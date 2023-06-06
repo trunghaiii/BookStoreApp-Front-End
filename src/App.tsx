@@ -1,32 +1,60 @@
-import type { RootState } from './redux/store'
-import { useSelector, useDispatch } from 'react-redux'
-import { decrement, increment } from './redux/slices/counterSlice'
+import { Outlet } from "react-router-dom";
+import Home from "./components/Home/Home";
+import Header from "./components/Header/Header";
+import Footer from "./components/Footer/Footer";
 
-function App() {
+import Contact from "./pages/Contact/Contact";
+import Login from "./pages/Login/Login";
+import Book from "./pages/Book/Book";
 
-  const count = useSelector((state: RootState) => state.counter.value)
-  const dispatch = useDispatch()
+import {
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom";
+
+
+const Layout = () => {
+  return (
+    <>
+      <Header />
+      <Outlet />
+      <Footer />
+    </>
+  )
+}
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Layout />,
+    errorElement: <div>404 Not Found</div>,
+
+    children: [
+      {
+        path: "/",
+        element: <Home />,
+      },
+      {
+        path: "contact",
+        element: <Contact />,
+      },
+      {
+        path: "book",
+        element: <Book />,
+      },
+      {
+        path: "login",
+        element: <Login />,
+      },
+    ],
+  },
+]);
+
+const App = () => {
 
   return (
     <>
-      <div>BookStore React Ts + Redux</div>
-      <div>
-        <div>
-          <button
-            aria-label="Increment value"
-            onClick={() => dispatch(increment())}
-          >
-            Increment
-          </button>
-          <span>{count}</span>
-          <button
-            aria-label="Decrement value"
-            onClick={() => dispatch(decrement())}
-          >
-            Decrementtt
-          </button>
-        </div>
-      </div>
+      <RouterProvider router={router} />
     </>
   )
 }
