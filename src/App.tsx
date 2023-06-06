@@ -6,6 +6,8 @@ import Footer from "./components/Footer/Footer";
 import Contact from "./pages/Contact/Contact";
 import Login from "./pages/Login/Login";
 import Book from "./pages/Book/Book";
+import Register from "./pages/Register/Register";
+
 
 import {
   createBrowserRouter,
@@ -41,12 +43,16 @@ const router = createBrowserRouter([
       {
         path: "book",
         element: <Book />,
-      },
-      {
-        path: "login",
-        element: <Login />,
-      },
+      }
     ],
+  },
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/register",
+    element: <Register />,
   },
 ]);
 
