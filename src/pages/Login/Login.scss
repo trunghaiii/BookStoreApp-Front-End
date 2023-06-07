@@ -1,0 +1,17 @@
+.login-page {
+    .or-text {
+        display: block;
+        width: 100%;
+        text-align: center;
+    }
+
+    p {
+        text-align: center;
+
+        .register-btn {
+            margin-left: 5px;
+            cursor: pointer;
+            color: blue;
+        }
+    }
+}
