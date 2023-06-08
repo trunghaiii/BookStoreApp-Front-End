@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-// import './index.css';
+import './Register.scss';
 import { Button, Form, Input, Divider, notification, message } from 'antd';
 import { useNavigate } from "react-router-dom";
 import { postRegisterUser } from "../../services/api"
@@ -93,6 +93,13 @@ const Register: React.FC = () => {
                         Register
                     </Button>
                 </Form.Item>
+                <span className='or-text'>Or</span>
+                <p>You already had an account?
+                    <span
+                        className='login-btn'
+                        onClick={() => navigate("/login")}
+                    >Login</span></p>
+                <Divider />
             </Form>
         </div>
     )
