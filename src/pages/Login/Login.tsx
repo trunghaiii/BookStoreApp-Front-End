@@ -1,18 +1,39 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Login.scss';
 import { useNavigate } from "react-router-dom";
-import { Button, Checkbox, Form, Input, Divider } from 'antd';
+import { Button, Form, Input, Divider, notification, message } from 'antd';
+import { postLogin } from "../../services/api"
 
-const onFinish = (values: any) => {
-    console.log('Success:', values);
-};
 
 // const onFinishFailed = (errorInfo: any) => {
 //     console.log('Failed:', errorInfo);
 // };
 
 const Login: React.FC = () => {
+
+    const [isLogin, setIsLogin] = useState<boolean>(false);
     const navigate = useNavigate();
+
+    const onFinish = async (values: any) => {
+        //console.log('Success:', values);
+        let { email, password } = values
+
+        setIsLogin(true)
+        const result = await postLogin(email, password)
+        setIsLogin(false)
+
+        if (result?.errorCode === 0) {
+            message.success(result.errorMessage)
+            navigate("/")
+        } else {
+            notification.error({
+                message: `Notification`,
+                description: result.errorMessage,
+                duration: 5
+            });
+        }
+
+    };
 
     return (
         <div className='login-page'>
@@ -44,12 +65,12 @@ const Login: React.FC = () => {
                     <Input.Password />
                 </Form.Item>
 
-                <Form.Item name="remember" valuePropName="checked" wrapperCol={{ offset: 8, span: 16 }}>
+                {/* <Form.Item name="remember" valuePropName="checked" wrapperCol={{ offset: 8, span: 16 }}>
                     <Checkbox>Remember me</Checkbox>
-                </Form.Item>
+                </Form.Item> */}
 
                 <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                    <Button type="primary" htmlType="submit">
+                    <Button type="primary" htmlType="submit" loading={isLogin}>
                         Login
                     </Button>
                 </Form.Item>
