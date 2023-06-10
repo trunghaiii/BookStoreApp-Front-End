@@ -8,11 +8,15 @@ import Login from "./pages/Login/Login";
 import Book from "./pages/Book/Book";
 import Register from "./pages/Register/Register";
 
+import { getFetchAccount } from "./services/api";
+import { saveLoginData } from "./redux/slices/accountSlice";
 
 import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 
 
 const Layout = () => {
@@ -57,6 +61,21 @@ const router = createBrowserRouter([
 ]);
 
 const App = () => {
+
+  const dispatch = useDispatch()
+
+  const fetchAccount = async () => {
+    let response = await getFetchAccount();
+
+    if (response && response.data && response.data.user) {
+      dispatch(saveLoginData(response.data.user))
+    }
+
+  }
+
+  useEffect(() => {
+    fetchAccount()
+  }, [])
 
   return (
     <>

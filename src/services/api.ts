@@ -11,3 +11,7 @@ export const postLogin = (email: string, password: string) => {
     const params = new URLSearchParams({ email, password });
     return axios.post('api/v1/auth/login', params)
 }
+
+export const getFetchAccount = () => {
+    return axios.get('api/v1/auth/account')
+}
