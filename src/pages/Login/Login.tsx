@@ -3,6 +3,8 @@ import './Login.scss';
 import { useNavigate } from "react-router-dom";
 import { Button, Form, Input, Divider, notification, message } from 'antd';
 import { postLogin } from "../../services/api"
+import { useDispatch } from 'react-redux';
+import { saveLoginData } from '../../redux/slices/accountSlice';
 
 
 // const onFinishFailed = (errorInfo: any) => {
@@ -13,6 +15,7 @@ const Login: React.FC = () => {
 
     const [isLogin, setIsLogin] = useState<boolean>(false);
     const navigate = useNavigate();
+    const dispatch = useDispatch()
 
     const onFinish = async (values: any) => {
         //console.log('Success:', values);
@@ -24,6 +27,7 @@ const Login: React.FC = () => {
 
         if (result?.errorCode === 0) {
             localStorage.setItem('access_token', result.data.access_token);
+            dispatch(saveLoginData(result.data.user))
             message.success(result.errorMessage)
             navigate("/")
         } else {
