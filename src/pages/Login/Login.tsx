@@ -23,6 +23,7 @@ const Login: React.FC = () => {
         setIsLogin(false)
 
         if (result?.errorCode === 0) {
+            localStorage.setItem('access_token', result.data.access_token);
             message.success(result.errorMessage)
             navigate("/")
         } else {
