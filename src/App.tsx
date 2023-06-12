@@ -3,6 +3,7 @@ import Home from "./components/Home/Home";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import NotFound from "./components/NotFound/NotFound";
+import Loading from "./components/Loading/Loading";
 
 import Contact from "./pages/Contact/Contact";
 import Login from "./pages/Login/Login";
@@ -80,7 +81,8 @@ const App = () => {
 
   return (
     <>
-      <RouterProvider router={router} />
+      {/* <RouterProvider router={router} /> */}
+      <Loading />
     </>
   )
 }
