@@ -2,6 +2,7 @@ import { Outlet } from "react-router-dom";
 import Home from "./components/Home/Home";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
+import NotFound from "./components/NotFound/NotFound";
 
 import Contact from "./pages/Contact/Contact";
 import Login from "./pages/Login/Login";
@@ -33,7 +34,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Layout />,
-    errorElement: <div>404 Not Found</div>,
+    errorElement: <NotFound />,
 
     children: [
       {
