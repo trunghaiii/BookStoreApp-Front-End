@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
-import type { PayloadAction } from '@reduxjs/toolkit'
+//import type { PayloadAction } from '@reduxjs/toolkit'
 
-export interface CounterState {
+export interface accountState {
     isAuthenticated: boolean,
     user: {
         email: string,
@@ -13,7 +13,7 @@ export interface CounterState {
     }
 }
 
-const initialState: CounterState = {
+const initialState: accountState = {
     isAuthenticated: false,
     user: {
         email: "",
@@ -25,8 +25,8 @@ const initialState: CounterState = {
     }
 }
 
-export const counterSlice = createSlice({
-    name: 'counter',
+export const accountSlice = createSlice({
+    name: 'account',
     initialState,
     reducers: {
         saveLoginData: (state, action) => {
@@ -43,6 +43,6 @@ export const counterSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { saveLoginData } = counterSlice.actions
+export const { saveLoginData } = accountSlice.actions
 
-export default counterSlice.reducer
+export default accountSlice.reducer

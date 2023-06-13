@@ -4,11 +4,17 @@ import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import NotFound from "./components/NotFound/NotFound";
 import Loading from "./components/Loading/Loading";
+import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 
 import Contact from "./pages/Contact/Contact";
 import Login from "./pages/Login/Login";
 import Book from "./pages/Book/Book";
 import Register from "./pages/Register/Register";
+import Admin from "./pages/Admin/Admin";
+
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 import { getFetchAccount } from "./services/api";
 import { saveLoginData } from "./redux/slices/accountSlice";
@@ -17,17 +23,16 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+
 
 
 const Layout = () => {
   return (
-    <>
+    <div className="app-layout">
       <Header />
       <Outlet />
       <Footer />
-    </>
+    </div>
   )
 }
 
@@ -53,6 +58,26 @@ const router = createBrowserRouter([
     ],
   },
   {
+    path: "/admin",
+    element: <Layout />,
+    errorElement: <NotFound />,
+
+    children: [
+      {
+        path: "/admin",
+        element: <ProtectedRoute><Admin /></ProtectedRoute>,
+      },
+      {
+        path: "contact",
+        element: <Contact />,
+      },
+      {
+        path: "book",
+        element: <Book />,
+      }
+    ],
+  },
+  {
     path: "/login",
     element: <Login />,
   },
@@ -62,14 +87,20 @@ const router = createBrowserRouter([
   },
 ]);
 
+
 const App = () => {
 
   const dispatch = useDispatch()
+  const isAuthenticated = useSelector(state => state.account.isAuthenticated)
 
   const fetchAccount = async () => {
+    if (window.location.pathname === "/login") return;
+    console.log("Fetch account");
+
     let response = await getFetchAccount();
 
     if (response && response.data && response.data.user) {
+
       dispatch(saveLoginData(response.data.user))
     }
 
@@ -77,12 +108,23 @@ const App = () => {
 
   useEffect(() => {
     fetchAccount()
+
   }, [])
 
+  console.log("return check check");
+
   return (
+
     <>
-      {/* <RouterProvider router={router} /> */}
-      <Loading />
+      {isAuthenticated === true
+        || window.location.pathname === '/login'
+        ?
+        <RouterProvider router={router} />
+
+        :
+        <Loading />
+      }
+
     </>
   )
 }

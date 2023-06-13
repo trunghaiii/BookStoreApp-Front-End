@@ -5,6 +5,7 @@ import { store } from './redux/store.tsx'
 import { Provider } from 'react-redux'
 
 
+console.log("render app freessh redux");
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   // <React.StrictMode>
