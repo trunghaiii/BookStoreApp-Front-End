@@ -2,8 +2,9 @@ import './Header.scss';
 import { useState } from 'react';
 import { BsSearch } from 'react-icons/Bs';
 import { GiBlackBook } from 'react-icons/Gi';
+import { FaBars } from 'react-icons/Fa';
 import { AiOutlineShoppingCart } from 'react-icons/Ai';
-import { Input, MenuProps, Dropdown, Space, Badge } from 'antd';
+import { Input, MenuProps, Dropdown, Space, Badge, Drawer } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 
 
@@ -19,18 +20,33 @@ const items: MenuProps['items'] = [
 ];
 
 const Header = () => {
-    const [open, setOpen] = useState(false);
+
+    const [openDrop, setOpenDrop] = useState<boolean>(false);
+    const [openDrawer, setOpenDrawer] = useState<boolean>(false);
 
     const handleMenuClick: MenuProps['onClick'] = (e) => {
         if (e.key === '3') {
-            setOpen(false);
+            setOpenDrop(false);
         }
     };
     const handleOpenChange = (flag: boolean) => {
-        setOpen(flag);
+        setOpenDrop(flag);
     };
+
+
+    const showDrawer = () => {
+        setOpenDrawer(true);
+    };
+
+    const onClose = () => {
+        setOpenDrawer(false);
+    };
+
     return (
         <div className="header-container">
+            <div className='header-drawer-icon' onClick={showDrawer}>
+                <FaBars />
+            </div>
             <div className="header-icon">
                 <GiBlackBook />
             </div>
@@ -51,7 +67,7 @@ const Header = () => {
                         onClick: handleMenuClick,
                     }}
                     onOpenChange={handleOpenChange}
-                    open={open}
+                    open={openDrop}
                 >
                     <a onClick={(e) => e.preventDefault()}>
                         <Space>
@@ -61,6 +77,19 @@ const Header = () => {
                     </a>
                 </Dropdown>
             </div>
+            <Drawer
+                className='header-drawer'
+                title="Account Menu"
+                placement="left"
+                onClose={onClose}
+                open={openDrawer}>
+                <div className='header-drawer-item' style={{ textAlign: "center" }}>
+                    <p>Information</p>
+                    <hr />
+                    <p>Log Out.</p>
+                </div>
+
+            </Drawer>
         </div>
     )
 }

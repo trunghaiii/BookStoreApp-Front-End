@@ -5,6 +5,12 @@
     //background-color: rgb(201, 255, 255);
 
     //justify-content: space-between;
+    .header-drawer-icon {
+        display: none;
+        font-size: 40px;
+        cursor: pointer;
+    }
+
     .header-icon {
         color: rgb(0, 204, 255);
         font-size: 35px;
@@ -34,4 +40,28 @@
         cursor: pointer;
         color: rgb(0, 204, 255);
     }
+
+}
+
+
+@media screen and (max-width: 700px) {
+    .header-container {
+
+        .header-drawer-icon {
+            display: block;
+        }
+
+        .header-icon {
+            display: none;
+        }
+
+        .header-title {
+            display: none;
+        }
+
+        .header-account {
+            display: none
+        }
+    }
+
 }
