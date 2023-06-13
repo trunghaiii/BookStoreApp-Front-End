@@ -36,6 +36,19 @@ const Layout = () => {
   )
 }
 
+const LayoutAdmin = () => {
+  const isAdminRoute = window.location.pathname.startsWith("/admin")
+  const user = useSelector((state) => state.account.user)
+  const userRole = user.role
+  return (
+    <div className="app-layout-admin">
+      {isAdminRoute && userRole === "ADMIN" && <Header />}
+      <Outlet />
+      {isAdminRoute && userRole === "ADMIN" && <Footer />}
+    </div>
+  )
+}
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -59,7 +72,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/admin",
-    element: <Layout />,
+    element: <LayoutAdmin />,
     errorElement: <NotFound />,
 
     children: [
@@ -94,7 +107,10 @@ const App = () => {
   const isAuthenticated = useSelector(state => state.account.isAuthenticated)
 
   const fetchAccount = async () => {
-    if (window.location.pathname === "/login") return;
+    if (window.location.pathname === "/login"
+      || window.location.pathname === "/register"
+      || window.location.pathname === "/"
+    ) return;
     console.log("Fetch account");
 
     let response = await getFetchAccount();
@@ -118,6 +134,8 @@ const App = () => {
     <>
       {isAuthenticated === true
         || window.location.pathname === '/login'
+        || window.location.pathname === "/register"
+        || window.location.pathname === "/"
         ?
         <RouterProvider router={router} />
 
