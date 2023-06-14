@@ -1,0 +1,162 @@
+
+import React, { useState } from 'react';
+import './LayoutAdmin.scss';
+import {
+    MenuFoldOutlined,
+    MenuUnfoldOutlined
+} from '@ant-design/icons';
+import { Layout, Menu, Button, theme, MenuProps, Dropdown, Space } from 'antd';
+import { DownOutlined } from '@ant-design/icons';
+// import { useSelector } from "react-redux"
+import { Outlet, useNavigate } from "react-router-dom"
+
+import { RiDashboardLine } from "react-icons/Ri";
+import { AiOutlineUser } from "react-icons/Ai";
+import { FiUsers } from "react-icons/Fi";
+import { GoBook } from "react-icons/Go";
+import { RiMoneyDollarCircleLine } from "react-icons/Ri";
+import { useSelector } from 'react-redux';
+
+
+
+const { Header, Sider, Content, Footer } = Layout;
+
+const items: MenuProps['items'] = [
+    {
+        label: 'Information',
+        key: '1',
+    },
+    {
+        label: 'Log Out',
+        key: '2',
+    }
+];
+
+const LayoutAdmin = () => {
+    const [collapsed, setCollapsed] = useState(false);
+    const [openDrop, setOpenDrop] = useState<boolean>(false);
+    const navigate = useNavigate()
+    const user = useSelector((state) => state.account.user)
+
+    const {
+        token: { colorBgContainer },
+    } = theme.useToken();
+
+    const handleMenuClick: MenuProps['onClick'] = (e) => {
+        if (e.key === '3') {
+            setOpenDrop(false);
+        }
+    };
+    const handleOpenChange = (flag: boolean) => {
+        setOpenDrop(flag);
+    };
+
+    // const isAdminRoute = window.location.pathname.startsWith("/admin")
+    // const user = useSelector((state) => state.account.user)
+    // const userRole = user.role
+    return (
+        <div className="app-layout-admin">
+            <Layout
+                style={{
+                    minHeight: "100vh",
+                }}
+            >
+                <Sider theme="light" trigger={null} collapsible collapsed={collapsed}>
+                    <div className="demo-logo-vertical" />
+                    <Menu
+                        mode="inline"
+                        defaultSelectedKeys={['dashboard']}
+                        items={[
+                            {
+                                key: 'title-admin',
+                                label: <span
+                                    style={{
+                                        color: 'rgb(0, 204, 255)',
+                                        fontSize: "20px",
+                                    }}
+                                    onClick={() => navigate("/admin")}
+                                >Admin</span>,
+                            },
+                            {
+                                key: 'dashboard',
+                                icon: <RiDashboardLine onClick={() => navigate("/admin")} />,
+                                label: <span onClick={() => navigate("/admin")}>Dashboard</span>,
+                            },
+                            {
+                                key: 'usermanage',
+                                icon: <AiOutlineUser />,
+                                label: <span>User Management</span>,
+                                children: [
+                                    {
+                                        key: 'crud',
+                                        icon: <FiUsers />,
+                                        label: <span>CRUD</span>,
+                                    },
+                                    {
+                                        key: 'file',
+                                        icon: <FiUsers />,
+                                        label: <span >File</span>,
+                                    }
+                                ]
+                            },
+                            {
+                                key: 'bookmanage',
+                                icon: <GoBook onClick={() => navigate("/admin/book")} />,
+                                label: <span onClick={() => navigate("/admin/book")}>Book Management</span>,
+                            },
+                            {
+                                key: 'ordermanage',
+                                icon: <RiMoneyDollarCircleLine onClick={() => navigate("/admin/contact")} />,
+                                label: <span onClick={() => navigate("/admin/contact")}>Order Management</span>,
+                            },
+                        ]}
+                    />
+                </Sider>
+                <Layout>
+                    <Header className='header-admin' style={{ padding: 0, background: colorBgContainer }}>
+                        <Button
+                            type="text"
+                            icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+                            onClick={() => setCollapsed(!collapsed)}
+                            style={{
+                                fontSize: '16px',
+                                width: 64,
+                                height: 64,
+                            }}
+                        />
+                        <div className='header-account'>
+                            <Dropdown
+                                menu={{
+                                    items,
+                                    onClick: handleMenuClick,
+                                }}
+                                onOpenChange={handleOpenChange}
+                                open={openDrop}
+                            >
+                                <a onClick={(e) => e.preventDefault()}>
+                                    <Space>
+                                        Welcome, {user && user.fullName}
+                                        <DownOutlined />
+                                    </Space>
+                                </a>
+                            </Dropdown>
+                        </div>
+                    </Header>
+                    <Content
+                        style={{
+                            margin: '24px 16px',
+                            padding: 24,
+                            // height: "75vh",
+                            background: colorBgContainer,
+                        }}
+                    >
+                        <Outlet />
+                    </Content>
+                    <Footer style={{ textAlign: 'center' }}>BookStore ©2023 Created by Hai Tran</Footer>
+                </Layout>
+            </Layout>
+        </div>
+    )
+}
+
+export default LayoutAdmin

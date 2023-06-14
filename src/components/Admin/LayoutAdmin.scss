@@ -1,0 +1,10 @@
+.app-layout-admin {
+    .header-admin {
+        display: flex;
+        justify-content: space-between;
+
+        .header-account {
+            margin-right: 80px;
+        }
+    }
+}

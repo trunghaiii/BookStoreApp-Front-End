@@ -5,6 +5,7 @@ import Footer from "./components/Footer/Footer";
 import NotFound from "./components/NotFound/NotFound";
 import Loading from "./components/Loading/Loading";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
+import LayoutAdmin from "./components/Admin/LayoutAdmin";
 
 import Contact from "./pages/Contact/Contact";
 import Login from "./pages/Login/Login";
@@ -36,18 +37,7 @@ const Layout = () => {
   )
 }
 
-const LayoutAdmin = () => {
-  const isAdminRoute = window.location.pathname.startsWith("/admin")
-  const user = useSelector((state) => state.account.user)
-  const userRole = user.role
-  return (
-    <div className="app-layout-admin">
-      {isAdminRoute && userRole === "ADMIN" && <Header />}
-      <Outlet />
-      {isAdminRoute && userRole === "ADMIN" && <Footer />}
-    </div>
-  )
-}
+
 
 const router = createBrowserRouter([
   {
