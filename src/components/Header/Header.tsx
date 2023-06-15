@@ -6,6 +6,7 @@ import { FaBars } from 'react-icons/Fa';
 import { AiOutlineShoppingCart } from 'react-icons/Ai';
 import { Input, MenuProps, Dropdown, Space, Badge, Drawer } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
+import { useSelector } from 'react-redux';
 
 
 const items: MenuProps['items'] = [
@@ -23,6 +24,8 @@ const Header = () => {
 
     const [openDrop, setOpenDrop] = useState<boolean>(false);
     const [openDrawer, setOpenDrawer] = useState<boolean>(false);
+
+    const user = useSelector(state => state.account.user)
 
     const handleMenuClick: MenuProps['onClick'] = (e) => {
         if (e.key === '3') {
@@ -61,21 +64,26 @@ const Header = () => {
                 </Badge>
             </div>
             <div className='header-account'>
-                <Dropdown
-                    menu={{
-                        items,
-                        onClick: handleMenuClick,
-                    }}
-                    onOpenChange={handleOpenChange}
-                    open={openDrop}
-                >
-                    <a onClick={(e) => e.preventDefault()}>
-                        <Space>
-                            Account
-                            <DownOutlined />
-                        </Space>
-                    </a>
-                </Dropdown>
+                {user && user.fullName
+                    ?
+                    <Dropdown
+                        menu={{
+                            items,
+                            onClick: handleMenuClick,
+                        }}
+                        onOpenChange={handleOpenChange}
+                        open={openDrop}
+                    >
+                        <a onClick={(e) => e.preventDefault()}>
+                            <Space>
+                                Welcome, {user.fullName}
+                                <DownOutlined />
+                            </Space>
+                        </a>
+                    </Dropdown>
+                    :
+                    <div>Account</div>
+                }
             </div>
             <Drawer
                 className='header-drawer'
