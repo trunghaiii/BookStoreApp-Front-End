@@ -5,7 +5,7 @@ import {
     MenuFoldOutlined,
     MenuUnfoldOutlined
 } from '@ant-design/icons';
-import { Layout, Menu, Button, theme, MenuProps, Dropdown, Space } from 'antd';
+import { Layout, Menu, Button, theme, MenuProps, Dropdown, Space, message } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 // import { useSelector } from "react-redux"
 import { Outlet, useNavigate } from "react-router-dom"
@@ -17,26 +17,22 @@ import { GoBook } from "react-icons/Go";
 import { RiMoneyDollarCircleLine } from "react-icons/Ri";
 import { useSelector } from 'react-redux';
 
+import { postLogOut } from '../../services/api';
+
+import { doLogOut } from '../../redux/slices/accountSlice';
+import { useDispatch } from 'react-redux';
+
 
 
 const { Header, Sider, Content, Footer } = Layout;
 
-const items: MenuProps['items'] = [
-    {
-        label: 'Information',
-        key: '1',
-    },
-    {
-        label: 'Log Out',
-        key: '2',
-    }
-];
 
 const LayoutAdmin = () => {
     const [collapsed, setCollapsed] = useState(false);
     const [openDrop, setOpenDrop] = useState<boolean>(false);
     const navigate = useNavigate()
     const user = useSelector((state) => state.account.user)
+    const dispatch = useDispatch()
 
     const {
         token: { colorBgContainer },
@@ -51,9 +47,30 @@ const LayoutAdmin = () => {
         setOpenDrop(flag);
     };
 
-    // const isAdminRoute = window.location.pathname.startsWith("/admin")
-    // const user = useSelector((state) => state.account.user)
-    // const userRole = user.role
+
+    const handleLogOut = async () => {
+        const response = await postLogOut();
+        if (response && response.errorCode === 0) {
+            dispatch(doLogOut())
+            message.success(response.errorMessage)
+            navigate("/")
+        }
+
+        // alert("log out")
+    }
+
+
+    const items: MenuProps['items'] = [
+        {
+            label: 'Information',
+            key: '1',
+        },
+        {
+            label: <div onClick={() => handleLogOut()}>Log Out</div>,
+            key: '2',
+        }
+    ];
+
     return (
         <div className="app-layout-admin">
             <Layout

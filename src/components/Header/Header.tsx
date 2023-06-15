@@ -4,21 +4,15 @@ import { BsSearch } from 'react-icons/Bs';
 import { GiBlackBook } from 'react-icons/Gi';
 import { FaBars } from 'react-icons/Fa';
 import { AiOutlineShoppingCart } from 'react-icons/Ai';
-import { Input, MenuProps, Dropdown, Space, Badge, Drawer } from 'antd';
+import { Input, MenuProps, Dropdown, Space, Badge, Drawer, message } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
+import { postLogOut } from '../../services/api';
 
-const items: MenuProps['items'] = [
-    {
-        label: 'Information',
-        key: '1',
-    },
-    {
-        label: 'Log Out',
-        key: '2',
-    }
-];
+import { doLogOut } from '../../redux/slices/accountSlice';
+
 
 const Header = () => {
 
@@ -26,6 +20,8 @@ const Header = () => {
     const [openDrawer, setOpenDrawer] = useState<boolean>(false);
 
     const user = useSelector(state => state.account.user)
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     const handleMenuClick: MenuProps['onClick'] = (e) => {
         if (e.key === '3') {
@@ -35,16 +31,35 @@ const Header = () => {
     const handleOpenChange = (flag: boolean) => {
         setOpenDrop(flag);
     };
-
-
     const showDrawer = () => {
         setOpenDrawer(true);
     };
-
     const onClose = () => {
         setOpenDrawer(false);
     };
 
+
+    const handleLogOut = async () => {
+        const response = await postLogOut();
+        if (response && response.errorCode === 0) {
+            dispatch(doLogOut())
+            message.success(response.errorMessage)
+            navigate("/")
+        }
+
+        // alert("log out")
+    }
+
+    const items: MenuProps['items'] = [
+        {
+            label: 'Information',
+            key: '1',
+        },
+        {
+            label: <span onClick={() => handleLogOut()}>Log Out</span>,
+            key: '2',
+        }
+    ];
     return (
         <div className="header-container">
             <div className='header-drawer-icon' onClick={showDrawer}>

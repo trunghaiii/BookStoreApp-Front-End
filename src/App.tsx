@@ -99,9 +99,9 @@ const App = () => {
   const fetchAccount = async () => {
     if (window.location.pathname === "/login"
       || window.location.pathname === "/register"
-      || window.location.pathname === "/"
+      // || window.location.pathname === "/"
     ) return;
-    console.log("Fetch account");
+    //console.log("Fetch account");
 
     let response = await getFetchAccount();
 
@@ -117,7 +117,7 @@ const App = () => {
 
   }, [])
 
-  console.log("return check check");
+  //console.log("return check check");
 
   return (
 

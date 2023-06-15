@@ -38,11 +38,28 @@ export const accountSlice = createSlice({
             state.user = action.payload
             //console.log(">>> uh", action.payload);
 
-        }
+        },
+        doLogOut: (state) => {
+            // Redux Toolkit allows us to write "mutating" logic in reducers. It
+            // doesn't actually mutate the state because it uses the Immer library,
+            // which detects changes to a "draft state" and produces a brand new
+            // immutable state based off those changes
+            localStorage.removeItem("access_token")
+            state.isAuthenticated = false
+            state.user = {
+                email: "",
+                phone: "",
+                fullName: "",
+                role: "",
+                avatar: "",
+                id: ""
+            }
+
+        },
     },
 })
 
 // Action creators are generated for each case reducer function
-export const { saveLoginData } = accountSlice.actions
+export const { saveLoginData, doLogOut } = accountSlice.actions
 
 export default accountSlice.reducer
