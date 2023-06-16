@@ -7,6 +7,7 @@ const instance = axios.create({
 
 instance.defaults.headers.common = { 'Authorization': `Bearer ${localStorage.getItem("access_token")}` }
 
+
 const handleRefreshToken = async () => {
     let response = await instance.get("api/v1/auth/refresh")
     if (response && response.data) {
@@ -19,6 +20,7 @@ const handleRefreshToken = async () => {
 // Add a request interceptor
 instance.interceptors.request.use(function (config) {
     // Do something before request is sent
+    instance.defaults.headers.common = { 'Authorization': `Bearer ${localStorage.getItem("access_token")}` }
     return config;
 }, function (error) {
     // Do something with request error

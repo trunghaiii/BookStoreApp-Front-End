@@ -29,8 +29,8 @@ const Login: React.FC = () => {
             localStorage.setItem('access_token', result.data.access_token);
             dispatch(saveLoginData(result.data.user))
             message.success(result.errorMessage)
-            //navigate("/")
-            window.location.href = '/'
+            navigate("/")
+            //window.location.href = '/'
         } else {
             notification.error({
                 message: `Notification`,
