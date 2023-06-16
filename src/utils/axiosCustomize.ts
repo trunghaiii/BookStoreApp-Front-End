@@ -25,6 +25,8 @@ instance.interceptors.request.use(function (config) {
     return Promise.reject(error);
 });
 
+let NO_RETRY_HEADER = false
+
 // Add a response interceptor
 instance.interceptors.response.use(function (response) {
     // Any status code that lie within the range of 2xx cause this function to trigger
@@ -33,8 +35,14 @@ instance.interceptors.response.use(function (response) {
 }, async function (error) {
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     // Do something with response error
-    if (error.config && error.response && +error.response.status === 401) {
+
+    if (error.config
+        && error.response
+        && +error.response.status === 401
+        && !NO_RETRY_HEADER) {
+        NO_RETRY_HEADER = true
         let newAccessToken = await handleRefreshToken()
+
         if (newAccessToken) {
             localStorage.setItem("access_token", newAccessToken)
             error.config.headers['Authorization'] = `Bearer ${newAccessToken}`
