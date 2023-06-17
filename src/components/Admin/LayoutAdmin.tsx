@@ -106,8 +106,8 @@ const LayoutAdmin = () => {
                                 children: [
                                     {
                                         key: 'crud',
-                                        icon: <FiUsers />,
-                                        label: <span>CRUD</span>,
+                                        icon: <FiUsers onClick={() => navigate("/admin/user")} />,
+                                        label: <span onClick={() => navigate("/admin/user")}>CRUD</span>,
                                     },
                                     {
                                         key: 'file',

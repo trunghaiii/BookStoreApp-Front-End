@@ -6,6 +6,7 @@ import NotFound from "./components/NotFound/NotFound";
 import Loading from "./components/Loading/Loading";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import LayoutAdmin from "./components/Admin/LayoutAdmin";
+import UserTable from "./components/Admin/User/UserTable";
 
 import Contact from "./pages/Contact/Contact";
 import Login from "./pages/Login/Login";
@@ -71,8 +72,8 @@ const router = createBrowserRouter([
         element: <ProtectedRoute><Admin /></ProtectedRoute>,
       },
       {
-        path: "contact",
-        element: <Contact />,
+        path: "user",
+        element: <UserTable />,
       },
       {
         path: "book",
