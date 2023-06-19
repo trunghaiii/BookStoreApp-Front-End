@@ -161,8 +161,8 @@ const LayoutAdmin = () => {
                     </Header>
                     <Content
                         style={{
-                            margin: '24px 16px',
-                            padding: 24,
+                            margin: '5px 10px',
+                            padding: 14,
                             // height: "75vh",
                             background: colorBgContainer,
                         }}
