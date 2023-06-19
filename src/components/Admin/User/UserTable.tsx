@@ -84,7 +84,13 @@ const UserTable = () => {
                 <UserSearch />
             </div>
             <div className='user-table'>
-                <Table columns={columns} dataSource={data} onChange={onChange} />
+                <Table
+                    columns={columns}
+                    dataSource={data}
+                    onChange={onChange}
+                    pagination={{ current: 1, pageSize: 2, showSizeChanger: true }}
+
+                />
             </div>
         </div>
 
