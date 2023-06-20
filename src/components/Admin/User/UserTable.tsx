@@ -5,6 +5,7 @@ import type { ColumnsType, TableProps } from 'antd/es/table';
 import UserSearch from './UserSearch';
 
 import { getUserPagination } from '../../../services/api';
+import ShowUser from './ShowUser';
 
 interface DataType {
     _id: React.Key;
@@ -14,37 +15,44 @@ interface DataType {
     english: number;
 }
 
-const columns: ColumnsType<DataType> = [
-    {
-        title: 'ID',
-        dataIndex: '_id',
-    },
-    {
-        title: 'Name',
-        dataIndex: 'fullName',
-        sorter: true
-    },
-    {
-        title: 'Email',
-        dataIndex: 'email',
-        sorter: true
-    },
-    {
-        title: 'Phone Number',
-        dataIndex: 'phone',
-        sorter: true
-    },
-    {
-        title: 'Action',
-        render: (text, record, index) => {
-            return (
-                <><Button>Delete</Button></>
-            )
-        }
-    },
-];
-
 const UserTable = () => {
+
+    const columns: ColumnsType<DataType> = [
+        {
+            title: 'ID',
+            // dataIndex: '_id',
+            render: (text, record, index) => {
+                // console.log("recoed", record);
+
+                return (
+                    <a onClick={() => handleDisplayUser(record)}>{record._id}</a>
+                )
+            }
+        },
+        {
+            title: 'Name',
+            dataIndex: 'fullName',
+            // sorter: true
+        },
+        {
+            title: 'Email',
+            dataIndex: 'email',
+            // sorter: true
+        },
+        {
+            title: 'Phone Number',
+            dataIndex: 'phone',
+            //  sorter: true
+        },
+        {
+            title: 'Action',
+            render: (text, record, index) => {
+                return (
+                    <><Button>Delete</Button></>
+                )
+            }
+        },
+    ];
 
     const onChange: TableProps<DataType>['onChange'] = (pagination, filters, sorter, extra) => {
         console.log('params', pagination, filters, sorter, extra);
@@ -64,8 +72,11 @@ const UserTable = () => {
     const [current, setCurrent] = useState<number>(1)
     const [pageSize, setPageSize] = useState<number>(3)
     const [total, setTotal] = useState<number>(0)
+
     const [query, setQuery] = useState<string>("")
 
+    const [showUserInfo, setShowUserInfo] = useState<object>({})
+    const [showUser, setShowUser] = useState<boolean>(false)
     const fetchUserPagination = async (filterQuerry: string) => {
         let query = `pageSize=${pageSize}&current=${current}`
         if (filterQuerry) {
@@ -92,6 +103,13 @@ const UserTable = () => {
         fetchUserPagination(query)
     }
 
+    const handleDisplayUser = (user) => {
+        // console.log(user);
+        setShowUser(true)
+        setShowUserInfo(user)
+        //alert("meme")
+    }
+
     useEffect(() => {
         //console.log(query);
 
@@ -113,6 +131,11 @@ const UserTable = () => {
 
                 />
             </div>
+            <ShowUser
+                showUser={showUser}
+                setShowUser={setShowUser}
+                showUserInfo={showUserInfo}
+            />
         </div>
 
     )
