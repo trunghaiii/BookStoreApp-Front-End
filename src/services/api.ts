@@ -19,3 +19,7 @@ export const getFetchAccount = () => {
 export const postLogOut = () => {
     return axios.post('api/v1/auth/logout')
 }
+
+export const getUserPagination = (query) => {
+    return axios.get(`api/v1/user?${query}`)
+}

@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 // import './index.css';
-import { Table } from 'antd';
+import { Table, Button } from 'antd';
 import type { ColumnsType, TableProps } from 'antd/es/table';
 import UserSearch from './UserSearch';
 
+import { getUserPagination } from '../../../services/api';
+
 interface DataType {
-    key: React.Key;
+    _id: React.Key;
     name: string;
     chinese: number;
     math: number;
@@ -14,70 +16,82 @@ interface DataType {
 
 const columns: ColumnsType<DataType> = [
     {
+        title: 'ID',
+        dataIndex: '_id',
+    },
+    {
         title: 'Name',
-        dataIndex: 'name',
+        dataIndex: 'fullName',
+        sorter: true
     },
     {
-        title: 'Chinese Score',
-        dataIndex: 'chinese',
-        sorter: {
-            compare: (a, b) => a.chinese - b.chinese,
-            multiple: 3,
-        },
+        title: 'Email',
+        dataIndex: 'email',
+        sorter: true
     },
     {
-        title: 'Math Score',
-        dataIndex: 'math',
-        sorter: {
-            compare: (a, b) => a.math - b.math,
-            multiple: 2,
-        },
+        title: 'Phone Number',
+        dataIndex: 'phone',
+        sorter: true
     },
     {
-        title: 'English Score',
-        dataIndex: 'english',
-        sorter: {
-            compare: (a, b) => a.english - b.english,
-            multiple: 1,
-        },
+        title: 'Action',
+        render: (text, record, index) => {
+            return (
+                <><Button>Delete</Button></>
+            )
+        }
     },
 ];
 
-const data: DataType[] = [
-    {
-        key: '1',
-        name: 'John Brown',
-        chinese: 98,
-        math: 60,
-        english: 70,
-    },
-    {
-        key: '2',
-        name: 'Jim Green',
-        chinese: 98,
-        math: 66,
-        english: 89,
-    },
-    {
-        key: '3',
-        name: 'Joe Black',
-        chinese: 98,
-        math: 90,
-        english: 70,
-    },
-    {
-        key: '4',
-        name: 'Jim Red',
-        chinese: 88,
-        math: 99,
-        english: 89,
-    },
-];
-
-const onChange: TableProps<DataType>['onChange'] = (pagination, filters, sorter, extra) => {
-    console.log('params', pagination, filters, sorter, extra);
-};
 const UserTable = () => {
+
+    const onChange: TableProps<DataType>['onChange'] = (pagination, filters, sorter, extra) => {
+        console.log('params', pagination, filters, sorter, extra);
+
+        if (pagination.current !== current) {
+            setCurrent(pagination.current)
+        }
+
+        if (pagination.pageSize !== pageSize) {
+            setCurrent(1)
+            setPageSize(pagination.pageSize)
+        }
+
+    };
+
+    const [userList, setUserList] = useState<[]>([])
+    const [current, setCurrent] = useState<number>(1)
+    const [pageSize, setPageSize] = useState<number>(3)
+    const [total, setTotal] = useState<number>(0)
+
+    const fetchUserPagination = async () => {
+        let query = `pageSize=${pageSize}&current=${current}`
+
+        let response = await getUserPagination(query);
+
+        if (response && response.errorCode === 0) {
+
+            setTotal(response.data.meta.total)
+        }
+
+        if (response && response.errorCode === 0) {
+
+            setUserList(response.data.result)
+        }
+
+        if (response && response.errorCode === 0) {
+
+            setUserList(response.data.result)
+        }
+
+    }
+
+    useEffect(() => {
+        fetchUserPagination()
+    }, [pageSize, current])
+
+
     return (
         <div>
             <div className='user-search'>
@@ -86,9 +100,9 @@ const UserTable = () => {
             <div className='user-table'>
                 <Table
                     columns={columns}
-                    dataSource={data}
+                    dataSource={userList}
                     onChange={onChange}
-                    pagination={{ current: 1, pageSize: 2, showSizeChanger: true }}
+                    pagination={{ total: total, current: current, pageSize: pageSize, showSizeChanger: true }}
 
                 />
             </div>
