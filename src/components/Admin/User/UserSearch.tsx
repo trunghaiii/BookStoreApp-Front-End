@@ -2,12 +2,27 @@ import React from 'react';
 import './UserSearch.scss';
 import { Button, Checkbox, Form, Input } from 'antd';
 
-const onFinish = (values: any) => {
-    console.log('Success:', values);
-};
+const UserSearch = (props: any) => {
+    const [form] = Form.useForm();
+
+    const onFinish = (values: any) => {
+        console.log('Success:', values);
+        let { name, email, phone } = values;
+        if (!name) name = ""
+        if (!email) email = ""
+        if (!phone) phone = ""
+
+        let query = `&name=${name}&email=${email}&phone=${phone}`
+
+        props.handleSearch(query)
 
 
-const UserSearch = () => {
+    };
+
+    const handleClear = () => {
+        form.resetFields();
+        props.handleSearch("")
+    }
     return (
         <div className='user-search-container'>
             <Form
@@ -18,13 +33,13 @@ const UserSearch = () => {
                 initialValues={{ remember: true }}
                 onFinish={onFinish}
                 autoComplete="off"
+                form={form}
             >
                 <div className='user-search-input-group'>
                     <Form.Item
                         className='user-search-input'
                         label="Name"
                         name="name"
-                        rules={[{ required: true, message: 'Please input name!' }]}
                     >
                         <Input />
                     </Form.Item>
@@ -32,7 +47,6 @@ const UserSearch = () => {
                         className='user-search-input'
                         label="Email"
                         name="email"
-                        rules={[{ required: true, message: 'Please input email!' }]}
                     >
                         <Input />
                     </Form.Item>
@@ -40,7 +54,6 @@ const UserSearch = () => {
                         className='user-search-input'
                         label="Phone"
                         name="phone"
-                        rules={[{ required: true, message: 'Please input phone number!' }]}
                     >
                         <Input />
                     </Form.Item>
@@ -54,7 +67,7 @@ const UserSearch = () => {
                             <Button className='btn-search' type="primary" htmlType="submit" >
                                 Search
                             </Button>
-                            <Button className='btn-clear' htmlType="submit" >
+                            <Button onClick={() => handleClear()} className='btn-clear' >
                                 Clear
                             </Button>
                         </Form.Item>

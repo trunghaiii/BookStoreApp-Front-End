@@ -64,9 +64,14 @@ const UserTable = () => {
     const [current, setCurrent] = useState<number>(1)
     const [pageSize, setPageSize] = useState<number>(3)
     const [total, setTotal] = useState<number>(0)
+    const [query, setQuery] = useState<string>("")
 
-    const fetchUserPagination = async () => {
+    const fetchUserPagination = async (filterQuerry: string) => {
         let query = `pageSize=${pageSize}&current=${current}`
+        if (filterQuerry) {
+            query += filterQuerry
+        }
+
 
         let response = await getUserPagination(query);
 
@@ -80,22 +85,24 @@ const UserTable = () => {
             setUserList(response.data.result)
         }
 
-        if (response && response.errorCode === 0) {
+    }
 
-            setUserList(response.data.result)
-        }
-
+    const handleSearch = (query: object) => {
+        setQuery(query)
+        fetchUserPagination(query)
     }
 
     useEffect(() => {
-        fetchUserPagination()
+        //console.log(query);
+
+        fetchUserPagination(query)
     }, [pageSize, current])
 
 
     return (
         <div>
             <div className='user-search'>
-                <UserSearch />
+                <UserSearch handleSearch={handleSearch} />
             </div>
             <div className='user-table'>
                 <Table
