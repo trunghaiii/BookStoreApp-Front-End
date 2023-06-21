@@ -97,7 +97,7 @@ const Header = () => {
                         </a>
                     </Dropdown>
                     :
-                    <div>Account</div>
+                    <div onClick={() => navigate("/login")}>Account</div>
                 }
             </div>
             <Drawer
