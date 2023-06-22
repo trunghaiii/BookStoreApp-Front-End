@@ -5,7 +5,7 @@ import {
     MenuFoldOutlined,
     MenuUnfoldOutlined
 } from '@ant-design/icons';
-import { Layout, Menu, Button, theme, MenuProps, Dropdown, Space, message } from 'antd';
+import { Layout, Menu, Button, theme, MenuProps, Dropdown, Space, message, Avatar } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 // import { useSelector } from "react-redux"
 import { Outlet, useNavigate } from "react-router-dom"
@@ -62,7 +62,11 @@ const LayoutAdmin = () => {
 
     const items: MenuProps['items'] = [
         {
-            label: 'Information',
+            label: <div onClick={() => navigate("/")}>Home Page</div>,
+            key: '',
+        },
+        {
+            label: 'Account Management',
             key: '1',
         },
         {
@@ -152,7 +156,7 @@ const LayoutAdmin = () => {
                             >
                                 <a onClick={(e) => e.preventDefault()}>
                                     <Space>
-                                        Welcome, {user && user.fullName}
+                                        <Avatar shape="square" size={32} src={user.avatar} /> {user && user.fullName}
                                         <DownOutlined />
                                     </Space>
                                 </a>
