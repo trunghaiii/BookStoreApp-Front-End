@@ -62,7 +62,7 @@ const Header = () => {
     ];
     if (user && user.role === "ADMIN") {
         items?.unshift({
-            label: <span onClick={() => navigate("/admin")}>Admin Management</span>,
+            label: <span onClick={() => window.location.href = "/admin"}>Admin Management</span>,
             key: '0',
         })
     }

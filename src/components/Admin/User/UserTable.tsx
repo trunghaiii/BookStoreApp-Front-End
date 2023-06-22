@@ -79,6 +79,7 @@ const UserTable = () => {
     const [total, setTotal] = useState<number>(0)
 
     const [query, setQuery] = useState<string>("")
+    const [isTableLoading, setIsTableLoading] = useState<boolean>(false)
 
     const [showUserInfo, setShowUserInfo] = useState<object>({})
     const [showUser, setShowUser] = useState<boolean>(false)
@@ -111,8 +112,9 @@ const UserTable = () => {
             query += filterQuerry
         }
 
-
+        setIsTableLoading(true)
         let response = await getUserPagination(query);
+        setIsTableLoading(false)
 
         if (response && response.errorCode === 0) {
 
@@ -139,7 +141,7 @@ const UserTable = () => {
     }
 
     useEffect(() => {
-        //console.log(query);
+        console.log("gugu");
 
         fetchUserPagination(query)
     }, [pageSize, current])
@@ -162,7 +164,7 @@ const UserTable = () => {
                         pageSize: pageSize,
                         showSizeChanger: true
                     }}
-                // loading={true}
+                    loading={isTableLoading}
 
                 />
             </div>
