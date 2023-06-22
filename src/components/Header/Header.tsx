@@ -1,10 +1,10 @@
 import './Header.scss';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { BsSearch } from 'react-icons/Bs';
 import { GiBlackBook } from 'react-icons/Gi';
 import { FaBars } from 'react-icons/Fa';
 import { AiOutlineShoppingCart } from 'react-icons/Ai';
-import { Input, MenuProps, Dropdown, Space, Badge, Drawer, message } from 'antd';
+import { Input, MenuProps, Dropdown, Space, Badge, Drawer, message, Avatar } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -50,9 +50,9 @@ const Header = () => {
         // alert("log out")
     }
 
-    const items: MenuProps['items'] = [
+    let items: MenuProps['items'] = [
         {
-            label: 'Information',
+            label: 'Account Management',
             key: '1',
         },
         {
@@ -60,6 +60,14 @@ const Header = () => {
             key: '2',
         }
     ];
+    if (user && user.role === "ADMIN") {
+        items?.unshift({
+            label: <span onClick={() => navigate("/admin")}>Admin Management</span>,
+            key: '0',
+        })
+    }
+
+
     return (
         <div className="header-container">
             <div className='header-drawer-icon' onClick={showDrawer}>
@@ -91,7 +99,7 @@ const Header = () => {
                     >
                         <a onClick={(e) => e.preventDefault()}>
                             <Space>
-                                Welcome, {user.fullName}
+                                <Avatar shape="square" size={32} src={user.avatar} /> {user.fullName}
                                 <DownOutlined />
                             </Space>
                         </a>
@@ -107,9 +115,13 @@ const Header = () => {
                 onClose={onClose}
                 open={openDrawer}>
                 <div className='header-drawer-item' style={{ textAlign: "center" }}>
-                    <p>Information</p>
+                    {user && user.role === "ADMIN" &&
+                        <div style={{ cursor: "pointer" }} onClick={() => navigate("/admin")}>Admin Management</div>
+                    }
                     <hr />
-                    <p>Log Out.</p>
+                    <div style={{ cursor: "pointer" }}>Account Management</div>
+                    <hr />
+                    <div style={{ cursor: "pointer" }} onClick={() => handleLogOut()}>Log Out.</div>
                 </div>
 
             </Drawer>
