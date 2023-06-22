@@ -7,6 +7,9 @@ import UserSearch from './UserSearch';
 import { getUserPagination } from '../../../services/api';
 import ShowUser from './ShowUser';
 
+import { AiOutlinePlusCircle } from 'react-icons/Ai';
+
+
 interface DataType {
     _id: React.Key;
     name: string;
@@ -124,6 +127,7 @@ const UserTable = () => {
             </div>
             <div className='user-table'>
                 <Table
+                    title={TableHeader}
                     columns={columns}
                     dataSource={userList}
                     onChange={onChange}
@@ -138,6 +142,21 @@ const UserTable = () => {
             />
         </div>
 
+    )
+}
+
+const TableHeader = () => {
+    return (
+        <div style={{ display: "flex", justifyContent: "space-between" }} className='table-header'>
+            <div className='table-header-title'>
+                User List
+            </div>
+            <div className='table-header-AddNew-btn'>
+                <Button type="primary" icon={<AiOutlinePlusCircle />}>
+                    New user
+                </Button>
+            </div>
+        </div>
     )
 }
 
