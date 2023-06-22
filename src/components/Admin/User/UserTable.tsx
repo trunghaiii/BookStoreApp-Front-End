@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react';
 // import './index.css';
 import { Table, Button } from 'antd';
 import type { ColumnsType, TableProps } from 'antd/es/table';
-import UserSearch from './UserSearch';
 
 import { getUserPagination } from '../../../services/api';
+
 import ShowUser from './ShowUser';
+import CreateNewUserModal from './CreateNewUserModal';
+import UserSearch from './UserSearch';
 
 import { AiOutlinePlusCircle } from 'react-icons/Ai';
 
@@ -80,6 +82,29 @@ const UserTable = () => {
 
     const [showUserInfo, setShowUserInfo] = useState<object>({})
     const [showUser, setShowUser] = useState<boolean>(false)
+
+    const [showCreateUser, setShowCreateUser] = useState<boolean>(false)
+
+    const TableHeader = () => {
+        return (
+            <div style={{ display: "flex", justifyContent: "space-between" }} className='table-header'>
+                <div className='table-header-title'>
+                    User List
+                </div>
+                <div className='table-header-AddNew-btn'>
+                    <Button
+                        type="primary"
+                        icon={<AiOutlinePlusCircle />}
+                        onClick={() => setShowCreateUser(!showCreateUser)}
+                    >
+                        New user
+                    </Button>
+                </div>
+            </div>
+        )
+    }
+
+
     const fetchUserPagination = async (filterQuerry: string) => {
         let query = `pageSize=${pageSize}&current=${current}`
         if (filterQuerry) {
@@ -131,7 +156,13 @@ const UserTable = () => {
                     columns={columns}
                     dataSource={userList}
                     onChange={onChange}
-                    pagination={{ total: total, current: current, pageSize: pageSize, showSizeChanger: true }}
+                    pagination={{
+                        total: total,
+                        current: current,
+                        pageSize: pageSize,
+                        showSizeChanger: true
+                    }}
+                // loading={true}
 
                 />
             </div>
@@ -140,24 +171,14 @@ const UserTable = () => {
                 setShowUser={setShowUser}
                 showUserInfo={showUserInfo}
             />
+            <CreateNewUserModal
+                showCreateUser={showCreateUser}
+                setShowCreateUser={setShowCreateUser}
+            />
         </div>
 
     )
 }
 
-const TableHeader = () => {
-    return (
-        <div style={{ display: "flex", justifyContent: "space-between" }} className='table-header'>
-            <div className='table-header-title'>
-                User List
-            </div>
-            <div className='table-header-AddNew-btn'>
-                <Button type="primary" icon={<AiOutlinePlusCircle />}>
-                    New user
-                </Button>
-            </div>
-        </div>
-    )
-}
 
 export default UserTable;

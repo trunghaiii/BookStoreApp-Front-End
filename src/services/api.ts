@@ -23,3 +23,16 @@ export const postLogOut = () => {
 export const getUserPagination = (query) => {
     return axios.get(`api/v1/user?${query}`)
 }
+
+export const postCreateUser = (name: string, password: string, email: string, phone: string, imageFile: any) => {
+    console.log(imageFile);
+
+    const data = new FormData();
+    data.append('fullName', name);
+    data.append('password', password);
+    data.append('email', email);
+    data.append('phone', phone);
+    data.append('userImage', imageFile);
+
+    return axios.post('api/v1/user', data);
+}
