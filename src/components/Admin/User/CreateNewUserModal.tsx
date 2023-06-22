@@ -17,6 +17,8 @@ const CreateNewUserModal = (props: IProps) => {
 
     const { showCreateUser, setShowCreateUser } = props
 
+    const [isCreate, setIsCreate] = useState<boolean>(false)
+
     const showModal = () => {
         setShowCreateUser(true);
     };
@@ -30,7 +32,16 @@ const CreateNewUserModal = (props: IProps) => {
         console.log('Success:', values);
         const { name, password, email, phone, imageFile } = values
 
-        let response = await postCreateUser(name, password, email, phone, imageFile.file.originFileObj)
+        let response
+        setIsCreate(true);
+        if (imageFile) {
+            response = await postCreateUser(name, password, email, phone, imageFile.file.originFileObj)
+        } else {
+            response = await postCreateUser(name, password, email, phone, undefined)
+        }
+
+        setIsCreate(false);
+
         if (response && response.errorCode === 0) {
             message.success(response.errorMessage)
             handleCancel()
@@ -54,7 +65,7 @@ const CreateNewUserModal = (props: IProps) => {
                 <Button
                     key="submit"
                     type="primary"
-                    loading={false}
+                    loading={isCreate}
                     onClick={() => form.submit()}>
                     Create
                 </Button>,
