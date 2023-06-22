@@ -7,7 +7,8 @@ import { postCreateUser } from "../../../services/api"
 
 interface IProps {
     showCreateUser: boolean;
-    setShowCreateUser: any
+    setShowCreateUser: any;
+    fetchUserPagination: any
 }
 
 
@@ -15,7 +16,7 @@ const CreateNewUserModal = (props: IProps) => {
 
     const [form] = Form.useForm();
 
-    const { showCreateUser, setShowCreateUser } = props
+    const { showCreateUser, setShowCreateUser, fetchUserPagination } = props
 
     const [isCreate, setIsCreate] = useState<boolean>(false)
 
@@ -45,6 +46,7 @@ const CreateNewUserModal = (props: IProps) => {
         if (response && response.errorCode === 0) {
             message.success(response.errorMessage)
             handleCancel()
+            fetchUserPagination("")
         } else {
             notification.error({
                 message: `Notification`,

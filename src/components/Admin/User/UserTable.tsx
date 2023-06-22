@@ -141,7 +141,7 @@ const UserTable = () => {
     }
 
     useEffect(() => {
-        console.log("gugu");
+        //console.log("gugu");
 
         fetchUserPagination(query)
     }, [pageSize, current])
@@ -176,6 +176,7 @@ const UserTable = () => {
             <CreateNewUserModal
                 showCreateUser={showCreateUser}
                 setShowCreateUser={setShowCreateUser}
+                fetchUserPagination={fetchUserPagination}
             />
         </div>
 
