@@ -36,3 +36,9 @@ export const postCreateUser = (name: string, password: string, email: string, ph
 
     return axios.post('api/v1/user', data);
 }
+
+export const putUpdateUser = (_id: string, fullName: string, email: string, phone: string, role: string) => {
+    // add URLSearchParams to fix bug not attach payload when sending api endpoint
+    const params = new URLSearchParams({ _id, fullName, email, phone, role });
+    return axios.put('api/v1/user', params)
+}

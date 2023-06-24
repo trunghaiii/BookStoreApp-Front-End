@@ -7,6 +7,7 @@ import { getUserPagination } from '../../../services/api';
 
 import ShowUser from './ShowUser';
 import CreateNewUserModal from './CreateNewUserModal';
+import UpdateUserModal from './UpdateUserModal';
 import UserSearch from './UserSearch';
 
 import { AiOutlinePlusCircle } from 'react-icons/Ai';
@@ -53,7 +54,14 @@ const UserTable = () => {
             title: 'Action',
             render: (text, record, index) => {
                 return (
-                    <><Button>Delete</Button></>
+                    <div style={{ display: "flex", gap: "10px" }}>
+                        <Button size='small'>Delete</Button>
+                        <Button
+                            size='small'
+                            type='primary'
+                            onClick={() => handleUpdateUser(record)}
+                        >Update</Button>
+                    </div>
                 )
             }
         },
@@ -85,6 +93,9 @@ const UserTable = () => {
     const [showUser, setShowUser] = useState<boolean>(false)
 
     const [showCreateUser, setShowCreateUser] = useState<boolean>(false)
+    const [showUpdateUser, setShowUpdateUser] = useState<boolean>(false)
+    const [updateData, setUpdateData] = useState<object>({})
+
 
     const TableHeader = () => {
         return (
@@ -140,6 +151,13 @@ const UserTable = () => {
         //alert("meme")
     }
 
+    const handleUpdateUser = (userData: object) => {
+
+        setUpdateData(userData)
+        setShowUpdateUser(true)
+
+    }
+
     useEffect(() => {
         //console.log("gugu");
 
@@ -176,6 +194,12 @@ const UserTable = () => {
             <CreateNewUserModal
                 showCreateUser={showCreateUser}
                 setShowCreateUser={setShowCreateUser}
+                fetchUserPagination={fetchUserPagination}
+            />
+            <UpdateUserModal
+                showUpdateUser={showUpdateUser}
+                setShowUpdateUser={setShowUpdateUser}
+                updateData={updateData}
                 fetchUserPagination={fetchUserPagination}
             />
         </div>
