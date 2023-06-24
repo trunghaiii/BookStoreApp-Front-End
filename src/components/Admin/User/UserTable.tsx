@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 // import './index.css';
-import { Table, Button } from 'antd';
+import { Table, Button, Popconfirm, message, notification } from 'antd';
 import type { ColumnsType, TableProps } from 'antd/es/table';
 
-import { getUserPagination } from '../../../services/api';
+import { deleteUser, getUserPagination } from '../../../services/api';
 
 import ShowUser from './ShowUser';
 import CreateNewUserModal from './CreateNewUserModal';
@@ -22,6 +22,7 @@ interface DataType {
 }
 
 const UserTable = () => {
+
 
     const columns: ColumnsType<DataType> = [
         {
@@ -55,7 +56,17 @@ const UserTable = () => {
             render: (text, record, index) => {
                 return (
                     <div style={{ display: "flex", gap: "10px" }}>
-                        <Button size='small'>Delete</Button>
+                        <Popconfirm
+                            placement="leftTop"
+                            title={"Delete user confirmation!"}
+                            description={"Are you sure to delete this User?"}
+                            onConfirm={() => handleDeleteUser(record)}
+                            okText="Yes"
+                            cancelText="No"
+                        >
+                            <Button size='small'>Delete</Button>
+                        </Popconfirm>
+
                         <Button
                             size='small'
                             type='primary'
@@ -155,6 +166,23 @@ const UserTable = () => {
 
         setUpdateData(userData)
         setShowUpdateUser(true)
+
+    }
+
+    const handleDeleteUser = async (userInfo: object) => {
+
+        let response = await deleteUser(userInfo._id);
+
+        if (response && response.errorCode === 0) {
+            message.success(response.errorMessage)
+            fetchUserPagination("")
+        } else {
+            notification.error({
+                message: `Notification`,
+                description: response.errorMessage,
+                duration: 5
+            });
+        }
 
     }
 

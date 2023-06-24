@@ -42,3 +42,7 @@ export const putUpdateUser = (_id: string, fullName: string, email: string, phon
     const params = new URLSearchParams({ _id, fullName, email, phone, role });
     return axios.put('api/v1/user', params)
 }
+
+export const deleteUser = (userId: string) => {
+    return axios.delete(`api/v1/user?_id=${userId}`)
+}
