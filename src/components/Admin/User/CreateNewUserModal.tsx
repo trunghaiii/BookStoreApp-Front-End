@@ -60,6 +60,7 @@ const CreateNewUserModal = (props: IProps) => {
     return (
         <Modal title="Create A New User"
             open={showCreateUser}
+            onCancel={handleCancel}
             footer={[
                 <Button key="back" onClick={handleCancel}>
                     Cancell
