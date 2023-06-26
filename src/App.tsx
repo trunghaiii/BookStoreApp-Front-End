@@ -7,10 +7,10 @@ import Loading from "./components/Loading/Loading";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import LayoutAdmin from "./components/Admin/LayoutAdmin";
 import UserTable from "./components/Admin/User/UserTable";
+import BookTable from "./components/Admin/Book/BookTable";
 
 import Contact from "./pages/Contact/Contact";
 import Login from "./pages/Login/Login";
-import Book from "./pages/Book/Book";
 import Register from "./pages/Register/Register";
 import Admin from "./pages/Admin/Admin";
 
@@ -57,7 +57,7 @@ const router = createBrowserRouter([
       },
       {
         path: "book",
-        element: <Book />,
+        element: <BookTable />,
       }
     ],
   },
@@ -77,7 +77,7 @@ const router = createBrowserRouter([
       },
       {
         path: "book",
-        element: <Book />,
+        element: <BookTable />,
       }
     ],
   },

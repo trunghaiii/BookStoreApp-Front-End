@@ -1,0 +1,21 @@
+.book-search {
+
+    .search-input-group {
+        display: flex;
+        justify-content: space-between;
+
+        .search-input {
+            width: 32%;
+        }
+    }
+
+    .search-button-group {
+        // width: 100%;
+        display: flex;
+        justify-content: flex-end;
+
+        // .search-button {
+        //     display: flex;
+        // }
+    }
+}
