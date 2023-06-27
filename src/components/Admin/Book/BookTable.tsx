@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 // import './index.css';
 import { Table, Button } from 'antd';
 import type { ColumnsType, TableProps } from 'antd/es/table';
+
 import BookSearch from './BookSearch';
+import ShowBook from './ShowBook';
 
 import { AiOutlinePlusCircle } from 'react-icons/Ai';
 
@@ -16,43 +18,6 @@ interface DataType {
     english: number;
 }
 
-const columns: ColumnsType<DataType> = [
-    {
-        title: 'ID',
-        dataIndex: '_id',
-    },
-    {
-        title: 'Name',
-        dataIndex: 'bookName',
-    },
-    {
-        title: 'Genre',
-        dataIndex: 'category',
-    },
-    {
-        title: 'Author',
-        dataIndex: 'author',
-    },
-    {
-        title: 'Price ($)',
-        dataIndex: 'price',
-    },
-    {
-        title: 'Action',
-        dataIndex: '',
-        render: (text, record, index) => {
-            return (
-                <div style={{ display: "flex", gap: "10px" }}>
-                    <Button size='small'>Delete</Button>
-                    <Button
-                        size='small'
-                        type='primary'
-                    >Update</Button>
-                </div>
-            )
-        }
-    },
-];
 
 
 const BookTable = () => {
@@ -65,7 +30,53 @@ const BookTable = () => {
     const [query, setQuery] = useState<string>("")
     const [isTableLoading, setIsTableLoading] = useState<boolean>(false)
 
+    const [showBook, setShowBook] = useState<boolean>(false)
+    const [bookShowData, setBookShowData] = useState<object>()
 
+
+    const columns: ColumnsType<DataType> = [
+        {
+            title: 'ID',
+            // dataIndex: '_id',
+            render: (text, record, index) => {
+                // console.log("recoed", record);
+                return (
+                    <a onClick={() => handleShowBook(record)}>{record._id}</a>
+                )
+            }
+        },
+        {
+            title: 'Name',
+            dataIndex: 'bookName',
+        },
+        {
+            title: 'Genre',
+            dataIndex: 'category',
+        },
+        {
+            title: 'Author',
+            dataIndex: 'author',
+        },
+        {
+            title: 'Price ($)',
+            dataIndex: 'price',
+        },
+        {
+            title: 'Action',
+            dataIndex: '',
+            render: (text, record, index) => {
+                return (
+                    <div style={{ display: "flex", gap: "10px" }}>
+                        <Button size='small'>Delete</Button>
+                        <Button
+                            size='small'
+                            type='primary'
+                        >Update</Button>
+                    </div>
+                )
+            }
+        },
+    ];
     const onChange: TableProps<DataType>['onChange'] = (pagination, filters, sorter, extra) => {
         console.log('params', pagination, filters, sorter, extra);
         if (pagination.current !== current) {
@@ -104,6 +115,11 @@ const BookTable = () => {
     const handleSearch = (query: object) => {
         setQuery(query)
         fetchBookPagination(query)
+    }
+
+    const handleShowBook = (bookDataa: object) => {
+        setBookShowData(bookDataa)
+        setShowBook(true)
     }
 
     useEffect(() => {
@@ -145,6 +161,11 @@ const BookTable = () => {
                     pageSize: pageSize,
                     showSizeChanger: true
                 }}
+            />
+            <ShowBook
+                showBook={showBook}
+                setShowBook={setShowBook}
+                bookShowData={bookShowData}
             />
         </div>
     )
