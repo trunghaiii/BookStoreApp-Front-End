@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 // import './index.css';
-import { Drawer, Badge, Descriptions } from 'antd';
+import { Drawer, Badge, Descriptions, Divider } from 'antd';
 import moment from "moment"
+
+import ShowBookImage from './ShowBookImage';
 
 interface IProps {
     showBook: boolean;
@@ -36,6 +38,8 @@ const ShowBook = (props: IProps) => {
                     {moment(bookShowData.updatedAt).format('DD-MM-YYYY HH:mm:ss')}
                 </Descriptions.Item>
             </Descriptions>
+            <Divider orientation="left">Book Images</Divider>
+            <ShowBookImage />
         </Drawer>
     )
 }
