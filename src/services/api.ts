@@ -46,3 +46,7 @@ export const putUpdateUser = (_id: string, fullName: string, email: string, phon
 export const deleteUser = (userId: string) => {
     return axios.delete(`api/v1/user?_id=${userId}`)
 }
+
+export const getBookPagination = (query) => {
+    return axios.get(`api/v1/book?${query}`)
+}

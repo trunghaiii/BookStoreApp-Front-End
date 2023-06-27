@@ -2,16 +2,30 @@
 import './BookSearch.scss';
 import { Button, Form, Input } from "antd"
 
-const BookSearch = () => {
+const BookSearch = (props: any) => {
+    const [form] = Form.useForm();
 
     const onFinish = (values: any) => {
         console.log('Success:', values);
+
+        let { name, author, genre } = values;
+        if (!name) name = ""
+        if (!author) author = ""
+        if (!genre) genre = ""
+
+        let query = `&name=${name}&author=${author}&genre=${genre}`
+
+        props.handleSearch(query)
     };
 
-
+    const handleClear = () => {
+        form.resetFields();
+        props.handleSearch("")
+    }
     return (
         <div className="book-search">
             <Form
+                form={form}
                 name="basic"
                 labelCol={{ span: 24 }}
                 //wrapperCol={{ span: 24 }}
@@ -25,7 +39,6 @@ const BookSearch = () => {
                         className='search-input'
                         label="Name"
                         name="name"
-                        rules={[{ required: true, message: 'Please input the book name!' }]}
                     >
                         <Input />
                     </Form.Item>
@@ -34,7 +47,6 @@ const BookSearch = () => {
                         className='search-input'
                         label="Author"
                         name="author"
-                        rules={[{ required: true, message: 'Please input the author!' }]}
                     >
                         <Input />
                     </Form.Item>
@@ -43,7 +55,6 @@ const BookSearch = () => {
                         className='search-input'
                         label="Genre"
                         name="genre"
-                        rules={[{ required: true, message: 'Please input the Genre!' }]}
                     >
                         <Input />
                     </Form.Item>
@@ -54,7 +65,7 @@ const BookSearch = () => {
                         <Button type="primary" htmlType="submit">
                             Search
                         </Button>
-                        <Button style={{ marginLeft: "5px" }} htmlType="submit">
+                        <Button onClick={() => handleClear()} style={{ marginLeft: "5px" }} htmlType="submit">
                             Reload
                         </Button>
                     </Form.Item>
