@@ -28,6 +28,8 @@ const ShowBook = (props: IProps) => {
                 <Descriptions.Item label="Book Name">{bookShowData.bookName}</Descriptions.Item>
                 <Descriptions.Item label="Author">{bookShowData.author}</Descriptions.Item>
                 <Descriptions.Item label="Price($)">{bookShowData.price}</Descriptions.Item>
+                <Descriptions.Item label="Quantity">{bookShowData.quantity}</Descriptions.Item>
+                <Descriptions.Item label="Sold">{bookShowData.sold}</Descriptions.Item>
 
                 <Descriptions.Item label="Genre" span={3}>
                     <Badge status="processing" text={bookShowData.category} />
