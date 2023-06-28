@@ -19,6 +19,7 @@ const ShowBook = (props: IProps) => {
         setShowBook(false);
     };
 
+    console.log("///", bookShowData);
 
     return (
         <Drawer width={"50%"} title="Basic Drawer" placement="right" onClose={onClose} open={showBook}>

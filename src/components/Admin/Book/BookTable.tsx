@@ -5,6 +5,7 @@ import type { ColumnsType, TableProps } from 'antd/es/table';
 
 import BookSearch from './BookSearch';
 import ShowBook from './ShowBook';
+import CreateBookModal from './CreateBookModal';
 
 import { AiOutlinePlusCircle } from 'react-icons/Ai';
 
@@ -31,7 +32,9 @@ const BookTable = () => {
     const [isTableLoading, setIsTableLoading] = useState<boolean>(false)
 
     const [showBook, setShowBook] = useState<boolean>(false)
-    const [bookShowData, setBookShowData] = useState<object>()
+    const [bookShowData, setBookShowData] = useState<object>({})
+
+    const [showCreateBookModal, setShowCreateBookModal] = useState<boolean>(false)
 
 
     const columns: ColumnsType<DataType> = [
@@ -122,6 +125,10 @@ const BookTable = () => {
         setShowBook(true)
     }
 
+    const handleCreateBook = () => {
+        setShowCreateBookModal(true)
+    }
+
     useEffect(() => {
         //console.log("gugu");
 
@@ -138,6 +145,7 @@ const BookTable = () => {
                     <Button
                         type="primary"
                         icon={<AiOutlinePlusCircle />}
+                        onClick={() => handleCreateBook()}
                     >
                         New Book
                     </Button>
@@ -166,6 +174,10 @@ const BookTable = () => {
                 showBook={showBook}
                 setShowBook={setShowBook}
                 bookShowData={bookShowData}
+            />
+            <CreateBookModal
+                showCreateBookModal={showCreateBookModal}
+                setShowCreateBookModal={setShowCreateBookModal}
             />
         </div>
     )
