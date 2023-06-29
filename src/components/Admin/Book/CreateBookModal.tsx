@@ -148,16 +148,7 @@ const CreateBookModal = (props: Iprops) => {
                     </div>
 
                     <div className='upload-input-group'>
-                        <Form.Item label="ThumbNail Images" name="bookImageFile">
-                            <Upload maxCount={1} listType="picture-card">
-                                <div>
-                                    <PlusOutlined />
-                                    <div style={{ marginTop: 8 }}>Upload</div>
-                                </div>
-                            </Upload>
-                        </Form.Item>
-
-                        <Form.Item label="Slider Images" name="bookImageFileList">
+                        <Form.Item label="Upload Images" name="bookImageFileList">
                             <Upload listType="picture-card">
                                 <div>
                                     <PlusOutlined />
