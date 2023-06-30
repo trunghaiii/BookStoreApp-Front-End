@@ -6,6 +6,7 @@ import type { ColumnsType, TableProps } from 'antd/es/table';
 import BookSearch from './BookSearch';
 import ShowBook from './ShowBook';
 import CreateBookModal from './CreateBookModal';
+import UpdateBookModal from './UpdateBookModal';
 
 import { AiOutlinePlusCircle } from 'react-icons/Ai';
 
@@ -35,6 +36,9 @@ const BookTable = () => {
     const [bookShowData, setBookShowData] = useState<object>({})
 
     const [showCreateBookModal, setShowCreateBookModal] = useState<boolean>(false)
+
+    const [showUpdateBookModal, setShowUpdateBookModal] = useState<boolean>(false)
+
 
 
     const columns: ColumnsType<DataType> = [
@@ -74,6 +78,7 @@ const BookTable = () => {
                         <Button
                             size='small'
                             type='primary'
+                            onClick={() => handleUpdateBook()}
                         >Update</Button>
                     </div>
                 )
@@ -129,6 +134,10 @@ const BookTable = () => {
         setShowCreateBookModal(true)
     }
 
+    const handleUpdateBook = () => {
+        setShowUpdateBookModal(true)
+    }
+
     useEffect(() => {
         //console.log("gugu");
 
@@ -179,6 +188,10 @@ const BookTable = () => {
                 showCreateBookModal={showCreateBookModal}
                 setShowCreateBookModal={setShowCreateBookModal}
                 fetchBookPagination={fetchBookPagination}
+            />
+            <UpdateBookModal
+                showUpdateBookModal={showUpdateBookModal}
+                setShowUpdateBookModal={setShowUpdateBookModal}
             />
         </div>
     )
