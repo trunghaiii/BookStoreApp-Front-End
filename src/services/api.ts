@@ -25,7 +25,7 @@ export const getUserPagination = (query) => {
 }
 
 export const postCreateUser = (name: string, password: string, email: string, phone: string, imageFile: any) => {
-    console.log(imageFile);
+    // console.log(imageFile);
 
     const data = new FormData();
     data.append('fullName', name);
@@ -49,4 +49,35 @@ export const deleteUser = (userId: string) => {
 
 export const getBookPagination = (query) => {
     return axios.get(`api/v1/book?${query}`)
+}
+
+export const postCreateBook = (
+    name: string, author: string,
+    genre: string, price: string,
+    quantity: string, sold: string,
+    imageFiles: any
+
+) => {
+
+    const data = new FormData();
+    data.append('name', name);
+    data.append('author', author);
+    data.append('price', price);
+    data.append('genre', genre);
+    data.append('quantity', quantity);
+    data.append('sold', sold);
+    data.append('imageUrlArray', imageFiles);
+
+    return axios.post('api/v1/book', data);
+}
+
+export const postUploadBookImage = (
+    imageFile: any
+
+) => {
+
+    const data = new FormData();
+    data.append('bookImageFile', imageFile);
+
+    return axios.post('api/v1/book/upload-image', data);
 }

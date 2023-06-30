@@ -178,6 +178,7 @@ const BookTable = () => {
             <CreateBookModal
                 showCreateBookModal={showCreateBookModal}
                 setShowCreateBookModal={setShowCreateBookModal}
+                fetchBookPagination={fetchBookPagination}
             />
         </div>
     )

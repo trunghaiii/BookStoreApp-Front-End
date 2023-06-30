@@ -2,29 +2,74 @@
 import React, { useState } from 'react';
 import './CreateBookModal.scss';
 import { PlusOutlined } from '@ant-design/icons';
-import { Modal, Form, Input, InputNumber, Select, Upload } from 'antd';
+import { Button, Modal, Form, Input, InputNumber, Select, Upload, message, notification } from 'antd';
+
+import { postCreateBook, postUploadBookImage } from "../../../services/api"
 
 interface Iprops {
     showCreateBookModal: boolean;
     setShowCreateBookModal: any;
+    fetchBookPagination: any
 }
 
 const CreateBookModal = (props: Iprops) => {
     const [form] = Form.useForm();
 
-    const { showCreateBookModal, setShowCreateBookModal } = props;
+    const { showCreateBookModal, setShowCreateBookModal, fetchBookPagination } = props;
 
-    const onFinish = (values: any) => {
+    const [isCreate, setIsCreate] = useState<boolean>(false)
+
+    const onFinish = async (values: any) => {
+        setIsCreate(true)
         console.log('Success:', values);
-    };
+        const { name, author, genre, price, quantity, sold, bookImageFileList } = values;
 
-    const handleOk = () => {
-        form.submit()
-        setShowCreateBookModal(false);
+        //1. build imageFiles array:
+        let imageFiles: any = []
+        if (bookImageFileList && bookImageFileList.fileList) {
+            bookImageFileList.fileList.forEach((file: any) => {
+                imageFiles.push(file.originFileObj)
+            })
+        }
+
+        // 2. upload all image to cloudinary and get all coresponding image urls
+        let imageUrlArray: string[] = []
+        for (let i = 0; i < imageFiles.length; i++) {
+            let response = await postUploadBookImage(imageFiles[i])
+            console.log(response);
+
+            if (response && response.errorCode === 0) {
+                imageUrlArray.push(response.data)
+            } else {
+                return;
+            }
+        }
+
+
+        // console.log(imageUrlArray);
+
+        // 3. call api to upload data to database
+
+        let response = await postCreateBook(name, author, genre, price, quantity, sold, imageUrlArray);
+        setIsCreate(false)
+        if (response && response.errorCode === 0) {
+            message.success(response.errorMessage)
+            handleCancel()
+            fetchBookPagination("")
+            // fetchUserPagination("")
+        } else {
+            notification.error({
+                message: `Notification`,
+                description: response.errorMessage,
+                duration: 5
+            });
+        }
+
     };
 
     const handleCancel = () => {
         setShowCreateBookModal(false);
+        form.resetFields()
     };
 
     return (
@@ -34,8 +79,20 @@ const CreateBookModal = (props: Iprops) => {
                 className='create-book-modal'
                 title="Create a New Book"
                 open={showCreateBookModal}
-                onOk={handleOk}
-                onCancel={handleCancel}>
+                onCancel={handleCancel}
+                footer={[
+                    <Button key="back" onClick={handleCancel}>
+                        Cancell
+                    </Button>,
+                    <Button
+                        key="submit"
+                        type="primary"
+                        loading={isCreate}
+                        onClick={() => form.submit()}>
+                        Create
+                    </Button>,
+                ]}
+            >
                 <Form
                     form={form}
                     name="basic"
