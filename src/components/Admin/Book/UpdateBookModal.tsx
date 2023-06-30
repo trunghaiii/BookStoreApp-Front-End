@@ -1,29 +1,54 @@
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
 import './UpdateBookModal.scss';
 import { Button, Modal, Form, Input, InputNumber, Select, Upload, message, notification } from 'antd';
+import { putUpdateBook } from "../../../services/api"
 
 interface Iprops {
     showUpdateBookModal: boolean;
     setShowUpdateBookModal: any;
+    updateData: any;
+    fetchBookPagination: any;
 }
 const UpdateBookModal = (props: Iprops) => {
     const [form] = Form.useForm();
 
-    const { showUpdateBookModal, setShowUpdateBookModal } = props
+    const { showUpdateBookModal, setShowUpdateBookModal, updateData, fetchBookPagination } = props
+
+    const [isUpdate, setIsUpdate] = useState<boolean>(false)
 
     const onFinish = async (values: any) => {
         console.log('Success:', values);
 
+        const { _id, bookName, price, quantity, sold } = values;
+
+        setIsUpdate(true)
+        let response = await putUpdateBook(_id, bookName, price, quantity, sold)
+        setIsUpdate(false)
+
+        if (response && response.errorCode === 0) {
+            message.success(response.errorMessage)
+            handleCancel()
+            fetchBookPagination("")
+        } else {
+            notification.error({
+                message: `Notification`,
+                description: response.errorMessage,
+                duration: 5
+            });
+        }
+
     }
-    const handleOk = () => {
-        setShowUpdateBookModal(false);
-    };
 
     const handleCancel = () => {
         setShowUpdateBookModal(false);
     };
+
+    useEffect(() => {
+        form.setFieldsValue(updateData)
+    }, [updateData])
+
 
     return (
         <div className='update-book-modal-container'>
@@ -40,7 +65,7 @@ const UpdateBookModal = (props: Iprops) => {
                     <Button
                         key="submit"
                         type="primary"
-                        // loading={isCreate}
+                        loading={isUpdate}
                         onClick={() => form.submit()}>
                         Create
                     </Button>,
@@ -58,9 +83,18 @@ const UpdateBookModal = (props: Iprops) => {
                 >
                     <div className='text-input-group'>
                         <Form.Item
+                            hidden
+                            className='text-input'
+                            label="ID"
+                            name="_id"
+                            rules={[{ required: true, message: 'Please input Book Name!' }]}
+                        >
+                            <Input />
+                        </Form.Item>
+                        <Form.Item
                             className='text-input'
                             label="Book Name"
-                            name="name"
+                            name="bookName"
                             rules={[{ required: true, message: 'Please input Book Name!' }]}
                         >
                             <Input />
@@ -72,7 +106,7 @@ const UpdateBookModal = (props: Iprops) => {
                             name="author"
                             rules={[{ required: true, message: 'Please input Author!' }]}
                         >
-                            <Input />
+                            <Input disabled />
                         </Form.Item>
                     </div>
 
@@ -89,10 +123,11 @@ const UpdateBookModal = (props: Iprops) => {
                         <Form.Item
                             className='number-input'
                             label="Genre"
-                            name="genre"
+                            name="category"
                             rules={[{ required: true, message: 'Please input Genre!' }]}
                         >
                             <Select
+                                disabled
                                 showSearch
                                 placeholder="Select a genre"
                                 optionFilterProp="children"
@@ -157,7 +192,7 @@ const UpdateBookModal = (props: Iprops) => {
                         </Form.Item>
                     </div>
 
-                    <div className='upload-input-group'>
+                    {/* <div className='upload-input-group'>
                         <Form.Item label="Upload Images" name="bookImageFileList">
                             <Upload listType="picture-card">
                                 <div>
@@ -166,7 +201,7 @@ const UpdateBookModal = (props: Iprops) => {
                                 </div>
                             </Upload>
                         </Form.Item>
-                    </div>
+                    </div> */}
 
                 </Form>
             </Modal>

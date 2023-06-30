@@ -81,3 +81,9 @@ export const postUploadBookImage = (
 
     return axios.post('api/v1/book/upload-image', data);
 }
+
+export const putUpdateBook = (id: string, bookName: string, price: string, quantity: string, sold: string) => {
+    // add URLSearchParams to fix bug not attach payload when sending api endpoint
+    const params = new URLSearchParams({ id, bookName, price, quantity, sold });
+    return axios.put('api/v1/book', params)
+}

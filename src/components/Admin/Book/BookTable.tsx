@@ -38,6 +38,7 @@ const BookTable = () => {
     const [showCreateBookModal, setShowCreateBookModal] = useState<boolean>(false)
 
     const [showUpdateBookModal, setShowUpdateBookModal] = useState<boolean>(false)
+    const [updateData, setUpdateData] = useState<object>({})
 
 
 
@@ -78,7 +79,7 @@ const BookTable = () => {
                         <Button
                             size='small'
                             type='primary'
-                            onClick={() => handleUpdateBook()}
+                            onClick={() => handleUpdateBook(record)}
                         >Update</Button>
                     </div>
                 )
@@ -134,7 +135,9 @@ const BookTable = () => {
         setShowCreateBookModal(true)
     }
 
-    const handleUpdateBook = () => {
+    const handleUpdateBook = (bookDetail: object) => {
+        setUpdateData(bookDetail)
+
         setShowUpdateBookModal(true)
     }
 
@@ -192,6 +195,8 @@ const BookTable = () => {
             <UpdateBookModal
                 showUpdateBookModal={showUpdateBookModal}
                 setShowUpdateBookModal={setShowUpdateBookModal}
+                updateData={updateData}
+                fetchBookPagination={fetchBookPagination}
             />
         </div>
     )
