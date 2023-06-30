@@ -1,8 +1,8 @@
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 // import './index.css';
 import { Modal, Upload } from 'antd';
-import type { RcFile, UploadProps } from 'antd/es/upload';
+import type { RcFile } from 'antd/es/upload';
 import type { UploadFile } from 'antd/es/upload/interface';
 
 const getBase64 = (file: RcFile): Promise<string> =>
@@ -13,10 +13,16 @@ const getBase64 = (file: RcFile): Promise<string> =>
         reader.onerror = (error) => reject(error);
     });
 
-const ShowBookImage = () => {
+interface iProps {
+    bookShowData: any
+}
+
+const ShowBookImage = (props: iProps) => {
     const [previewOpen, setPreviewOpen] = useState(false);
     const [previewImage, setPreviewImage] = useState('');
     const [previewTitle, setPreviewTitle] = useState('');
+
+
     const [fileList, setFileList] = useState<UploadFile[]>([
         {
             uid: '-1',
@@ -56,8 +62,30 @@ const ShowBookImage = () => {
         setPreviewTitle(file.name || file.url!.substring(file.url!.lastIndexOf('/') + 1));
     };
 
-    const handleChange: UploadProps['onChange'] = ({ fileList: newFileList }) =>
-        setFileList(newFileList);
+    const handleDisplayImages = () => {
+        // 1. build fileList Data:
+        let imageDataArr: any = []
+
+        props.bookShowData.slider.forEach((imageUrl: any, index: any) => {
+            imageDataArr.push({
+                uid: `${index}`,
+                name: `image-${index}.png`,
+                status: 'done',
+                url: imageUrl,
+            })
+        })
+
+        setFileList(imageDataArr)
+        // console.log("imageDataArr", imageDataArr);
+
+    }
+
+    useEffect(() => {
+        //console.log("gg");
+        handleDisplayImages()
+
+    }, [props.bookShowData])
+
     return (
         <>
             <Upload
@@ -65,7 +93,6 @@ const ShowBookImage = () => {
                 listType="picture-card"
                 fileList={fileList}
                 onPreview={handlePreview}
-                onChange={handleChange}
                 showUploadList={{
                     showRemoveIcon: false
                 }}

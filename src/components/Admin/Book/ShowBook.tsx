@@ -19,7 +19,7 @@ const ShowBook = (props: IProps) => {
         setShowBook(false);
     };
 
-    console.log("///", bookShowData);
+    //console.log("///", bookShowData);
 
     return (
         <Drawer width={"50%"} title="Basic Drawer" placement="right" onClose={onClose} open={showBook}>
@@ -42,7 +42,9 @@ const ShowBook = (props: IProps) => {
                 </Descriptions.Item>
             </Descriptions>
             <Divider orientation="left">Book Images</Divider>
-            <ShowBookImage />
+            <ShowBookImage
+                bookShowData={bookShowData}
+            />
         </Drawer>
     )
 }
