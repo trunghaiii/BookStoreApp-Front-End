@@ -87,3 +87,7 @@ export const putUpdateBook = (id: string, bookName: string, price: string, quant
     const params = new URLSearchParams({ id, bookName, price, quantity, sold });
     return axios.put('api/v1/book', params)
 }
+
+export const deleteBook = (bookId: string) => {
+    return axios.delete(`api/v1/book?id=${bookId}`)
+}

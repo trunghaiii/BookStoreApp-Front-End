@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 // import './index.css';
-import { Table, Button } from 'antd';
+import { Table, Button, Popconfirm, message, notification } from 'antd';
 import type { ColumnsType, TableProps } from 'antd/es/table';
 
 import BookSearch from './BookSearch';
@@ -10,7 +10,7 @@ import UpdateBookModal from './UpdateBookModal';
 
 import { AiOutlinePlusCircle } from 'react-icons/Ai';
 
-import { getBookPagination } from '../../../services/api';
+import { getBookPagination, deleteBook } from '../../../services/api';
 
 interface DataType {
     key: React.Key;
@@ -75,7 +75,16 @@ const BookTable = () => {
             render: (text, record, index) => {
                 return (
                     <div style={{ display: "flex", gap: "10px" }}>
-                        <Button size='small'>Delete</Button>
+                        <Popconfirm
+                            placement="leftTop"
+                            title="Are you Sure to delete this Book?"
+                            description=""
+                            onConfirm={() => handleDeleteBook(record)}
+                            okText="Yes"
+                            cancelText="No"
+                        >
+                            <Button size='small'>Delete</Button>
+                        </Popconfirm>
                         <Button
                             size='small'
                             type='primary'
@@ -140,6 +149,24 @@ const BookTable = () => {
 
         setShowUpdateBookModal(true)
     }
+
+    const handleDeleteBook = async (bookDetail: any) => {
+        // console.log("bookDetail", bookDetail);
+
+        let response = await deleteBook(bookDetail._id)
+
+        if (response && response.errorCode === 0) {
+            message.success(response.errorMessage)
+            fetchBookPagination("")
+        } else {
+            notification.error({
+                message: `Notification`,
+                description: response.errorMessage,
+                duration: 5
+            });
+        }
+    };
+
 
     useEffect(() => {
         //console.log("gugu");
