@@ -67,7 +67,7 @@ const UpdateBookModal = (props: Iprops) => {
                         type="primary"
                         loading={isUpdate}
                         onClick={() => form.submit()}>
-                        Create
+                        Update
                     </Button>,
                 ]}
             >
