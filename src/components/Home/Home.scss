@@ -1,0 +1,20 @@
+.homepage-container {
+
+    height: 85vh;
+
+    .homepage-leftside {
+        border: 1px solid red;
+        height: 100%;
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+    }
+
+    .homepage-rightside {
+        border: 1px solid green;
+        height: 100%;
+    }
+}
