@@ -16,5 +16,17 @@
     .homepage-rightside {
         border: 1px solid green;
         height: 100%;
+
+        .book-list {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+
+        .pagination {
+            margin-top: 5px;
+            text-align: center;
+        }
     }
 }
