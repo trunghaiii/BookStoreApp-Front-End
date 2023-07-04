@@ -21,6 +21,8 @@ const Home = () => {
     const [total, setTotal] = useState<number>()
     const [bookData, setBookData] = useState([])
 
+    const [query, setQuery] = useState<string>("")
+
 
 
     const genreOptions = ['Arts', 'Business', 'Teen', 'Cooking', "Entertainment",
@@ -29,6 +31,8 @@ const Home = () => {
     const handleFilter = (changedValues: any, allValues: any) => {
         // console.log("changedValues", changedValues);
         console.log("allValues", allValues);
+        let queryInput = `&genreList=${allValues.checkboxFilter.join(",")}`
+        setQuery(queryInput)
 
     }
 
@@ -41,7 +45,10 @@ const Home = () => {
 
     const fetchBookPagination = async (current, pageSize) => {
 
-        let response = await getBookPagination(`current=${current}&pageSize=${pageSize}`)
+        let fullQuery: string = `current=${current}&pageSize=${pageSize}`
+        if (query) fullQuery += query;
+
+        let response = await getBookPagination(fullQuery)
 
         if (response && response.errorCode === 0) {
             setTotal(response.data.meta.total)
@@ -75,7 +82,7 @@ const Home = () => {
 
     useEffect(() => {
         fetchBookPagination(current, pageSize)
-    }, [current, pageSize])
+    }, [current, pageSize, query])
 
 
     return (
@@ -100,7 +107,7 @@ const Home = () => {
                                 <p style={{ fontWeight: "600" }}>Genre List</p>
                                 <Form.Item
 
-                                    name="checkbox-filter"
+                                    name="checkboxFilter"
                                 >
                                     <Checkbox.Group
                                         style={{ display: "flex", flexDirection: "column", gap: "5px", marginLeft: "5px" }}
