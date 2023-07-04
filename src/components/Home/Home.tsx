@@ -3,17 +3,25 @@ import './Home.scss';
 
 import { AiOutlineReload } from 'react-icons/Ai';
 
-import { Col, Row, Checkbox, Divider, InputNumber, Button, Tabs, Card, Pagination } from 'antd';
-import type { CheckboxValueType } from 'antd/es/checkbox/Group';
+import {
+    Col, Row, Checkbox, Divider,
+    InputNumber, Button, Tabs, Card, Pagination, Form
+} from 'antd';
+
 import type { TabsProps } from 'antd';
 
 const Home = () => {
 
-    const plainOptions = ['Arts', 'Business', 'Teen', 'Cooking', "Entertainment",
+    const [form] = Form.useForm();
+
+    const genreOptions = ['Arts', 'Business', 'Teen', 'Cooking', "Entertainment",
         "History", "Music", "Sports", "Travelling"];
-    const onChange = (checkedValues: CheckboxValueType[]) => {
-        console.log('checked = ', checkedValues);
-    };
+
+    const handleFilter = (changedValues: any, allValues: any) => {
+        // console.log("changedValues", changedValues);
+        console.log("allValues", allValues);
+
+    }
 
     const items: TabsProps['items'] = [
         {
@@ -44,27 +52,50 @@ const Home = () => {
                     <div className="homepage-leftside">
                         <div className='header'>
                             <div style={{ fontWeight: "600" }}>Search Filter</div>
-                            <div style={{ fontSize: "20px", cursor: "pointer" }}><AiOutlineReload /></div>
-                        </div>
-                        <div className='checkbox-filter'>
-                            <p style={{ fontWeight: "600" }}>Genre List</p>
-                            <Checkbox.Group
-                                style={{ display: "flex", flexDirection: "column", gap: "5px", marginLeft: "5px" }}
-                                options={plainOptions}
-                                defaultValue={['Apple']}
-                                onChange={onChange}
-                            />
-                        </div>
-                        <Divider />
-                        <div className='range-filter'>
-                            <p style={{ fontWeight: "600" }}>Price Range</p>
-                            <div style={{ display: "flex", justifyContent: "center" }}>
-                                <InputNumber min={1} max={100000} /> - <InputNumber min={1} max={100000} />
-                            </div>
-                            <div style={{ display: "flex", justifyContent: "center", marginTop: "10px" }}>
-                                <Button type='primary'>Apply</Button>
+                            <div onClick={() => form.resetFields()} style={{ fontSize: "20px", cursor: "pointer" }}>
+                                <AiOutlineReload />
                             </div>
                         </div>
+                        <Form
+                            form={form}
+                            name="basic"
+                            autoComplete="off"
+                            onValuesChange={(changedValues, allValues) => handleFilter(changedValues, allValues)}
+                        >
+
+                            <div className='checkbox-filter'>
+                                <p style={{ fontWeight: "600" }}>Genre List</p>
+                                <Form.Item
+
+                                    name="checkbox-filter"
+                                >
+                                    <Checkbox.Group
+                                        style={{ display: "flex", flexDirection: "column", gap: "5px", marginLeft: "5px" }}
+                                        options={genreOptions}
+                                    />
+                                </Form.Item>
+                            </div>
+                            <Divider />
+                            <div className='range-filter'>
+                                <p style={{ fontWeight: "600" }}>Price Range</p>
+                                <div style={{ display: "flex", justifyContent: "center", flexWrap: "wrap" }}>
+                                    <Form.Item
+
+                                        name="range-from"
+                                    ><InputNumber placeholder='from' min={1} max={100000} /></Form.Item>
+                                    <div>-</div>
+                                    <Form.Item
+
+                                        name="range-to"
+                                    ><InputNumber placeholder='to' min={1} max={100000} /></Form.Item>
+                                </div>
+                                <div style={{ display: "flex", justifyContent: "center", marginTop: "10px" }}>
+                                    <Button type='primary'>Apply</Button>
+                                </div>
+                            </div>
+                        </Form>
+
+
                     </div>
                 </Col>
                 <Col md={20} sm={24} xs={24}>
@@ -118,7 +149,7 @@ const Home = () => {
 
                         </div>
                         <div className='pagination'>
-                            <Pagination defaultCurrent={1} total={50} />;
+                            <Pagination defaultCurrent={1} total={50} />
                         </div>
 
                     </div>
