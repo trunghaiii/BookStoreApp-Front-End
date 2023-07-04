@@ -1,4 +1,4 @@
-
+import { useEffect, useState } from 'react';
 import './Home.scss';
 
 import { AiOutlineReload } from 'react-icons/Ai';
@@ -10,9 +10,18 @@ import {
 
 import type { TabsProps } from 'antd';
 
+import { getBookPagination } from '../../services/api';
+
 const Home = () => {
 
     const [form] = Form.useForm();
+
+    const [current, setCurrent] = useState<number>(1)
+    const [pageSize, setPageSize] = useState<number>(4)
+    const [total, setTotal] = useState<number>()
+    const [bookData, setBookData] = useState([])
+
+
 
     const genreOptions = ['Arts', 'Business', 'Teen', 'Cooking', "Entertainment",
         "History", "Music", "Sports", "Travelling"];
@@ -20,6 +29,24 @@ const Home = () => {
     const handleFilter = (changedValues: any, allValues: any) => {
         // console.log("changedValues", changedValues);
         console.log("allValues", allValues);
+
+    }
+
+    const handlePaginationChange = (page: any, pageSize: any) => {
+        if (page !== current) setCurrent(page)
+        if (pageSize !== pageSize) setPageSize(pageSize)
+
+
+    }
+
+    const fetchBookPagination = async (current, pageSize) => {
+
+        let response = await getBookPagination(`current=${current}&pageSize=${pageSize}`)
+
+        if (response && response.errorCode === 0) {
+            setTotal(response.data.meta.total)
+            setBookData(response.data.result)
+        }
 
     }
 
@@ -45,6 +72,12 @@ const Home = () => {
             children: <></>,
         },
     ];
+
+    useEffect(() => {
+        fetchBookPagination(current, pageSize)
+    }, [current, pageSize])
+
+
     return (
         <div className="homepage-container">
             <Row style={{ height: "100%" }} gutter={[20, 20]}>
@@ -104,52 +137,37 @@ const Home = () => {
                             <Tabs defaultActiveKey="1" items={items} />
                         </div>
                         <div className='book-list'>
-                            <Card style={{ width: 200, height: 250 }}>
-                                <div>
-                                    <img style={{ width: "100%", height: "150px" }} src="https://res.cloudinary.com/dbljsakpb/image/upload/v1688174013/BookStoreApp/lyux9lmifowtlsfupxip.jpg" alt="book-image" />
-                                </div>
-                                <div>Sorry! I am just a hooker</div>
-                                <div>200 $US</div>
-                            </Card>
-                            <Card style={{ width: 200, height: 250 }}>
-                                <div>
-                                    <img style={{ width: "100%", height: "150px" }} src="https://res.cloudinary.com/dbljsakpb/image/upload/v1688174012/BookStoreApp/fblvj0lzlv3dipgzb3hu.png" alt="book-image" />
-                                </div>
-                                <div>Ronaldo And Messi</div>
-                                <div>100 $US</div>
-                            </Card>
-                            <Card style={{ width: 200, height: 250 }}>
-                                <div>
-                                    <img style={{ width: "100%", height: "150px" }} src="https://res.cloudinary.com/dbljsakpb/image/upload/v1688174013/BookStoreApp/lyux9lmifowtlsfupxip.jpg" alt="book-image" />
-                                </div>
-                                <div>Sorry! I am just a hooker</div>
-                                <div>200 $US</div>
-                            </Card>
-                            <Card style={{ width: 200, height: 250 }}>
-                                <div>
-                                    <img style={{ width: "100%", height: "150px" }} src="https://res.cloudinary.com/dbljsakpb/image/upload/v1688174012/BookStoreApp/fblvj0lzlv3dipgzb3hu.png" alt="book-image" />
-                                </div>
-                                <div>Ronaldo And Messi</div>
-                                <div>100 $US</div>
-                            </Card>
-                            <Card style={{ width: 200, height: 250 }}>
-                                <div>
-                                    <img style={{ width: "100%", height: "150px" }} src="https://res.cloudinary.com/dbljsakpb/image/upload/v1688174013/BookStoreApp/lyux9lmifowtlsfupxip.jpg" alt="book-image" />
-                                </div>
-                                <div>Sorry! I am just a hooker</div>
-                                <div>200 $US</div>
-                            </Card>
-                            <Card style={{ width: 200, height: 250 }}>
-                                <div>
-                                    <img style={{ width: "100%", height: "150px" }} src="https://res.cloudinary.com/dbljsakpb/image/upload/v1688174012/BookStoreApp/fblvj0lzlv3dipgzb3hu.png" alt="book-image" />
-                                </div>
-                                <div>Ronaldo And Messi</div>
-                                <div>100 $US</div>
-                            </Card>
+                            {bookData && bookData.length !== 0
+
+                                ?
+                                bookData.map((book) => {
+                                    return (
+                                        <Card style={{ width: 200, height: 250 }}>
+                                            <div>
+                                                <img
+                                                    style={{ width: "100%", height: "150px" }}
+                                                    src={book.slider[0]}
+                                                    alt="book-image" />
+                                            </div>
+                                            <div>{book.bookName}</div>
+                                            <div>{book.price} $</div>
+                                        </Card>
+                                    )
+                                })
+
+                                :
+                                <div>No data</div>
+                            }
+
 
                         </div>
                         <div className='pagination'>
-                            <Pagination defaultCurrent={1} total={50} />
+                            <Pagination
+                                current={current}
+                                pageSize={pageSize}
+                                total={total}
+                                onChange={(page, pageSize) => handlePaginationChange(page, pageSize)}
+                            />
                         </div>
 
                     </div>
