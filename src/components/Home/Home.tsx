@@ -43,6 +43,11 @@ const Home = () => {
 
     }
 
+    const handleReload = () => {
+        form.resetFields();
+        setQuery("")
+    }
+
     const fetchBookPagination = async (current, pageSize) => {
 
         let fullQuery: string = `current=${current}&pageSize=${pageSize}`
@@ -92,7 +97,7 @@ const Home = () => {
                     <div className="homepage-leftside">
                         <div className='header'>
                             <div style={{ fontWeight: "600" }}>Search Filter</div>
-                            <div onClick={() => form.resetFields()} style={{ fontSize: "20px", cursor: "pointer" }}>
+                            <div onClick={() => handleReload()} style={{ fontSize: "20px", cursor: "pointer" }}>
                                 <AiOutlineReload />
                             </div>
                         </div>
