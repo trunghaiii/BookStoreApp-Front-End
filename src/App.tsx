@@ -13,6 +13,8 @@ import Contact from "./pages/Contact/Contact";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import Admin from "./pages/Admin/Admin";
+import Book from "./pages/Book/Book";
+
 
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
@@ -56,8 +58,8 @@ const router = createBrowserRouter([
         element: <Contact />,
       },
       {
-        path: "book",
-        element: <BookTable />,
+        path: "book/:bookId",
+        element: <Book />,
       }
     ],
   },

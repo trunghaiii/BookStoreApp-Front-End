@@ -3,6 +3,8 @@ import './Home.scss';
 
 import { AiOutlineReload } from 'react-icons/Ai';
 
+import { useNavigate } from "react-router-dom";
+
 import {
     Col, Row, Checkbox, Divider,
     InputNumber, Button, Tabs, Card, Pagination, Form
@@ -15,6 +17,7 @@ import { getBookPagination } from '../../services/api';
 const Home = () => {
 
     const [form] = Form.useForm();
+    const navigate = useNavigate();
 
     const [current, setCurrent] = useState<number>(1)
     const [pageSize, setPageSize] = useState<number>(4)
@@ -61,6 +64,12 @@ const Home = () => {
     const handleReload = () => {
         form.resetFields();
         setQuery("")
+    }
+
+    const handleShowBookPage = (book: any) => {
+        //console.log("book detai", book);
+        navigate(`/book/${book._id}`)
+
     }
 
     const fetchBookPagination = async (current, pageSize) => {
@@ -173,7 +182,7 @@ const Home = () => {
                                 ?
                                 bookData.map((book) => {
                                     return (
-                                        <Card style={{ width: 200, height: 250 }}>
+                                        <Card onClick={() => handleShowBookPage(book)} style={{ width: 200, height: 250 }}>
                                             <div>
                                                 <img
                                                     style={{ width: "100%", height: "150px" }}
