@@ -22,17 +22,32 @@ const Home = () => {
     const [bookData, setBookData] = useState([])
 
     const [query, setQuery] = useState<string>("")
+    const [queryPrice, setQueryPrice] = useState<string>("")
+
 
 
 
     const genreOptions = ['Arts', 'Business', 'Teen', 'Cooking', "Entertainment",
         "History", "Music", "Sports", "Travelling"];
 
+    const onFinish = (values: any) => {
+        console.log('Success:', values);
+        if (values.rangefrom || values.rangeto) {
+            let queryInput = `&fromPrice=${values.rangefrom || ''}&toPrice=${values.rangeto || ''}`
+            setQueryPrice(queryInput)
+
+        }
+    };
+
     const handleFilter = (changedValues: any, allValues: any) => {
         // console.log("changedValues", changedValues);
         console.log("allValues", allValues);
-        let queryInput = `&genreList=${allValues.checkboxFilter.join(",")}`
-        setQuery(queryInput)
+        if (allValues.checkboxFilter) {
+            let queryInput = `&genreList=${allValues.checkboxFilter.join(",")}`
+            setQuery(queryInput)
+
+        }
+
 
     }
 
@@ -52,6 +67,9 @@ const Home = () => {
 
         let fullQuery: string = `current=${current}&pageSize=${pageSize}`
         if (query) fullQuery += query;
+        if (queryPrice) fullQuery += queryPrice;
+
+        console.log("fullquerry", fullQuery);
 
         let response = await getBookPagination(fullQuery)
 
@@ -87,7 +105,7 @@ const Home = () => {
 
     useEffect(() => {
         fetchBookPagination(current, pageSize)
-    }, [current, pageSize, query])
+    }, [current, pageSize, query, queryPrice])
 
 
     return (
@@ -105,6 +123,7 @@ const Home = () => {
                             form={form}
                             name="basic"
                             autoComplete="off"
+                            onFinish={onFinish}
                             onValuesChange={(changedValues, allValues) => handleFilter(changedValues, allValues)}
                         >
 
@@ -126,16 +145,16 @@ const Home = () => {
                                 <div style={{ display: "flex", justifyContent: "center", flexWrap: "wrap" }}>
                                     <Form.Item
 
-                                        name="range-from"
+                                        name="rangefrom"
                                     ><InputNumber placeholder='from' min={1} max={100000} /></Form.Item>
                                     <div>-</div>
                                     <Form.Item
 
-                                        name="range-to"
+                                        name="rangeto"
                                     ><InputNumber placeholder='to' min={1} max={100000} /></Form.Item>
                                 </div>
                                 <div style={{ display: "flex", justifyContent: "center", marginTop: "10px" }}>
-                                    <Button type='primary'>Apply</Button>
+                                    <Button onClick={() => form.submit()} type='primary'>Apply</Button>
                                 </div>
                             </div>
                         </Form>
