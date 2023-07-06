@@ -1,0 +1,21 @@
+.book-detail-wrapper {
+    height: 60vh;
+    padding: 50px;
+
+    .book-detail-container {
+        height: 100%;
+        display: flex;
+        gap: 10px;
+        background-color: rgb(247, 239, 228);
+
+        .image-group {
+            width: 50%;
+            border: 1px solid red;
+        }
+
+        .content {
+            width: 50%;
+            border: 1px solid green;
+        }
+    }
+}
