@@ -8,7 +8,9 @@
         // flex-direction: column;
         // justify-content: center;
         gap: 10px;
-        background-color: rgb(247, 239, 228);
+        background-color: rgb(238, 237, 235);
+        padding: 20px;
+        border-radius: 10px;
 
         .image-group {
             width: 50%;
@@ -19,12 +21,40 @@
         .content {
             width: 50%;
             border: 1px solid green;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            //padding: 10px;
+
+            .author {
+                font-size: 15px;
+            }
+
+            .title {
+                font-size: 30px;
+                font-style: italic;
+            }
+
+            .price {
+                background-color: aliceblue;
+                padding: 20px 0px;
+                margin: 0px 10px;
+                border-radius: 20px;
+                text-align: center;
+                font-size: 30px;
+                color: #0A6DCA;
+            }
+
+            .button-group {
+                margin-top: 10px;
+            }
         }
     }
 }
 
 @media screen and (max-width: 700px) {
     .book-detail-wrapper {
+        height: 100%;
 
         .book-detail-container {
             flex-direction: column;
