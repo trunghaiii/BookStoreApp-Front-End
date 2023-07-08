@@ -11,13 +11,15 @@ import { BsCartCheck } from 'react-icons/Bs';
 
 import { getBookDetail } from "../../services/api"
 
-
+import Comment from './Comment';
 
 const Book = () => {
 
     let { bookId } = useParams();
     const [bookDetailData, setBookDetailData] = useState({})
     const [imageSlider, setImageSlider] = useState([])
+
+    const [showComment, setShowComment] = useState<boolean>(false)
 
     // const images = [
     //     {
@@ -62,6 +64,10 @@ const Book = () => {
 
     }
 
+    const handleComment = () => {
+        setShowComment(true)
+    }
+
     useEffect(() => {
         fetchBookDetail()
     }, [bookId])
@@ -98,9 +104,19 @@ const Book = () => {
                             <BsCartCheck />  Add to Cart
                         </Button>
                         <Button style={{ marginLeft: "5px" }} size='large' type="primary">Buy Now</Button>
+                        <Button
+                            style={{ marginLeft: "5px" }}
+                            size='large'
+                            type="primary"
+                            onClick={() => handleComment()}
+                        >Comments</Button>
                     </div>
                 </div>
             </div>
+            <Comment
+                showComment={showComment}
+                setShowComment={setShowComment}
+            />
         </div>
 
     )
