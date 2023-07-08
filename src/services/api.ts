@@ -95,3 +95,7 @@ export const deleteBook = (bookId: string) => {
 export const getBookDetail = (bookId: any) => {
     return axios.get(`api/v1/book/detail?bookId=${bookId}`)
 }
+
+export const getHomeBookPagination = (query) => {
+    return axios.get(`api/v1/book/home?${query}`)
+}

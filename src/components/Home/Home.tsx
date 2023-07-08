@@ -12,7 +12,7 @@ import {
 
 import type { TabsProps } from 'antd';
 
-import { getBookPagination } from '../../services/api';
+import { getHomeBookPagination } from '../../services/api';
 
 const Home = () => {
 
@@ -80,7 +80,7 @@ const Home = () => {
 
         console.log("fullquerry", fullQuery);
 
-        let response = await getBookPagination(fullQuery)
+        let response = await getHomeBookPagination(fullQuery)
 
         if (response && response.errorCode === 0) {
             setTotal(response.data.meta.total)
