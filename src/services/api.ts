@@ -91,3 +91,7 @@ export const putUpdateBook = (id: string, bookName: string, price: string, quant
 export const deleteBook = (bookId: string) => {
     return axios.delete(`api/v1/book?id=${bookId}`)
 }
+
+export const getBookDetail = (bookId: any) => {
+    return axios.get(`api/v1/book/detail?bookId=${bookId}`)
+}
