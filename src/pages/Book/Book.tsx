@@ -116,6 +116,7 @@ const Book = () => {
             <Comment
                 showComment={showComment}
                 setShowComment={setShowComment}
+                bookId={bookId}
             />
         </div>
 

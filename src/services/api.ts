@@ -99,3 +99,7 @@ export const getBookDetail = (bookId: any) => {
 export const getHomeBookPagination = (query) => {
     return axios.get(`api/v1/book/home?${query}`)
 }
+
+export const getComment = (bookId: string) => {
+    return axios.get(`api/v1/book/comment?bookId=${bookId}`)
+}

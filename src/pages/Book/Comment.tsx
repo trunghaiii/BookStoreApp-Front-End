@@ -1,19 +1,23 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Comment.scss';
 import { Modal, Rate, Button, Form, Input } from 'antd';
+import { getComment } from "../../services/api"
 
 interface IProps {
     showComment: boolean;
     setShowComment: any;
+    bookId: string;
 }
 
 const { TextArea } = Input;
 
 const Comment = (props: IProps) => {
 
-    const { showComment, setShowComment } = props
+    const { showComment, setShowComment, bookId } = props
 
     let [arr, setArr] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+
+    const [commentDetail, setCommentDetail] = useState([])
 
     const onFinish = (values: any) => {
         console.log('Success:', values);
@@ -23,6 +27,20 @@ const Comment = (props: IProps) => {
         setShowComment(false);
     };
 
+    const fetchCommentDetail = async () => {
+        let response = await getComment(bookId)
+
+        if (response && response.errorCode === 0) {
+            setCommentDetail(response.data)
+        }
+
+    }
+
+    useEffect(() => {
+        fetchCommentDetail()
+    }, [bookId])
+
+    console.log("commentDetail", commentDetail);
 
     return (
         <Modal
@@ -38,16 +56,16 @@ const Comment = (props: IProps) => {
 
             <div className='comment-container'>
 
-                {arr.map(() => {
+                {commentDetail && commentDetail.map((comment) => {
                     return (
                         <div className='comment-content'>
                             <div className='user-info'>
-                                <img src="https://res.cloudinary.com/dbljsakpb/image/upload/v1688427611/BookStoreApp/sf95og7ccjk8plgbobwf.jpg" alt="" />
-                                <span>Lam Python</span>
-                                <div className='star-rate'><Rate defaultValue={4} /></div>
+                                <img src={comment.ownerAvatar} alt="" />
+                                <span>{comment.ownerName}</span>
+                                <div className='star-rate'><Rate defaultValue={comment.rate} /></div>
                             </div>
                             <div className='content'>
-                                This Book is fucking good
+                                {comment.content}
                             </div>
 
                             <Button size='small' type="primary" danger>
