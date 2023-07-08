@@ -64,6 +64,7 @@ const Home = () => {
     const handleReload = () => {
         form.resetFields();
         setQuery("")
+        setQueryPrice("")
     }
 
     const handleShowBookPage = (book: any) => {
