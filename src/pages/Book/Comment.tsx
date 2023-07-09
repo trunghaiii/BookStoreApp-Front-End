@@ -86,6 +86,7 @@ const Comment = (props: IProps) => {
             title="Basic Modal"
             width={"70%"}
             open={showComment}
+            onCancel={handleCancel}
             footer={[
                 <Button key="back" onClick={handleCancel}>
                     Close
