@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux'
 import './Comment.scss';
-import { Modal, Rate, Button, Form, Input } from 'antd';
-import { getComment } from "../../services/api"
+import { Modal, Rate, Button, Form, Input, message, notification } from 'antd';
+import { getComment, postComment } from "../../services/api"
 
 interface IProps {
     showComment: boolean;
@@ -15,15 +15,32 @@ const { TextArea } = Input;
 const Comment = (props: IProps) => {
 
     const account = useSelector((state) => state.account)
+    const [form] = Form.useForm();
 
     const { showComment, setShowComment, bookId } = props
 
-    let [arr, setArr] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
-
     const [commentDetail, setCommentDetail] = useState([])
 
-    const onFinish = (values: any) => {
+    const onFinish = async (values: any) => {
         console.log('Success:', values);
+        let content: string = ""
+        let rate: number = 1
+        if (values.comment) content = values.comment;
+        if (values.rate) rate = values.rate;
+        let response = await postComment(bookId, account.user.id, content, rate)
+
+        if (response && response.errorCode === 0) {
+            form.resetFields()
+            fetchCommentDetail()
+            message.success(response.errorMessage)
+        } else {
+            notification.error({
+                message: `Notification`,
+                description: response.errorMessage,
+                duration: 5
+            });
+        }
+
     };
 
     const handleCancel = () => {
@@ -84,6 +101,7 @@ const Comment = (props: IProps) => {
                     ?
                     <div className='comment-form'>
                         <Form
+                            form={form}
                             name="basic"
                             wrapperCol={{ span: 24 }}
                             onFinish={onFinish}
