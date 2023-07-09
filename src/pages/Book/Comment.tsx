@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux'
 import './Comment.scss';
 import { Modal, Rate, Button, Form, Input } from 'antd';
 import { getComment } from "../../services/api"
@@ -12,6 +13,8 @@ interface IProps {
 const { TextArea } = Input;
 
 const Comment = (props: IProps) => {
+
+    const account = useSelector((state) => state.account)
 
     const { showComment, setShowComment, bookId } = props
 
@@ -41,6 +44,7 @@ const Comment = (props: IProps) => {
     }, [bookId])
 
     console.log("commentDetail", commentDetail);
+    //console.log("account", account);
 
     return (
         <Modal
@@ -76,26 +80,32 @@ const Comment = (props: IProps) => {
                     )
                 })}
 
-                <div className='comment-form'>
-                    <Form
-                        name="basic"
-                        wrapperCol={{ span: 24 }}
-                        onFinish={onFinish}
-                    >
-                        <Form.Item
-                            name="comment"
+                {account && account.isAuthenticated === true
+                    ?
+                    <div className='comment-form'>
+                        <Form
+                            name="basic"
+                            wrapperCol={{ span: 24 }}
+                            onFinish={onFinish}
                         >
-                            <TextArea placeholder='Write some comment' rows={4} />
-                        </Form.Item>
+                            <Form.Item
+                                name="comment"
+                            >
+                                <TextArea placeholder='Write some comment' rows={4} />
+                            </Form.Item>
 
 
-                        <Form.Item>
-                            <Button type="primary" htmlType="submit">
-                                Submit
-                            </Button>
-                        </Form.Item>
-                    </Form>
-                </div>
+                            <Form.Item>
+                                <Button type="primary" htmlType="submit">
+                                    Submit
+                                </Button>
+                            </Form.Item>
+                        </Form>
+                    </div>
+                    :
+                    <div></div>
+                }
+
             </div>
         </Modal>
     )
