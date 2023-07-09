@@ -83,7 +83,7 @@ const Comment = (props: IProps) => {
 
     return (
         <Modal
-            title="Basic Modal"
+            title="Comments"
             width={"70%"}
             open={showComment}
             onCancel={handleCancel}
