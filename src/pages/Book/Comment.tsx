@@ -89,6 +89,12 @@ const Comment = (props: IProps) => {
                             onFinish={onFinish}
                         >
                             <Form.Item
+                                name="rate"
+                            >
+                                <Rate />
+                            </Form.Item>
+
+                            <Form.Item
                                 name="comment"
                             >
                                 <TextArea placeholder='Write some comment' rows={4} />

@@ -103,3 +103,7 @@ export const getHomeBookPagination = (query) => {
 export const getComment = (bookId: string) => {
     return axios.get(`api/v1/book/comment?bookId=${bookId}`)
 }
+
+export const postComment = (bookId: string, userId: string, content: string, rate: any) => {
+    return axios.post(`api/v1/book/comment?bookId=${bookId}&userId=${userId}&content=${content}&rate=${rate}`)
+}
