@@ -107,3 +107,7 @@ export const getComment = (bookId: string) => {
 export const postComment = (bookId: string, userId: string, content: string, rate: any) => {
     return axios.post(`api/v1/book/comment?bookId=${bookId}&userId=${userId}&content=${content}&rate=${rate}`)
 }
+
+export const deleteComment = (commentId: string, bookId: string) => {
+    return axios.delete(`api/v1/book/comment?commentId=${commentId}&bookId=${bookId}`)
+}

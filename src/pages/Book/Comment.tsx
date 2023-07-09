@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux'
 import './Comment.scss';
 import { Modal, Rate, Button, Form, Input, message, notification } from 'antd';
-import { getComment, postComment } from "../../services/api"
+import { getComment, postComment, deleteComment } from "../../services/api"
 
 interface IProps {
     showComment: boolean;
@@ -47,6 +47,22 @@ const Comment = (props: IProps) => {
         setShowComment(false);
     };
 
+    const handleDeleteComment = async (commentID) => {
+        let response = await deleteComment(commentID, bookId)
+
+        if (response && response.errorCode === 0) {
+            fetchCommentDetail()
+            message.success(response.errorMessage)
+        } else {
+            notification.error({
+                message: `Notification`,
+                description: response.errorMessage,
+                duration: 5
+            });
+        }
+
+    }
+
     const fetchCommentDetail = async () => {
         let response = await getComment(bookId)
 
@@ -60,7 +76,9 @@ const Comment = (props: IProps) => {
         fetchCommentDetail()
     }, [bookId])
 
-    console.log("commentDetail", commentDetail);
+    // console.log("commentDetail", commentDetail);
+    // console.log(account.user.id);
+
     //console.log("account", account);
 
     return (
@@ -89,9 +107,19 @@ const Comment = (props: IProps) => {
                                 {comment.content}
                             </div>
 
-                            <Button size='small' type="primary" danger>
-                                Delete
-                            </Button>
+                            {account.user.id === comment.ownerId
+                                ?
+                                <Button
+                                    onClick={() => handleDeleteComment(comment.commentId)}
+                                    size='small'
+                                    type="primary"
+                                    danger>
+                                    Delete
+                                </Button>
+                                :
+                                <div></div>
+                            }
+
 
                         </div>
                     )
