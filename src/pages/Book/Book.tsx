@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import "./Book.scss"
 
+import { useDispatch } from 'react-redux'
+
 import "react-image-gallery/styles/scss/image-gallery.scss";
 import ImageGallery from "react-image-gallery";
 
@@ -14,9 +16,13 @@ import { getBookDetail } from "../../services/api"
 
 import Comment from './Comment';
 
+import { doCartAction } from '../../redux/slices/orderSlice';
+
 const Book = () => {
 
+    const dispatch = useDispatch()
     let { bookId } = useParams();
+
     const [bookDetailData, setBookDetailData] = useState({})
     const [imageSlider, setImageSlider] = useState([])
 
@@ -71,6 +77,10 @@ const Book = () => {
         setShowComment(true)
     }
 
+    const handleAddCart = (quantity: any, book: any) => {
+        dispatch(doCartAction({ quantity, _id: book._id, detail: book }))
+    }
+
     useEffect(() => {
         fetchBookDetail()
     }, [bookId])
@@ -98,7 +108,7 @@ const Book = () => {
                     </div>
                     <div className='price'>{bookDetailData.price} $</div>
                     <div className='quantity'>
-                        Quantity:
+                        Quantity{`(${bookDetailData.quantity})`}:
                         <span className='quantity-input'>
                             <Button onClick={() => handleQuantityClick("MINUS")}><AiOutlineMinus /></Button>
                             <input onChange={(event) => handleChangeQuantity(event.target.value)} value={quantity} />
@@ -107,6 +117,7 @@ const Book = () => {
                     </div>
                     <div className='button-group'>
                         <Button
+                            onClick={() => handleAddCart(quantity, bookDetailData)}
                             style={{ backgroundColor: "#C9E5FF", color: "#2584DD", border: "1px solid #2584DD" }}
                             size='large' type="primary">
                             <BsCartCheck />  Add to Cart
