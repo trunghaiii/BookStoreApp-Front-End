@@ -45,6 +45,30 @@
                 color: #0A6DCA;
             }
 
+            .quantity {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+
+                .quantity-input {
+                    height: 50px;
+                    display: flex;
+                    align-items: center;
+
+                    button {
+                        height: 100%;
+                    }
+
+                    input {
+                        height: 100%;
+                        border: none;
+                        border-radius: 10px;
+                        width: 25%;
+                        text-align: center;
+                    }
+                }
+            }
+
             .button-group {
                 margin-top: 10px;
             }

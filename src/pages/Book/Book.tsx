@@ -7,7 +7,8 @@ import ImageGallery from "react-image-gallery";
 
 import { InputNumber, Button, Rate } from 'antd';
 
-import { BsCartCheck } from 'react-icons/Bs';
+import { BsCartCheck, BsPlusLg } from 'react-icons/Bs';
+import { AiOutlineMinus } from 'react-icons/Ai';
 
 import { getBookDetail } from "../../services/api"
 
@@ -21,25 +22,27 @@ const Book = () => {
 
     const [showComment, setShowComment] = useState<boolean>(false)
 
-    // const images = [
-    //     {
-    //         original: 'https://picsum.photos/id/1018/1000/600/',
-    //         thumbnail: 'https://picsum.photos/id/1018/250/150/',
-    //         originalHeight: 300
-    //     },
-    //     {
-    //         original: 'https://picsum.photos/id/1015/1000/600/',
-    //         thumbnail: 'https://picsum.photos/id/1015/250/150/',
-    //     },
-    //     {
-    //         original: 'https://picsum.photos/id/1019/1000/600/',
-    //         thumbnail: 'https://picsum.photos/id/1019/250/150/',
-    //     },
-    // ];
+    const [quantity, setQuantity] = useState<number>(1)
 
-    const onChange = (value: number) => {
-        console.log('changed', value);
-    };
+    const handleQuantityClick = (operator: string) => {
+
+        if (operator === "MINUS" && quantity > 1) {
+            setQuantity(quantity - 1);
+        } else if (operator === "PLUS" && quantity < +bookDetailData.quantity) {
+            setQuantity(quantity + 1);
+        }
+
+    }
+
+    const handleChangeQuantity = (changeQuantity: any) => {
+        if (!isNaN(+changeQuantity)) {
+            if (+changeQuantity > 0 && +changeQuantity <= +bookDetailData.quantity) {
+                setQuantity(+changeQuantity)
+            }
+        }
+
+
+    }
 
     const fetchBookDetail = async () => {
         let response = await getBookDetail(bookId)
@@ -95,7 +98,12 @@ const Book = () => {
                     </div>
                     <div className='price'>{bookDetailData.price} $</div>
                     <div className='quantity'>
-                        Quantity: <InputNumber min={1} max={10} defaultValue={3} onChange={onChange} />
+                        Quantity:
+                        <span className='quantity-input'>
+                            <Button onClick={() => handleQuantityClick("MINUS")}><AiOutlineMinus /></Button>
+                            <input onChange={(event) => handleChangeQuantity(event.target.value)} value={quantity} />
+                            <Button onClick={() => handleQuantityClick("PLUS")}><BsPlusLg /></Button>
+                        </span>
                     </div>
                     <div className='button-group'>
                         <Button
