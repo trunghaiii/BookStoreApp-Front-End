@@ -90,29 +90,6 @@ const Home = () => {
 
     }
 
-    const items: TabsProps['items'] = [
-        {
-            key: '1',
-            label: `Popular`,
-            children: <></>,
-        },
-        {
-            key: '2',
-            label: `New`,
-            children: <></>,
-        },
-        {
-            key: '3',
-            label: `Cheap to Expensive`,
-            children: <></>,
-        },
-        {
-            key: '4',
-            label: `Expensive to Cheap`,
-            children: <></>,
-        },
-    ];
-
     useEffect(() => {
         fetchBookPagination(current, pageSize)
     }, [current, pageSize, query, queryPrice])
@@ -174,9 +151,6 @@ const Home = () => {
                 </Col>
                 <Col md={20} sm={24} xs={24}>
                     <div className="homepage-rightside">
-                        <div className='filter'>
-                            <Tabs defaultActiveKey="1" items={items} />
-                        </div>
                         <div className='book-list'>
                             {bookData && bookData.length !== 0
 
