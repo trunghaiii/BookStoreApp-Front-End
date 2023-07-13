@@ -20,6 +20,8 @@ const Header = () => {
     const [openDrawer, setOpenDrawer] = useState<boolean>(false);
 
     const user = useSelector(state => state.account.user)
+    const cart = useSelector(state => state.order.cart)
+
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
@@ -82,7 +84,10 @@ const Header = () => {
                     prefix={<BsSearch style={{ color: "rgb(0, 204, 255)" }} />} />
             </div>
             <div className='header-cart-icon'>
-                <Badge count={99}>
+                <Badge
+                    showZero={true}
+                    count={cart?.length ?? 0}
+                >
                     <AiOutlineShoppingCart size="30px" color="rgb(0, 204, 255)" />
                 </Badge>
             </div>
