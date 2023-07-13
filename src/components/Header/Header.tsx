@@ -4,7 +4,7 @@ import { BsSearch } from 'react-icons/Bs';
 import { GiBlackBook } from 'react-icons/Gi';
 import { FaBars } from 'react-icons/Fa';
 import { AiOutlineShoppingCart } from 'react-icons/Ai';
-import { Input, MenuProps, Dropdown, Space, Badge, Drawer, message, Avatar } from 'antd';
+import { Input, MenuProps, Dropdown, Space, Badge, Drawer, message, Avatar, Popover } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -13,6 +13,10 @@ import { postLogOut } from '../../services/api';
 
 import { doLogOut } from '../../redux/slices/accountSlice';
 
+import CartContent from './CartContent';
+
+
+const text = <span>Shopping Cart</span>;
 
 const Header = () => {
 
@@ -84,12 +88,17 @@ const Header = () => {
                     prefix={<BsSearch style={{ color: "rgb(0, 204, 255)" }} />} />
             </div>
             <div className='header-cart-icon'>
-                <Badge
-                    showZero={true}
-                    count={cart?.length ?? 0}
-                >
-                    <AiOutlineShoppingCart size="30px" color="rgb(0, 204, 255)" />
-                </Badge>
+                <Popover
+                    placement="leftTop"
+                    title={text}
+                    content={CartContent}>
+                    <Badge
+                        showZero={true}
+                        count={cart?.length ?? 0}
+                    >
+                        <AiOutlineShoppingCart size="30px" color="rgb(0, 204, 255)" />
+                    </Badge>
+                </Popover>
             </div>
             <div className='header-account'>
                 {user && user.fullName
