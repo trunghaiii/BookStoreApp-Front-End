@@ -9,7 +9,7 @@ import LayoutAdmin from "./components/Admin/LayoutAdmin";
 import UserTable from "./components/Admin/User/UserTable";
 import BookTable from "./components/Admin/Book/BookTable";
 
-import Contact from "./pages/Contact/Contact";
+import Contact from "./pages/Order/Order";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import Admin from "./pages/Admin/Admin";
@@ -54,7 +54,7 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "contact",
+        path: "order",
         element: <Contact />,
       },
       {

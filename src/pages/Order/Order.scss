@@ -1,0 +1,61 @@
+.order-container {
+    display: flex;
+    height: 82vh;
+    gap: 8px;
+
+    .order-list {
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
+        border: 1px solid red;
+        width: 70%;
+        padding: 10px;
+
+        .order {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            border: 1px solid rgb(173, 170, 170);
+            border-radius: 15px;
+            padding: 15px 5px;
+            //background-color: rgb(235, 231, 231);
+            background-color: #cfe3ff;
+
+            img {
+                width: 70px;
+                height: 70px;
+                border-radius: 10px;
+            }
+
+            .book-name {
+                font-weight: 600;
+            }
+
+            .price {
+                font-weight: 600;
+                color: blue;
+            }
+
+            .quantity-input {
+                width: 15%;
+            }
+
+            .total-price {
+                font-weight: 600;
+                color: blue;
+                width: 15%;
+            }
+
+            .delete-btn {
+                font-size: 20px;
+                cursor: pointer;
+            }
+        }
+    }
+
+    .order-counting {
+        border: 1px solid green;
+        width: 30%;
+    }
+}
