@@ -95,3 +95,78 @@
         }
     }
 }
+
+@media only screen and (max-width: 800px) {
+    .order-container {
+        flex-direction: column;
+
+        .order-list {
+            width: 100%;
+
+            .order {
+
+                img {
+                    width: 40px;
+                    height: 40px;
+                }
+
+                .book-name {}
+
+                .price {}
+
+                .quantity-input {}
+
+                .total-price {}
+
+                .delete-btn {}
+            }
+        }
+
+        .order-counting {
+            width: 100%;
+
+            .order-counting-board {
+
+
+                .order-number {}
+
+                .total-price {}
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 390px) {
+    .order-container {
+
+        .order-list {
+            .order {
+
+                img {
+                    width: 30px;
+                }
+
+                .book-name {}
+
+                .price {}
+
+                .quantity-input {}
+
+                .total-price {}
+
+                .delete-btn {}
+            }
+        }
+
+        .order-counting {
+
+            .order-counting-board {
+
+
+                .order-number {}
+
+                .total-price {}
+            }
+        }
+    }
+}

@@ -22,7 +22,7 @@ const Order = () => {
                         59$/item
                     </div>
                     <div className="quantity-input">
-                        <InputNumber min={1} max={10} defaultValue={3} onChange={onChange} />
+                        <InputNumber style={{ width: "60px" }} min={1} max={10} defaultValue={3} onChange={onChange} />
                     </div>
                     <div className="total-price">
                         Total: 200$
@@ -42,7 +42,7 @@ const Order = () => {
                         59$/item
                     </div>
                     <div className="quantity-input">
-                        <InputNumber min={1} max={10} defaultValue={3} onChange={onChange} />
+                        <InputNumber style={{ width: "60px" }} min={1} max={10} defaultValue={3} onChange={onChange} />
                     </div>
                     <div className="total-price">
                         Total: 200$
@@ -62,7 +62,7 @@ const Order = () => {
                         59$/item
                     </div>
                     <div className="quantity-input">
-                        <InputNumber min={1} max={10} defaultValue={3} onChange={onChange} />
+                        <InputNumber style={{ width: "60px" }} min={1} max={10} defaultValue={3} onChange={onChange} />
                     </div>
                     <div className="total-price">
                         Total: 200$
