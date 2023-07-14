@@ -57,5 +57,41 @@
     .order-counting {
         border: 1px solid green;
         width: 30%;
+        padding: 10px;
+
+        .order-counting-board {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            //border: 1px solid blueviolet;
+            border-radius: 5px;
+            padding: 7px;
+            height: 250px;
+            background-color: #cfe3ff;
+
+            .order-number {
+                display: flex;
+                justify-content: space-between;
+                padding: 30px;
+                // border: 1px solid red;
+                border-radius: 5px;
+                background-color: #ebf1fc;
+                font-weight: 600;
+                font-size: large;
+                color: blue;
+            }
+
+            .total-price {
+                display: flex;
+                justify-content: space-between;
+                padding: 30px;
+                // border: 1px solid red;
+                border-radius: 5px;
+                background-color: #ebf1fc;
+                font-weight: 600;
+                font-size: large;
+                color: blue;
+            }
+        }
     }
 }

@@ -1,6 +1,6 @@
 
 import "./Order.scss"
-import { InputNumber } from 'antd';
+import { InputNumber, Button } from 'antd';
 import { RiDeleteBin6Line } from 'react-icons/Ri';
 
 const Order = () => {
@@ -73,7 +73,27 @@ const Order = () => {
                 </div>
             </div>
             <div className="order-counting">
-                order counting
+                <div className="order-counting-board">
+                    <div className="order-number">
+                        <div className="order-number-title">
+                            Total Order Number:
+                        </div>
+                        <div className="order-number-digit">
+                            5
+                        </div>
+                    </div>
+                    <div className="total-price">
+                        <div className="total-price-title">
+                            Total Price:
+                        </div>
+                        <div className="total-price-digit">
+                            200$
+                        </div>
+                    </div>
+                    <div className="buying-btn">
+                        <Button style={{ width: "100%" }} type="primary">Buying Now</Button>
+                    </div>
+                </div>
             </div>
         </div>
     )
