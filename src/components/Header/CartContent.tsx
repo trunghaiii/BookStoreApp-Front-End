@@ -2,10 +2,12 @@
 import { useSelector } from "react-redux";
 import "./CartContent.scss"
 import { Button } from "antd";
+import { useNavigate } from "react-router-dom";
 
 const CartContent = () => {
 
     const cart = useSelector(state => state.order.cart);
+    const navigate = useNavigate();
 
     return (
         <div className="cart-container">
@@ -31,7 +33,7 @@ const CartContent = () => {
             }
 
 
-            <Button type="primary">View Shopping Cart</Button>
+            <Button onClick={() => navigate("/order")} type="primary">View Shopping Cart</Button>
         </div>
     )
 }
