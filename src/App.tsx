@@ -9,7 +9,7 @@ import LayoutAdmin from "./components/Admin/LayoutAdmin";
 import UserTable from "./components/Admin/User/UserTable";
 import BookTable from "./components/Admin/Book/BookTable";
 
-import Contact from "./pages/Order/Order";
+import IndexOrder from "./pages/Order/IndexOrder";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import Admin from "./pages/Admin/Admin";
@@ -55,7 +55,7 @@ const router = createBrowserRouter([
       },
       {
         path: "order",
-        element: <Contact />,
+        element: <IndexOrder />,
       },
       {
         path: "book/:bookId",

@@ -6,7 +6,10 @@ import { RiDeleteBin6Line } from 'react-icons/Ri';
 import { useSelector, useDispatch } from "react-redux";
 import { doCartDelete, doCartUpdate } from "../../redux/slices/orderSlice";
 
-const Order = () => {
+interface IProps {
+    setCurrentStep: any
+}
+const Order = (props: IProps) => {
 
     const cart = useSelector((state) => state.order.cart)
     const dispatch = useDispatch()
@@ -32,6 +35,10 @@ const Order = () => {
 
     const handleDeleteOrder = (bookOrder: any) => {
         dispatch(doCartDelete({ _id: bookOrder._id }))
+    }
+
+    const handlePlaceOrder = () => {
+        props.setCurrentStep(2)
     }
 
     useEffect(() => {
@@ -100,7 +107,11 @@ const Order = () => {
                         </div>
                     </div>
                     <div className="buying-btn">
-                        <Button style={{ width: "100%" }} type="primary">Buying Now</Button>
+                        <Button
+                            style={{ width: "100%" }}
+                            type="primary"
+                            onClick={() => handlePlaceOrder()}
+                        >Buying Now</Button>
                     </div>
                 </div>
             </div>
