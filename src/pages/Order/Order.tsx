@@ -3,15 +3,20 @@ import "./Order.scss"
 import { InputNumber, Button } from 'antd';
 import { useEffect, useState } from "react";
 import { RiDeleteBin6Line } from 'react-icons/Ri';
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { doCartDelete, doCartUpdate } from "../../redux/slices/orderSlice";
 
 const Order = () => {
 
     const cart = useSelector((state) => state.order.cart)
+    const dispatch = useDispatch()
     const [totalPrice, setTotalPrice] = useState<number>(0)
 
-    const onChange = (value: any) => {
-        console.log('changed', value);
+    const onChange = (bookOrder: any, value: any) => {
+        // console.log('changed', value);
+        // console.log(bookOrder);
+
+        dispatch(doCartUpdate({ quantity: value, _id: bookOrder._id, detail: bookOrder.detail }))
     };
 
     const handleTotalPrice = () => {
@@ -21,12 +26,19 @@ const Order = () => {
 
             result += (cart[i].quantity * cart[i].detail.price)
         }
+
         setTotalPrice(result)
     }
 
+    const handleDeleteOrder = (bookOrder: any) => {
+        dispatch(doCartDelete({ _id: bookOrder._id }))
+    }
+
     useEffect(() => {
+        // console.log("effect gg");
+
         handleTotalPrice()
-    }, [])
+    }, [cart])
 
     return (
         <div className="order-container">
@@ -47,13 +59,18 @@ const Order = () => {
                                 <div className="quantity-input">
                                     <InputNumber
                                         style={{ width: "60px" }}
+                                        min={1}
+                                        max={bookOrder.detail.quantity}
                                         defaultValue={bookOrder.quantity}
-                                        onChange={onChange} />
+                                        onChange={(value) => onChange(bookOrder, value)} />
                                 </div>
                                 <div className="total-price">
                                     Total: {bookOrder.quantity * bookOrder.detail.price}$
                                 </div>
-                                <div className="delete-btn">
+                                <div
+                                    onClick={() => handleDeleteOrder(bookOrder)}
+                                    className="delete-btn"
+                                >
                                     <RiDeleteBin6Line />
                                 </div>
                             </div>
