@@ -3,6 +3,7 @@ import { Steps } from 'antd';
 
 import Order from "./Order";
 import OrderPayment from './OrderPayment';
+import OrderSuccess from './OrderSuccess';
 
 const items = [
     {
@@ -25,14 +26,17 @@ const IndexOrder = () => {
                 current={currentStep}
                 items={items}
             />
-            {currentStep === 1
-
-                ?
+            {currentStep === 1 ?
                 <Order
                     setCurrentStep={setCurrentStep}
                 />
                 :
-                <OrderPayment />
+                currentStep === 2 ?
+                    <OrderPayment
+                        setCurrentStep={setCurrentStep}
+                    />
+                    :
+                    <OrderSuccess />
             }
 
         </div>

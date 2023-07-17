@@ -1,10 +1,16 @@
 
 import { useEffect, useState } from "react";
 import "./OrderPayment.scss"
-import { InputNumber, Button, Form, Input, Checkbox, Divider } from 'antd';
+import { InputNumber, Button, Form, Input, Checkbox, Divider, message, notification } from 'antd';
 import { useSelector, useDispatch } from "react-redux";
+import { postOrder } from "../../services/api";
+import { doCartReset } from "../../redux/slices/orderSlice";
 const { TextArea } = Input;
-const OrderPayment = (props) => {
+
+interface IProps {
+    setCurrentStep: any
+}
+const OrderPayment = (props: IProps) => {
 
     const [form] = Form.useForm();
     const cart = useSelector((state) => state.order.cart)
@@ -22,8 +28,41 @@ const OrderPayment = (props) => {
         setTotalPrice(result)
     }
 
-    const onFinish = (values: any) => {
+    const onFinish = async (values: any) => {
         console.log('Success:', values);
+        // 0. build order detail data for calling Api
+        let detailData: any = [];
+        for (let i = 0; i < cart.length; i++) {
+            detailData.push({
+                bookName: cart[i].detail.bookName,
+                quantity: cart[i].quantity,
+                _id: cart[i]._id
+            })
+        }
+
+        //1. build data ready for calling Api
+        let orderData: object = {
+            name: values.name,
+            address: values.address,
+            phone: values.phone,
+            totalPrice: totalPrice,
+            detail: detailData
+        }
+
+        // 2. call Api 
+        let response = await postOrder(orderData)
+        if (response && response.errorCode === 0) {
+            dispatch(doCartReset())
+            props.setCurrentStep(3)
+            message.success(response.errorMessage)
+        } else {
+            notification.error({
+                message: `Notification`,
+                description: response.errorMessage,
+                duration: 5
+            });
+        }
+
     };
 
     useEffect(() => {
