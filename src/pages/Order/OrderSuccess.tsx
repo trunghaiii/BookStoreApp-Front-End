@@ -10,9 +10,9 @@ const OrderSuccess = () => {
             icon={<SmileOutlined />}
             title="Great, Your Order has been Placed Successfully!"
             extra={<Button
-                onClick={() => navigate("/")}
+                onClick={() => navigate("/history")}
                 type="primary"
-            >Back Home Page</Button>}
+            >View Order History</Button>}
         />
     )
 }

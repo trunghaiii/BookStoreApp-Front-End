@@ -14,6 +14,7 @@ import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import Admin from "./pages/Admin/Admin";
 import Book from "./pages/Book/Book";
+import OrderHistory from "./pages/OrderHistory/OrderHistory";
 
 
 import { useEffect } from "react";
@@ -56,6 +57,10 @@ const router = createBrowserRouter([
       {
         path: "order",
         element: <IndexOrder />,
+      },
+      {
+        path: "history",
+        element: <OrderHistory />,
       },
       {
         path: "book/:bookId",

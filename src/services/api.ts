@@ -115,3 +115,7 @@ export const deleteComment = (commentId: string, bookId: string) => {
 export const postOrder = (data: any) => {
     return axios.post(`api/v1/order`, data)
 }
+
+export const getOrderHistory = () => {
+    return axios.get(`api/v1/order/history`)
+}

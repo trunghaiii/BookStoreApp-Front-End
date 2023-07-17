@@ -62,8 +62,12 @@ const Header = () => {
             key: '1',
         },
         {
-            label: <span onClick={() => handleLogOut()}>Log Out</span>,
+            label: <span onClick={() => navigate("/history")}>Order History</span>,
             key: '2',
+        },
+        {
+            label: <span onClick={() => handleLogOut()}>Log Out</span>,
+            key: '3',
         }
     ];
     if (user && user.role === "ADMIN") {
