@@ -1,14 +1,36 @@
 
+import { useEffect, useState } from "react";
 import "./OrderPayment.scss"
-import { InputNumber, Button } from 'antd';
-import { RiDeleteBin6Line } from 'react-icons/Ri';
+import { InputNumber, Button, Form, Input, Checkbox, Divider } from 'antd';
 import { useSelector, useDispatch } from "react-redux";
-
+const { TextArea } = Input;
 const OrderPayment = (props) => {
 
+    const [form] = Form.useForm();
     const cart = useSelector((state) => state.order.cart)
     const dispatch = useDispatch()
+    const [totalPrice, setTotalPrice] = useState<number>(0)
 
+    const handleTotalPrice = () => {
+        let result: number = 0;
+
+        for (let i = 0; i < cart.length; i++) {
+
+            result += (cart[i].quantity * cart[i].detail.price)
+        }
+
+        setTotalPrice(result)
+    }
+
+    const onFinish = (values: any) => {
+        console.log('Success:', values);
+    };
+
+    useEffect(() => {
+        // console.log("effect gg");
+
+        handleTotalPrice()
+    }, [])
 
     return (
         <div className="order-payment-container">
@@ -46,7 +68,64 @@ const OrderPayment = (props) => {
 
             </div>
             <div className="order-payment-detail">
+                <div className="customer-info">
+                    <Form
+                        form={form}
+                        name="basic"
+                        labelCol={{ span: 24 }}
+                        wrapperCol={{ span: 24 }}
+                        initialValues={{ remember: true }}
+                        onFinish={onFinish}
+                        autoComplete="off"
+                    >
+                        <Form.Item
+                            label="Name"
+                            name="name"
+                            rules={[{ required: true, message: 'Please input your Name!' }]}
+                        >
+                            <Input />
+                        </Form.Item>
 
+                        <Form.Item
+                            label="Phone Number"
+                            name="phone"
+                            rules={[{ required: true, message: 'Please input your Phone Number!' }]}
+                        >
+                            <Input />
+                        </Form.Item>
+
+                        <Form.Item
+                            label="Address"
+                            name="address"
+                            rules={[{ required: true, message: 'Please input your Address!' }]}
+                        >
+                            <TextArea rows={2} />
+                        </Form.Item>
+
+                        {/* <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+                            <Button type="primary" htmlType="submit">
+                                Submit
+                            </Button>
+                        </Form.Item> */}
+                    </Form>
+                </div>
+                {/* <Divider /> */}
+                <div className="payment-method">
+                    <h5>Payment Method</h5>
+                    <Checkbox checked>Pay when received order</Checkbox>
+                </div>
+                <Divider />
+                <div className="total-amount">
+                    <h4>Total Amount:</h4>
+                    <span>{totalPrice}$</span>
+                </div>
+                {/* <Divider /> */}
+                <div className="confirm-order">
+                    <Button
+                        onClick={() => form.submit()}
+                        type="primary"
+                    >Confirm Order</Button>
+                </div>
             </div>
         </div>
     )

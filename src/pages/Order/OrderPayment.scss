@@ -59,6 +59,23 @@
         width: 30%;
         padding: 10px;
 
+        .total-amount {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            span {
+                font-size: 30px;
+                font-weight: 600;
+                color: blue;
+            }
+        }
+
+        .confirm-order {
+            button {
+                width: 100%;
+            }
+        }
 
     }
 }
