@@ -14,6 +14,7 @@ const OrderPayment = (props: IProps) => {
 
     const [form] = Form.useForm();
     const cart = useSelector((state) => state.order.cart)
+    const accountUser = useSelector((state) => state.account.user)
     const dispatch = useDispatch()
     const [totalPrice, setTotalPrice] = useState<number>(0)
 
@@ -29,7 +30,7 @@ const OrderPayment = (props: IProps) => {
     }
 
     const onFinish = async (values: any) => {
-        console.log('Success:', values);
+        console.log('Success:', values, accountUser);
         // 0. build order detail data for calling Api
         let detailData: any = [];
         for (let i = 0; i < cart.length; i++) {
@@ -46,6 +47,7 @@ const OrderPayment = (props: IProps) => {
             address: values.address,
             phone: values.phone,
             totalPrice: totalPrice,
+            userId: accountUser.id,
             detail: detailData
         }
 
