@@ -31,26 +31,6 @@ const columns: ColumnsType<DataType> = [
         dataIndex: 'detail',
     }
 ];
-const data: DataType[] = [
-    {
-        key: 1,
-        price: 111,
-        time: 'New York No. 1 Lake Park',
-        detail: ['nice', 'developer'],
-    },
-    {
-        key: 2,
-        price: 222,
-        time: 'London No. 1 Lake Park',
-        detail: ['loser'],
-    },
-    {
-        key: 3,
-        price: 333,
-        time: 'Sydney No. 1 Lake Park',
-        detail: ['cool', 'teacher'],
-    },
-];
 const OrderHistory = () => {
 
     const [orderHistoryData, setOrderHistoryData] = useState<any[]>([])
@@ -77,15 +57,11 @@ const OrderHistory = () => {
                 })
             })
         }
-
-        console.log(orderData);
-
         setOrderHistoryData(orderData);
 
     }
 
     useEffect(() => {
-        console.log("gg");
 
         fetchOrderHistory()
     }, [])
