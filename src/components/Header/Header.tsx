@@ -14,6 +14,7 @@ import { postLogOut } from '../../services/api';
 import { doLogOut } from '../../redux/slices/accountSlice';
 
 import CartContent from './CartContent';
+import UpdateUser from './UpdateUser';
 
 
 const text = <span>Shopping Cart</span>;
@@ -22,6 +23,7 @@ const Header = () => {
 
     const [openDrop, setOpenDrop] = useState<boolean>(false);
     const [openDrawer, setOpenDrawer] = useState<boolean>(false);
+    const [showUpdateUserModal, setShowUpdateUserModal] = useState<boolean>(false)
 
     const user = useSelector(state => state.account.user)
     const cart = useSelector(state => state.order.cart)
@@ -58,7 +60,7 @@ const Header = () => {
 
     let items: MenuProps['items'] = [
         {
-            label: 'Account Management',
+            label: <span onClick={() => setShowUpdateUserModal(true)}>Account Management</span>,
             key: '1',
         },
         {
@@ -143,6 +145,10 @@ const Header = () => {
                 </div>
 
             </Drawer>
+            <UpdateUser
+                showUpdateUserModal={showUpdateUserModal}
+                setShowUpdateUserModal={setShowUpdateUserModal}
+            />
         </div>
     )
 }
