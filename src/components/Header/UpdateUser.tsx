@@ -1,7 +1,11 @@
 
 import React, { useState } from 'react';
 //import './index.css';
-import { Button, Modal } from 'antd';
+import { Modal, Tabs, Button } from 'antd';
+import type { TabsProps } from 'antd';
+
+import UpdateUserInfo from './UpdateUserInfo/UpdateUserInfo';
+import UpdateUserPassword from './UpdateUserPassword/UpdateUserPassword';
 
 interface IProps {
     showUpdateUserModal: boolean;
@@ -11,22 +15,39 @@ interface IProps {
 const UpdateUser = (props: IProps) => {
     const { showUpdateUserModal, setShowUpdateUserModal } = props;
 
-    const showModal = () => {
-        setShowUpdateUserModal(true);
-    };
-
-    const handleOk = () => {
-        setShowUpdateUserModal(false);
-    };
-
     const handleCancel = () => {
         setShowUpdateUserModal(false);
     };
+
+    const onChange = (key: string) => {
+        console.log(key);
+    };
+
+    const items: TabsProps['items'] = [
+        {
+            key: '1',
+            label: `Update Info`,
+            children: <UpdateUserInfo />,
+        },
+        {
+            key: '2',
+            label: `Change Password`,
+            children: <UpdateUserPassword />,
+        }
+    ];
     return (
-        <Modal title="Basic Modal" open={showUpdateUserModal} onOk={handleOk} onCancel={handleCancel}>
-            <p>Some contents...</p>
-            <p>Some contents...</p>
-            <p>Some contents...</p>
+        <Modal
+            width={"50%"}
+            title="Basic Modal"
+            open={showUpdateUserModal}
+            onCancel={handleCancel}
+            footer={[
+                <Button key="back" onClick={handleCancel}>
+                    Cancel
+                </Button>
+            ]}
+        >
+            <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
         </Modal>
     )
 }
