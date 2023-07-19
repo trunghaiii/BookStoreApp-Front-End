@@ -119,3 +119,17 @@ export const postOrder = (data: any) => {
 export const getOrderHistory = () => {
     return axios.get(`api/v1/order/history`)
 }
+
+export const putUpdateUserInfo = (
+    name: string, phone: string,
+    imageFile: any
+
+) => {
+
+    const data = new FormData();
+    data.append('userName', name);
+    data.append('phone', phone);
+    data.append('userImage', imageFile);
+
+    return axios.put('api/v1/user/info', data);
+}

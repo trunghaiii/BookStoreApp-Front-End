@@ -1,31 +1,47 @@
 
 import "./UpdateUserInfo.scss"
 import { UserOutlined, UploadOutlined } from '@ant-design/icons';
-import { Avatar, Button, Upload, Form, Input } from 'antd';
+import { Avatar, Button, Upload, Form, Input, message, notification } from 'antd';
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import { putUpdateUserInfo } from "../../../services/api";
+import { useDispatch } from "react-redux";
+import { updateUserRedux } from "../../../redux/slices/accountSlice";
 
 const UpdateUserInfo = () => {
 
     const accountUser = useSelector((state) => state.account.user)
+    const dispatch = useDispatch()
     const [imageFile, setImageFile] = useState<any>("")
 
     const onChangeImage = (file: any) => {
-        console.log("gg", file);
         setImageFile(file.file.originFileObj)
     }
 
-    const onFinish = (values: any) => {
+    const onFinish = async (values: any) => {
         console.log('Success:', values);
-    };
+        console.log(imageFile);
 
-    console.log(accountUser);
+        let response = await putUpdateUserInfo(values.name, values.phone, imageFile);
+        if (response && response.errorCode === 0) {
+            dispatch(updateUserRedux(response.data))
+            localStorage.removeItem("access_token")
+            message.success(response.errorMessage)
+        } else {
+            notification.error({
+                message: `Notification`,
+                description: response.errorMessage,
+                duration: 5
+            });
+        }
+
+    };
 
     return (
         <div className="update-user-info-container">
             <div className="image-update">
                 <Avatar
-                    src={imageFile ? URL.createObjectURL(imageFile) : ""}
+                    src={imageFile ? URL.createObjectURL(imageFile) : accountUser.avatar}
                     size={140}
                     icon={<UserOutlined />} />
                 <Upload onChange={onChangeImage} maxCount={1} showUploadList={false}>

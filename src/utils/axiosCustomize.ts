@@ -7,7 +7,6 @@ const instance = axios.create({
 
 instance.defaults.headers.common = { 'Authorization': `Bearer ${localStorage.getItem("access_token")}` }
 
-
 const handleRefreshToken = async () => {
     let response = await instance.get("api/v1/auth/refresh")
     if (response && response.data) {
@@ -42,7 +41,7 @@ instance.interceptors.response.use(function (response) {
         && error.response
         && +error.response.status === 401
         && !NO_RETRY_HEADER) {
-        NO_RETRY_HEADER = true
+        // NO_RETRY_HEADER = true
         let newAccessToken = await handleRefreshToken()
 
         if (newAccessToken) {
