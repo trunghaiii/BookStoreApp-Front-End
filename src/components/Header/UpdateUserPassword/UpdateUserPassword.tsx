@@ -1,17 +1,35 @@
 // import React from 'react';
 // import './index.css';
-import { Button, Form, Input } from 'antd';
+import { Button, Form, Input, message, notification } from 'antd';
+import { putUpdatePassword } from '../../../services/api';
 
 const UpdateUserPassword = () => {
+    const [form] = Form.useForm();
 
-    const onFinish = (values: any) => {
+    const onFinish = async (values: any) => {
         console.log('Success:', values);
+
+        let response = await putUpdatePassword(values.oldpassword, values.newpassword);
+
+        if (response && response.errorCode === 0) {
+
+            form.resetFields()
+            message.success(response.errorMessage)
+        } else {
+            notification.error({
+                message: `Notification`,
+                description: response.errorMessage,
+                duration: 5
+            });
+        }
+
     };
 
 
     return (
         <div className="update-user-password-container">
             <Form
+                form={form}
                 name="basic"
                 labelCol={{ span: 24 }}
                 wrapperCol={{ span: 24 }}
@@ -29,7 +47,7 @@ const UpdateUserPassword = () => {
 
                 <Form.Item
                     label="New Password"
-                    name="new password"
+                    name="newpassword"
                     rules={[{ required: true, message: 'Please input your New password!' }]}
                 >
                     <Input.Password />

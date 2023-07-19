@@ -133,3 +133,12 @@ export const putUpdateUserInfo = (
 
     return axios.put('api/v1/user/info', data);
 }
+
+export const putUpdatePassword = (oldPass: string, newPass: string) => {
+    // add URLSearchParams to fix bug not attach payload when sending api endpoint
+    const params = new URLSearchParams({
+        password: newPass,
+        oldPassword: oldPass
+    });
+    return axios.put('api/v1/user/password', params)
+}
