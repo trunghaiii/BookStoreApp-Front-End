@@ -142,3 +142,8 @@ export const putUpdatePassword = (oldPass: string, newPass: string) => {
     });
     return axios.put('api/v1/user/password', params)
 }
+
+export const getDashboard = () => {
+
+    return axios.get('api/v1/dashboard')
+}
