@@ -8,6 +8,7 @@ import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import LayoutAdmin from "./components/Admin/LayoutAdmin";
 import UserTable from "./components/Admin/User/UserTable";
 import BookTable from "./components/Admin/Book/BookTable";
+import OrderTable from "./components/Admin/Order/OrderTable";
 
 import IndexOrder from "./pages/Order/IndexOrder";
 import Login from "./pages/Login/Login";
@@ -85,6 +86,10 @@ const router = createBrowserRouter([
       {
         path: "book",
         element: <BookTable />,
+      },
+      {
+        path: "order",
+        element: <OrderTable />,
       }
     ],
   },

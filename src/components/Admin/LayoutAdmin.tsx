@@ -128,7 +128,7 @@ const LayoutAdmin = () => {
                             {
                                 key: 'ordermanage',
                                 icon: <RiMoneyDollarCircleLine onClick={() => navigate("/admin/contact")} />,
-                                label: <span onClick={() => navigate("/admin/contact")}>Order Management</span>,
+                                label: <span onClick={() => navigate("/admin/order")}>Order Management</span>,
                             },
                         ]}
                     />
