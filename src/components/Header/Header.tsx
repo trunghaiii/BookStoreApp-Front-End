@@ -86,9 +86,9 @@ const Header = () => {
                 <FaBars />
             </div>
             <div className="header-icon">
-                <GiBlackBook />
+                <GiBlackBook onClick={() => navigate("/")} />
             </div>
-            <div className='header-title'>BookStore</div>
+            <div onClick={() => navigate("/")} className='header-title'>BookStore</div>
             <div className='header-search'>
                 <Input size="large" placeholder="What book do you want to search?"
                     prefix={<BsSearch style={{ color: "rgb(0, 204, 255)" }} />} />
