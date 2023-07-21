@@ -147,3 +147,7 @@ export const getDashboard = () => {
 
     return axios.get('api/v1/dashboard')
 }
+
+export const getOrderPagination = (current: number | string, pageSize: number | string) => {
+    return axios.get(`api/v1/order?current=${current}&pageSize=${pageSize}`)
+}
