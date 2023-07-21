@@ -8,27 +8,13 @@ import {
     SyncOutlined,
 } from '@ant-design/icons';
 import { getOrderPagination } from '../../../services/api';
+import OrderDetailDrawer from './OrderDetailDrawer';
 
 interface DataType {
     id: string;
     name: string;
     status: any;
 }
-
-const columns: ColumnsType<DataType> = [
-    {
-        title: 'Order ID (Click id to view detail)',
-        dataIndex: 'id',
-    },
-    {
-        title: 'Customer Name',
-        dataIndex: 'name'
-    },
-    {
-        title: 'Status',
-        dataIndex: 'status'
-    }
-];
 
 
 const OrderTable = () => {
@@ -38,12 +24,39 @@ const OrderTable = () => {
     const [pageSize, setPageSize] = useState<number>(3)
     const [orderData, setOrderData] = useState<DataType[]>([])
 
+    const [showOrderDrawer, setShowOrderDrawer] = useState<boolean>(false)
+
     const onChange: TableProps<DataType>['onChange'] = (pagination) => {
         console.log('params', pagination);
         setCurrent(pagination.current)
         setPageSize(pagination.pageSize)
 
     };
+
+    const columns: ColumnsType<DataType> = [
+        {
+            title: 'Order ID (Click id to view detail)',
+            dataIndex: 'id',
+            render: (value, record, index) => {
+
+                return (
+                    <a onClick={() => handleShowOrder()}>{record.id}</a>
+                )
+            }
+        },
+        {
+            title: 'Customer Name',
+            dataIndex: 'name'
+        },
+        {
+            title: 'Status',
+            dataIndex: 'status'
+        }
+    ];
+
+    const handleShowOrder = () => {
+        setShowOrderDrawer(true);
+    }
 
     const fetchOrderPagination = async () => {
         let response = await getOrderPagination(current, pageSize)
@@ -76,6 +89,7 @@ const OrderTable = () => {
 
 
     }
+
     useEffect(() => {
         fetchOrderPagination()
     }, [current, pageSize])
@@ -90,6 +104,10 @@ const OrderTable = () => {
                     pageSize: pageSize,
                     current: current
                 }}
+            />
+            <OrderDetailDrawer
+                showOrderDrawer={showOrderDrawer}
+                setShowOrderDrawer={setShowOrderDrawer}
             />
         </div>
     )
