@@ -25,6 +25,7 @@ const OrderTable = () => {
     const [orderData, setOrderData] = useState<DataType[]>([])
 
     const [showOrderDrawer, setShowOrderDrawer] = useState<boolean>(false)
+    const [orderDrawerData, setOrderDrawerData] = useState({})
 
     const onChange: TableProps<DataType>['onChange'] = (pagination) => {
         console.log('params', pagination);
@@ -38,10 +39,9 @@ const OrderTable = () => {
             title: 'Order ID (Click id to view detail)',
             dataIndex: '_id',
             render: (value, record, index) => {
-                console.log("record", record);
 
                 return (
-                    <a onClick={() => handleShowOrder()}>{record._id}</a>
+                    <a onClick={() => handleShowOrder(record)}>{record._id}</a>
                 )
             }
         },
@@ -55,7 +55,9 @@ const OrderTable = () => {
         }
     ];
 
-    const handleShowOrder = () => {
+    const handleShowOrder = (order) => {
+        //console.log("order", order);
+        setOrderDrawerData(order)
         setShowOrderDrawer(true);
     }
 
@@ -105,6 +107,7 @@ const OrderTable = () => {
             <OrderDetailDrawer
                 showOrderDrawer={showOrderDrawer}
                 setShowOrderDrawer={setShowOrderDrawer}
+                orderDrawerData={orderDrawerData}
             />
         </div>
     )
