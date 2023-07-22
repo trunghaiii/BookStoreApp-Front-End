@@ -37,12 +37,13 @@ const OrderTable = () => {
         {
             title: 'Order ID (Click id to view detail)',
             dataIndex: '_id',
-            // render: (value, record, index) => {
+            render: (value, record, index) => {
+                console.log("record", record);
 
-            //     return (
-            //         <a onClick={() => handleShowOrder()}>{record.id}</a>
-            //     )
-            // }
+                return (
+                    <a onClick={() => handleShowOrder()}>{record._id}</a>
+                )
+            }
         },
         {
             title: 'Customer Name',
