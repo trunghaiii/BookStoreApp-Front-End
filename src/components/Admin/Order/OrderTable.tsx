@@ -36,13 +36,13 @@ const OrderTable = () => {
     const columns: ColumnsType<DataType> = [
         {
             title: 'Order ID (Click id to view detail)',
-            dataIndex: 'id',
-            render: (value, record, index) => {
+            dataIndex: '_id',
+            // render: (value, record, index) => {
 
-                return (
-                    <a onClick={() => handleShowOrder()}>{record.id}</a>
-                )
-            }
+            //     return (
+            //         <a onClick={() => handleShowOrder()}>{record.id}</a>
+            //     )
+            // }
         },
         {
             title: 'Customer Name',
@@ -63,21 +63,17 @@ const OrderTable = () => {
 
         let builtData: any = [];
         if (response && response.errorCode === 0) {
-            response.data.orderDetail.map((order) => {
-                builtData.push({
-                    id: order._id,
-                    name: order.name,
-                    status: order.isFinished === true
-                        ?
-                        <Tag icon={<CheckCircleOutlined />} color="success">
-                            delivered
-                        </Tag>
-                        :
-                        <Tag icon={<SyncOutlined spin />} color="warning">
-                            pending
-                        </Tag>
-
-                })
+            builtData = response.data.orderDetail;
+            builtData.map((order) => {
+                order.status = order.isFinished === true
+                    ?
+                    <Tag icon={<CheckCircleOutlined />} color="success">
+                        delivered
+                    </Tag>
+                    :
+                    <Tag icon={<SyncOutlined spin />} color="warning">
+                        pending
+                    </Tag>
             })
 
             setOrderData(builtData)
