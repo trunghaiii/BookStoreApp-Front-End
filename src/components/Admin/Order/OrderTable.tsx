@@ -1,13 +1,13 @@
 
 import React, { useEffect, useState } from 'react';
 // import './index.css';
-import { Table, Tag } from 'antd';
+import { Button, Table, Tag, message, notification } from 'antd';
 import type { ColumnsType, TableProps } from 'antd/es/table';
 import {
     CheckCircleOutlined,
     SyncOutlined,
 } from '@ant-design/icons';
-import { getOrderPagination } from '../../../services/api';
+import { getOrderPagination, postMarkDelivered } from '../../../services/api';
 import OrderDetailDrawer from './OrderDetailDrawer';
 
 interface DataType {
@@ -52,13 +52,52 @@ const OrderTable = () => {
         {
             title: 'Status',
             dataIndex: 'status'
+        },
+        {
+            title: 'Action',
+            dataIndex: 'action',
+            render: (value, record, index) => {
+
+                return (
+                    record.isFinished === true
+                        ?
+                        <Button
+                            disabled
+                            onClick={() => handleDeliver(record)}
+                            type='primary'
+                            size='small'>Delivered</Button>
+                        :
+
+                        <Button
+                            onClick={() => handleDeliver(record)}
+                            type='primary'
+                            size='small'>Delivered</Button>
+
+                )
+            }
         }
     ];
 
-    const handleShowOrder = (order) => {
+    const handleShowOrder = (order: any) => {
         //console.log("order", order);
         setOrderDrawerData(order)
         setShowOrderDrawer(true);
+    }
+
+    const handleDeliver = async (order: any) => {
+        let response = await postMarkDelivered(order._id);
+
+        if (response && response.errorCode === 0) {
+            message.success(response.errorMessage)
+            fetchOrderPagination()
+        } else {
+            notification.error({
+                message: `Notification`,
+                description: response.errorMessage,
+                duration: 5
+            });
+        }
+
     }
 
     const fetchOrderPagination = async () => {
