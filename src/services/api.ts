@@ -152,6 +152,6 @@ export const getOrderPagination = (current: number | string, pageSize: number | 
     return axios.get(`api/v1/order?current=${current}&pageSize=${pageSize}`)
 }
 
-export const postMarkDelivered = (id: string) => {
-    return axios.post(`api/v1/order/delivered?id=${id}`)
+export const postMarkDeliveredPending = (id: string, isFinished: boolean) => {
+    return axios.post(`api/v1/order/delivered?id=${id}&isFinished=${isFinished}`)
 }

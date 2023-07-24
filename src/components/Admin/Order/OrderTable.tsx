@@ -7,7 +7,7 @@ import {
     CheckCircleOutlined,
     SyncOutlined,
 } from '@ant-design/icons';
-import { getOrderPagination, postMarkDelivered } from '../../../services/api';
+import { getOrderPagination, postMarkDeliveredPending } from '../../../services/api';
 import OrderDetailDrawer from './OrderDetailDrawer';
 
 interface DataType {
@@ -61,17 +61,31 @@ const OrderTable = () => {
                 return (
                     record.isFinished === true
                         ?
-                        <Button
-                            disabled
-                            onClick={() => handleDeliver(record)}
-                            type='primary'
-                            size='small'>Delivered</Button>
+                        <div>
+                            <Button
+                                disabled
+                                onClick={() => handleDeliverPending(record)}
+                                type='primary'
+                                size='small'>Delivered</Button>
+                            <Button
+                                onClick={() => handleDeliverPending(record)}
+                                style={{ backgroundColor: "#D89E04", marginLeft: "3px", color: "white" }}
+                                size='small'>Pending</Button>
+                        </div>
                         :
 
-                        <Button
-                            onClick={() => handleDeliver(record)}
-                            type='primary'
-                            size='small'>Delivered</Button>
+                        <div>
+                            <Button
+                                onClick={() => handleDeliverPending(record)}
+                                type='primary'
+                                size='small'>Delivered</Button>
+                            <Button
+                                disabled
+                                onClick={() => handleDeliverPending(record)}
+                                style={{ marginLeft: "3px" }}
+                                type='primary'
+                                size='small'>Pending</Button>
+                        </div>
 
                 )
             }
@@ -84,8 +98,8 @@ const OrderTable = () => {
         setShowOrderDrawer(true);
     }
 
-    const handleDeliver = async (order: any) => {
-        let response = await postMarkDelivered(order._id);
+    const handleDeliverPending = async (order: any) => {
+        let response = await postMarkDeliveredPending(order._id, order.isFinished);
 
         if (response && response.errorCode === 0) {
             message.success(response.errorMessage)
