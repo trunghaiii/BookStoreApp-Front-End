@@ -22,18 +22,11 @@
     "react-dom": "^18.2.0",
     "react-icons": "^4.9.0",
     "react-image-gallery": "^1.2.12",
-    "react-json-view": "^1.21.3",
     "react-redux": "^8.0.7",
     "react-router-dom": "^6.11.2",
     "react-spinners": "^0.13.8",
     "redux-persist": "^6.0.0",
     "sass": "^1.62.1"
-  },
-  "overrides": {
-    "react-json-view": {
-      "react": "$react",
-      "react-dom": "$react-dom"
-    }
   },
   "devDependencies": {
     "@types/react": "^18.0.37",
