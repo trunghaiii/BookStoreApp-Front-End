@@ -116,8 +116,8 @@ export const postOrder = (data: any) => {
     return axios.post(`api/v1/order`, data)
 }
 
-export const getOrderHistory = () => {
-    return axios.get(`api/v1/order/history`)
+export const getOrderHistory = (current: any, pageSize: any) => {
+    return axios.get(`api/v1/order/history?current=${current}&pageSize=${pageSize}`)
 }
 
 export const putUpdateUserInfo = (
