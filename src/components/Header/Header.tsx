@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import { postLogOut } from '../../services/api';
 
 import { doLogOut } from '../../redux/slices/accountSlice';
+import { searchTextAction } from '../../redux/slices/searchBarSlice';
 
 import CartContent from './CartContent';
 import UpdateUser from './UpdateUser';
@@ -58,6 +59,12 @@ const Header = () => {
         // alert("log out")
     }
 
+    const handleSearchBar = (value) => {
+        console.log(value);
+        dispatch(searchTextAction(value))
+
+    }
+
     let items: MenuProps['items'] = [
         {
             label: <span onClick={() => setShowUpdateUserModal(true)}>Account Management</span>,
@@ -90,7 +97,10 @@ const Header = () => {
             </div>
             <div onClick={() => navigate("/")} className='header-title'>BookStore</div>
             <div className='header-search'>
-                <Input size="large" placeholder="What book do you want to search?"
+                <Input
+                    onChange={(event) => handleSearchBar(event.target.value)}
+                    size="large"
+                    placeholder="What book do you want to search?"
                     prefix={<BsSearch style={{ color: "rgb(0, 204, 255)" }} />} />
             </div>
             <div className='header-cart-icon'>

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux'
 import './Home.scss';
 
 import { AiOutlineReload } from 'react-icons/Ai';
@@ -27,7 +28,7 @@ const Home = () => {
     const [query, setQuery] = useState<string>("")
     const [queryPrice, setQueryPrice] = useState<string>("")
 
-
+    const searchBar = useSelector((state) => state.searchbar)
 
 
     const genreOptions = ['Arts', 'Business', 'Teen', 'Cooking', "Entertainment",
@@ -75,7 +76,9 @@ const Home = () => {
 
     const fetchBookPagination = async (current, pageSize) => {
 
-        let fullQuery: string = `current=${current}&pageSize=${pageSize}`
+        //console.log(searchBar.searchText);
+
+        let fullQuery: string = `current=${current}&pageSize=${pageSize}&name=${searchBar.searchText}`
         if (query) fullQuery += query;
         if (queryPrice) fullQuery += queryPrice;
 
@@ -92,7 +95,7 @@ const Home = () => {
 
     useEffect(() => {
         fetchBookPagination(current, pageSize)
-    }, [current, pageSize, query, queryPrice])
+    }, [current, pageSize, query, queryPrice, searchBar])
 
 
     return (
