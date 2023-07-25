@@ -13,6 +13,7 @@ const UpdateUserInfo = () => {
     const accountUser = useSelector((state) => state.account.user)
     const dispatch = useDispatch()
     const [imageFile, setImageFile] = useState<any>("")
+    const [isUpdated, setIsUpdated] = useState<boolean>(false)
 
     const onChangeImage = (file: any) => {
         setImageFile(file.file.originFileObj)
@@ -22,7 +23,9 @@ const UpdateUserInfo = () => {
         console.log('Success:', values);
         console.log(imageFile);
 
+        setIsUpdated(true);
         let response = await putUpdateUserInfo(values.name, values.phone, imageFile);
+        setIsUpdated(false);
         if (response && response.errorCode === 0) {
             dispatch(updateUserRedux(response.data))
             localStorage.removeItem("access_token")
@@ -84,7 +87,10 @@ const UpdateUserInfo = () => {
                     </Form.Item>
 
                     <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                        <Button type="primary" htmlType="submit">
+                        <Button
+                            loading={isUpdated}
+                            type="primary"
+                            htmlType="submit">
                             Update
                         </Button>
                     </Form.Item>
