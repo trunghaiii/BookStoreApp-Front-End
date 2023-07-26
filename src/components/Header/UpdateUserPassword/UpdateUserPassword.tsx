@@ -2,14 +2,18 @@
 // import './index.css';
 import { Button, Form, Input, message, notification } from 'antd';
 import { putUpdatePassword } from '../../../services/api';
+import { useState } from 'react';
 
 const UpdateUserPassword = () => {
     const [form] = Form.useForm();
+    const [isUpdated, setIsUpdated] = useState<boolean>(false)
 
     const onFinish = async (values: any) => {
         console.log('Success:', values);
 
+        setIsUpdated(true);
         let response = await putUpdatePassword(values.oldpassword, values.newpassword);
+        setIsUpdated(false);
 
         if (response && response.errorCode === 0) {
 
@@ -55,7 +59,10 @@ const UpdateUserPassword = () => {
 
 
                 <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                    <Button type="primary" htmlType="submit">
+                    <Button
+                        loading={isUpdated}
+                        type="primary"
+                        htmlType="submit">
                         Update
                     </Button>
                 </Form.Item>
