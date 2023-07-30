@@ -22,7 +22,7 @@ const ShowBook = (props: IProps) => {
     //console.log("///", bookShowData);
 
     return (
-        <Drawer width={"50%"} title="Basic Drawer" placement="right" onClose={onClose} open={showBook}>
+        <Drawer width={"90%"} title="Basic Drawer" placement="right" onClose={onClose} open={showBook}>
             <Descriptions column={2} title="Book Info" bordered>
                 <Descriptions.Item label="ID">{bookShowData._id}</Descriptions.Item>
                 <Descriptions.Item label="Book Name">{bookShowData.bookName}</Descriptions.Item>

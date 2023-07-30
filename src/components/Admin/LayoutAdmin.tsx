@@ -137,7 +137,7 @@ const LayoutAdmin = () => {
                     />
                 </Sider>
                 <Layout
-
+                    className='child-layout'
                 >
                     <Header className='header-admin' style={{ padding: 0, background: colorBgContainer }}>
                         <Button
@@ -173,6 +173,7 @@ const LayoutAdmin = () => {
                             // margin: '5px 10px',
                             // padding: 14,
                             // height: "75vh",
+                            border: "1px solid red",
                             background: colorBgContainer,
                         }}
                     >

@@ -20,7 +20,7 @@ const OrderDetailDrawer = (props: IProps) => {
 
     return (
         <Drawer
-            width={"50%"}
+            width={"90%"}
             title="Basic Drawer"
             placement="right"
             onClose={onClose}

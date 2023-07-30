@@ -57,18 +57,18 @@ const BookTable = () => {
             title: 'Name',
             dataIndex: 'bookName',
         },
-        {
-            title: 'Genre',
-            dataIndex: 'category',
-        },
-        {
-            title: 'Author',
-            dataIndex: 'author',
-        },
-        {
-            title: 'Price ($)',
-            dataIndex: 'price',
-        },
+        // {
+        //     title: 'Genre',
+        //     dataIndex: 'category',
+        // },
+        // {
+        //     title: 'Author',
+        //     dataIndex: 'author',
+        // },
+        // {
+        //     title: 'Price ($)',
+        //     dataIndex: 'price',
+        // },
         {
             title: 'Action',
             dataIndex: '',
