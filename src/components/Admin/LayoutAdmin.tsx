@@ -78,11 +78,14 @@ const LayoutAdmin = () => {
     return (
         <div className="app-layout-admin">
             <Layout
-                style={{
-                    minHeight: "100vh",
-                }}
+
             >
-                <Sider theme="light" trigger={null} collapsible collapsed={collapsed}>
+                <Sider
+                    theme="light"
+                    trigger={null}
+                    collapsible
+                    collapsed={collapsed}
+                    collapsedWidth="0">
                     <div className="demo-logo-vertical" />
                     <Menu
                         mode="inline"
@@ -133,7 +136,9 @@ const LayoutAdmin = () => {
                         ]}
                     />
                 </Sider>
-                <Layout>
+                <Layout
+
+                >
                     <Header className='header-admin' style={{ padding: 0, background: colorBgContainer }}>
                         <Button
                             type="text"
@@ -165,15 +170,22 @@ const LayoutAdmin = () => {
                     </Header>
                     <Content
                         style={{
-                            margin: '5px 10px',
-                            padding: 14,
+                            // margin: '5px 10px',
+                            // padding: 14,
                             // height: "75vh",
                             background: colorBgContainer,
                         }}
                     >
                         <Outlet />
                     </Content>
-                    <Footer style={{ textAlign: 'center' }}>BookStore ©2023 Created by Hai Tran</Footer>
+                    <Footer style={{
+                        textAlign: 'center',
+                        position: 'fixed',
+                        left: '0',
+                        bottom: '0',
+                        width: '100%'
+
+                    }}>BookStore ©2023 Created by Hai Tran</Footer>
                 </Layout>
             </Layout>
         </div>

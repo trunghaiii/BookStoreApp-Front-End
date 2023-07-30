@@ -69,7 +69,10 @@ const OrderTable = () => {
                                 size='small'>Delivered</Button>
                             <Button
                                 onClick={() => handleDeliverPending(record)}
-                                style={{ backgroundColor: "#D89E04", marginLeft: "3px", color: "white" }}
+                                style={{
+                                    backgroundColor: "#D89E04", marginLeft: "3px",
+                                    color: "white", marginTop: "9px"
+                                }}
                                 size='small'>Pending</Button>
                         </div>
                         :
@@ -82,7 +85,7 @@ const OrderTable = () => {
                             <Button
                                 disabled
                                 onClick={() => handleDeliverPending(record)}
-                                style={{ marginLeft: "3px" }}
+                                style={{ marginLeft: "3px", marginTop: "9px" }}
                                 type='primary'
                                 size='small'>Pending</Button>
                         </div>
