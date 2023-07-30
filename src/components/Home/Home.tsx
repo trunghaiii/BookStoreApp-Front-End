@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux'
 import './Home.scss';
 
-import { AiOutlineReload } from 'react-icons/Ai';
+import { AiOutlineReload, AiOutlineFilter } from 'react-icons/Ai';
 
 import { useNavigate } from "react-router-dom";
 
@@ -14,11 +14,14 @@ import {
 import type { TabsProps } from 'antd';
 
 import { getHomeBookPagination } from '../../services/api';
+import FilterDrawer from './FilterDrawer';
 
 const Home = () => {
 
     const [form] = Form.useForm();
     const navigate = useNavigate();
+
+    const [showFilterDrawer, setShowFilterDrawer] = useState<boolean>(false)
 
     const [current, setCurrent] = useState<number>(1)
     const [pageSize, setPageSize] = useState<number>(4)
@@ -152,6 +155,12 @@ const Home = () => {
 
                     </div>
                 </Col>
+                <Col md={0} sm={4} xs={4}>
+                    <span
+                        onClick={() => setShowFilterDrawer(true)}
+                        style={{ fontSize: "30px", color: "blue" }}>
+                        <AiOutlineFilter /></span>
+                </Col>
                 <Col md={20} sm={24} xs={24}>
                     <div className="homepage-rightside">
                         <div className='book-list'>
@@ -190,7 +199,14 @@ const Home = () => {
 
                     </div>
                 </Col>
-
+                <FilterDrawer
+                    showFilterDrawer={showFilterDrawer}
+                    setShowFilterDrawer={setShowFilterDrawer}
+                    handleReload={handleReload}
+                    onFinish={onFinish}
+                    handleFilter={handleFilter}
+                    genreOptions={genreOptions}
+                />
             </Row>
         </div>
     )
