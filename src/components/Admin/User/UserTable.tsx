@@ -41,16 +41,16 @@ const UserTable = () => {
             dataIndex: 'fullName',
             // sorter: true
         },
-        {
-            title: 'Email',
-            dataIndex: 'email',
-            // sorter: true
-        },
-        {
-            title: 'Phone Number',
-            dataIndex: 'phone',
-            //  sorter: true
-        },
+        // {
+        //     title: 'Email',
+        //     dataIndex: 'email',
+        //     // sorter: true
+        // },
+        // {
+        //     title: 'Phone Number',
+        //     dataIndex: 'phone',
+        //     //  sorter: true
+        // },
         {
             title: 'Action',
             render: (text, record, index) => {

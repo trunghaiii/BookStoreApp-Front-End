@@ -108,20 +108,9 @@ const LayoutAdmin = () => {
                             },
                             {
                                 key: 'usermanage',
-                                icon: <AiOutlineUser />,
-                                label: <span>User Management</span>,
-                                children: [
-                                    {
-                                        key: 'crud',
-                                        icon: <FiUsers onClick={() => navigate("/admin/user")} />,
-                                        label: <span onClick={() => navigate("/admin/user")}>CRUD</span>,
-                                    },
-                                    {
-                                        key: 'file',
-                                        icon: <FiUsers />,
-                                        label: <span >File</span>,
-                                    }
-                                ]
+                                icon: <AiOutlineUser onClick={() => navigate("/admin/user")} />,
+                                label: <span onClick={() => navigate("/admin/user")}>User Management</span>,
+
                             },
                             {
                                 key: 'bookmanage',

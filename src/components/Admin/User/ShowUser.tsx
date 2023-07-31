@@ -15,7 +15,7 @@ const ShowUser = (props: any) => {
 
     return (
         <>
-            <Drawer width="50vw" title="User Detail" placement="right" onClose={onClose} open={showUser}>
+            <Drawer width="90%" title="User Detail" placement="right" onClose={onClose} open={showUser}>
                 <Descriptions column={2} bordered>
                     <Descriptions.Item label="ID">{showUserInfo._id}</Descriptions.Item>
                     <Descriptions.Item label="Name">{showUserInfo.fullName}</Descriptions.Item>
