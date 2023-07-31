@@ -37,7 +37,7 @@ const UpdateUser = (props: IProps) => {
     ];
     return (
         <Modal
-            width={"50%"}
+            width={"90%"}
             title="Basic Modal"
             open={showUpdateUserModal}
             onCancel={handleCancel}

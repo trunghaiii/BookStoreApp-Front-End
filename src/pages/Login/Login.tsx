@@ -85,7 +85,12 @@ const Login: React.FC = () => {
                     <span
                         className='register-btn'
                         onClick={() => navigate("/register")}
-                    >Register</span></p>
+                    >Register</span>
+                    <span
+                        className='register-btn'
+                        onClick={() => navigate("/")}
+                    >Home</span>
+                </p>
                 <Divider />
             </Form>
         </div>

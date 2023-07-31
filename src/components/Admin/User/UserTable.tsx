@@ -26,7 +26,7 @@ const UserTable = () => {
 
     const columns: ColumnsType<DataType> = [
         {
-            title: 'ID',
+            title: 'User ID(Click id to view detail)',
             // dataIndex: '_id',
             render: (text, record, index) => {
                 // console.log("recoed", record);

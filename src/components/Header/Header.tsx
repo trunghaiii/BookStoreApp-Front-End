@@ -27,6 +27,7 @@ const Header = () => {
     const [showUpdateUserModal, setShowUpdateUserModal] = useState<boolean>(false)
 
     const user = useSelector(state => state.account.user)
+    const isAuthenticated = useSelector(state => state.account.isAuthenticated)
     const cart = useSelector(state => state.order.cart)
 
     const dispatch = useDispatch()
@@ -135,7 +136,12 @@ const Header = () => {
                         </a>
                     </Dropdown>
                     :
-                    <div onClick={() => navigate("/login")}>Account</div>
+                    <>
+                        <div onClick={() => navigate("/login")}>Login</div>
+                        <div onClick={() => navigate("/register")}>Register</div>
+
+                    </>
+
                 }
             </div>
             <Drawer
@@ -149,9 +155,25 @@ const Header = () => {
                         <div style={{ cursor: "pointer" }} onClick={() => navigate("/admin")}>Admin Management</div>
                     }
                     <hr />
-                    <div style={{ cursor: "pointer" }}>Account Management</div>
-                    <hr />
-                    <div style={{ cursor: "pointer" }} onClick={() => handleLogOut()}>Log Out.</div>
+                    {
+                        isAuthenticated === true
+                            ?
+                            <>
+                                <div style={{ cursor: "pointer" }} onClick={() => setShowUpdateUserModal(true)}>Account Management</div>
+                                <hr />
+                                <div style={{ cursor: "pointer" }} onClick={() => handleLogOut()}>Log Out.</div>
+                            </>
+
+                            :
+                            <>
+                                <div style={{ cursor: "pointer" }} onClick={() => navigate("/login")}>Login</div>
+                                <hr />
+                                <div style={{ cursor: "pointer" }} onClick={() => navigate('/register')}>Register</div>
+                            </>
+
+                    }
+
+
                 </div>
 
             </Drawer>

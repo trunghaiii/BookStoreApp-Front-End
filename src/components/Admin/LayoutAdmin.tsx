@@ -21,6 +21,7 @@ import { postLogOut } from '../../services/api';
 
 import { doLogOut } from '../../redux/slices/accountSlice';
 import { useDispatch } from 'react-redux';
+import UpdateUser from '../Header/UpdateUser';
 
 
 
@@ -30,6 +31,9 @@ const { Header, Sider, Content, Footer } = Layout;
 const LayoutAdmin = () => {
     const [collapsed, setCollapsed] = useState(false);
     const [openDrop, setOpenDrop] = useState<boolean>(false);
+
+    const [showUpdateUserModal, setShowUpdateUserModal] = useState<boolean>(false)
+
     const navigate = useNavigate()
     const user = useSelector((state) => state.account.user)
     const dispatch = useDispatch()
@@ -66,7 +70,7 @@ const LayoutAdmin = () => {
             key: '',
         },
         {
-            label: 'Account Management',
+            label: <div onClick={() => setShowUpdateUserModal(true)}>Account Management</div>,
             key: '1',
         },
         {
@@ -159,10 +163,6 @@ const LayoutAdmin = () => {
                     </Header>
                     <Content
                         style={{
-                            // margin: '5px 10px',
-                            // padding: 14,
-                            // height: "75vh",
-                            border: "1px solid red",
                             background: colorBgContainer,
                         }}
                     >
@@ -178,6 +178,10 @@ const LayoutAdmin = () => {
                     }}>BookStore ©2023 Created by Hai Tran</Footer>
                 </Layout>
             </Layout>
+            <UpdateUser
+                showUpdateUserModal={showUpdateUserModal}
+                setShowUpdateUserModal={setShowUpdateUserModal}
+            />
         </div>
     )
 }
