@@ -161,6 +161,8 @@ const Header = () => {
                             <>
                                 <div style={{ cursor: "pointer" }} onClick={() => setShowUpdateUserModal(true)}>Account Management</div>
                                 <hr />
+                                <div style={{ cursor: "pointer" }} onClick={() => navigate("/history")}>Order History</div>
+                                <hr />
                                 <div style={{ cursor: "pointer" }} onClick={() => handleLogOut()}>Log Out.</div>
                             </>
 

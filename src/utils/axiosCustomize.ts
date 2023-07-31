@@ -39,6 +39,13 @@ instance.interceptors.response.use(function (response) {
 
     if (error.config
         && error.response
+        && +error.response.status === 401 &&
+        error.config.url === "api/v1/auth/refresh") {
+        window.location.href = '/login'
+    }
+
+    if (error.config
+        && error.response
         && +error.response.status === 401
         && !NO_RETRY_HEADER) {
         // NO_RETRY_HEADER = true
@@ -51,12 +58,7 @@ instance.interceptors.response.use(function (response) {
         }
     }
 
-    if (error.config
-        && error.response
-        && +error.response.status === 401 &&
-        error.config.url === "api/v1/auth/refresh") {
-        window.location.href = '/login'
-    }
+
 
     return error && error.response && error.response.data ?
         error.response.data : Promise.reject(error);
