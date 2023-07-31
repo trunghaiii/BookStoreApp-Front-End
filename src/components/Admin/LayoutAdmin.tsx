@@ -173,7 +173,8 @@ const LayoutAdmin = () => {
                         position: 'fixed',
                         left: '0',
                         bottom: '0',
-                        width: '100%'
+                        width: '100%',
+                        marginTop: '5px'
 
                     }}>BookStore ©2023 Created by Hai Tran</Footer>
                 </Layout>

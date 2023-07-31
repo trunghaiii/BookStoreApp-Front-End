@@ -74,7 +74,7 @@ const OrderPayment = (props: IProps) => {
     }, [])
 
     return (
-        <div className="order-payment-container">
+        <div style={{ height: "100vh" }} className="order-payment-container">
             <div className="order-list">
                 {cart && cart.length > 0
                     ?

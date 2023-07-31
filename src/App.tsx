@@ -34,7 +34,8 @@ import {
 
 const Layout = () => {
   return (
-    <div className="app-layout">
+    <div
+      className="app-layout">
       <Header />
       <Outlet />
       <Footerr />
