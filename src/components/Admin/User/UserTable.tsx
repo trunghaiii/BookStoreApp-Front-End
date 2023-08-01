@@ -10,7 +10,7 @@ import CreateNewUserModal from './CreateNewUserModal';
 import UpdateUserModal from './UpdateUserModal';
 import UserSearch from './UserSearch';
 
-import { AiOutlinePlusCircle } from 'react-icons/Ai';
+import { AiOutlinePlusCircle } from 'react-icons/ai';
 
 
 interface DataType {
