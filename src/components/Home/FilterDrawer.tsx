@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 // import './index.css';
-import { AiOutlineReload } from 'react-icons/Ai';
+import { AiOutlineReload } from 'react-icons/ai';
 
 import {
     Checkbox, Divider,
