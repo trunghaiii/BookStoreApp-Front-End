@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux'
 import './Home.scss';
 
-import { AiOutlineReload, AiOutlineFilter } from 'react-icons/Ai';
+import { AiOutlineReload, AiOutlineFilter } from 'react-icons/ai';
 
 import { useNavigate } from "react-router-dom";
 
