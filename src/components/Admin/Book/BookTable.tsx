@@ -8,7 +8,7 @@ import ShowBook from './ShowBook';
 import CreateBookModal from './CreateBookModal';
 import UpdateBookModal from './UpdateBookModal';
 
-import { AiOutlinePlusCircle } from 'react-icons/Ai';
+import { AiOutlinePlusCircle } from 'react-icons/ai';
 
 import { getBookPagination, deleteBook } from '../../../services/api';
 
