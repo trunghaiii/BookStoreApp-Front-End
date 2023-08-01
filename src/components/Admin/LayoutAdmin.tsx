@@ -10,11 +10,10 @@ import { DownOutlined } from '@ant-design/icons';
 // import { useSelector } from "react-redux"
 import { Outlet, useNavigate } from "react-router-dom"
 
-import { RiDashboardLine } from "react-icons/Ri";
-import { AiOutlineUser } from "react-icons/Ai";
-import { FiUsers } from "react-icons/Fi";
-import { GoBook } from "react-icons/Go";
-import { RiMoneyDollarCircleLine } from "react-icons/Ri";
+import { RiDashboardLine } from "react-icons/ri";
+import { AiOutlineUser } from "react-icons/ai";
+import { GoBook } from "react-icons/go";
+import { RiMoneyDollarCircleLine } from "react-icons/ri";
 import { useSelector } from 'react-redux';
 
 import { postLogOut } from '../../services/api';

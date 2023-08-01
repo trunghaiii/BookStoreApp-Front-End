@@ -1,9 +1,9 @@
 import './Header.scss';
 import { useEffect, useState } from 'react';
-import { BsSearch } from 'react-icons/Bs';
-import { GiBlackBook } from 'react-icons/Gi';
-import { FaBars } from 'react-icons/Fa';
-import { AiOutlineShoppingCart } from 'react-icons/Ai';
+import { BsSearch } from 'react-icons/bs';
+import { GiBlackBook } from 'react-icons/gi';
+import { FaBars } from 'react-icons/fa';
+import { AiOutlineShoppingCart } from 'react-icons/ai';
 import { Input, MenuProps, Dropdown, Space, Badge, Drawer, message, Avatar, Popover } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import { useSelector, useDispatch } from 'react-redux';

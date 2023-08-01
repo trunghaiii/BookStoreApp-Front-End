@@ -2,7 +2,7 @@
 import "./Order.scss"
 import { InputNumber, Button } from 'antd';
 import { useEffect, useState } from "react";
-import { RiDeleteBin6Line } from 'react-icons/Ri';
+import { RiDeleteBin6Line } from 'react-icons/ri';
 import { useSelector, useDispatch } from "react-redux";
 import { doCartDelete, doCartUpdate } from "../../redux/slices/orderSlice";
 

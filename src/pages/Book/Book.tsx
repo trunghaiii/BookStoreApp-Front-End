@@ -9,8 +9,8 @@ import ImageGallery from "react-image-gallery";
 
 import { InputNumber, Button, Rate } from 'antd';
 
-import { BsCartCheck, BsPlusLg } from 'react-icons/Bs';
-import { AiOutlineMinus } from 'react-icons/Ai';
+import { BsCartCheck, BsPlusLg } from 'react-icons/bs';
+import { AiOutlineMinus } from 'react-icons/ai';
 
 import { getBookDetail } from "../../services/api"
 
