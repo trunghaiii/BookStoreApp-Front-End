@@ -122,7 +122,6 @@ const Book = () => {
                             size='large' type="primary">
                             <BsCartCheck />  Add to Cart
                         </Button>
-                        <Button style={{ marginLeft: "5px" }} size='large' type="primary">Buy Now</Button>
                         <Button
                             style={{ marginLeft: "5px" }}
                             size='large'
