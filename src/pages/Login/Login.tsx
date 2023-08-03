@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './Login.scss';
 import { useNavigate } from "react-router-dom";
-import { Button, Form, Input, Divider, notification, message, Popover } from 'antd';
+import { Button, Form, Input, Divider, notification, message } from 'antd';
 import { postLogin } from "../../services/api"
 import { useDispatch } from 'react-redux';
 import { saveLoginData } from '../../redux/slices/accountSlice';
@@ -84,29 +84,25 @@ const Login: React.FC = () => {
 
                 </Form.Item>
                 <span className='or-text'>Or</span>
-                <p>You do not have account yet?
-                    <Popover
-                        placement="bottom"
-                        content={
-                            <div>
-                                <p>Login as admin email: admin@gmail.com pass: 12345</p>
-                                <p>Login as user email:  user@gmail.com pass:  12345</p>
-                            </div>
-                        }
-                        visible={true}>
 
+                <p>
+                    You do not have account yet?
+                    <span
+                        className='register-btn'
+                        onClick={() => navigate("/register")}
+                    >Register</span>
 
-                        <span
-                            className='register-btn'
-                            onClick={() => navigate("/register")}
-                        >Register</span>
-                    </Popover>
                     <span
                         className='register-btn'
                         onClick={() => navigate("/")}
                     >Home</span>
                 </p>
+
                 <Divider />
+                <div>
+                    <p>Login as admin | email: <span>admin@gmail.com</span> pass: <span>12345</span></p>
+                    <p>Login as user | email:  <span>user@gmail.com</span> pass:  <span>12345</span></p>
+                </div>
             </Form>
         </div>
 
