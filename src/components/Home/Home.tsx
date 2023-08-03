@@ -183,7 +183,7 @@ const Home = () => {
                                 })
 
                                 :
-                                <div>No data</div>
+                                <div>Loading... please hold on for a while!</div>
                             }
 
 
