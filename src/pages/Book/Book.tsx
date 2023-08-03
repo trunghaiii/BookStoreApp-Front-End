@@ -123,7 +123,7 @@ const Book = () => {
                             <BsCartCheck />  Add to Cart
                         </Button>
                         <Button
-                            style={{ marginLeft: "5px" }}
+                            style={{ marginLeft: "5px", marginTop: "5px" }}
                             size='large'
                             type="primary"
                             onClick={() => handleComment()}

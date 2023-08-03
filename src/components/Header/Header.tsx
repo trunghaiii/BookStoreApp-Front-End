@@ -66,7 +66,21 @@ const Header = () => {
 
     }
 
+    const handleClickOrderHistory = () => {
+        navigate("/history")
+        setOpenDrawer(false)
+    }
+
+    const handleClickHome = () => {
+        navigate("/")
+        setOpenDrawer(false)
+    }
+
     let items: MenuProps['items'] = [
+        {
+            label: <span onClick={() => navigate("/")}>Home</span>,
+            key: '4',
+        },
         {
             label: <span onClick={() => setShowUpdateUserModal(true)}>Account Management</span>,
             key: '1',
@@ -151,6 +165,8 @@ const Header = () => {
                 onClose={onClose}
                 open={openDrawer}>
                 <div className='header-drawer-item' style={{ textAlign: "center" }}>
+                    <div style={{ cursor: "pointer" }} onClick={() => handleClickHome()}>Home</div>
+                    <hr />
                     {user && user.role === "ADMIN" &&
                         <div style={{ cursor: "pointer" }} onClick={() => navigate("/admin")}>Admin Management</div>
                     }
@@ -161,7 +177,7 @@ const Header = () => {
                             <>
                                 <div style={{ cursor: "pointer" }} onClick={() => setShowUpdateUserModal(true)}>Account Management</div>
                                 <hr />
-                                <div style={{ cursor: "pointer" }} onClick={() => navigate("/history")}>Order History</div>
+                                <div style={{ cursor: "pointer" }} onClick={() => handleClickOrderHistory()}>Order History</div>
                                 <hr />
                                 <div style={{ cursor: "pointer" }} onClick={() => handleLogOut()}>Log Out.</div>
                             </>
