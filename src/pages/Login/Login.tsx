@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Login.scss';
 import { useNavigate } from "react-router-dom";
-import { Button, Form, Input, Divider, notification, message } from 'antd';
+import { Button, Form, Input, Divider, notification, message, Popover } from 'antd';
 import { postLogin } from "../../services/api"
 import { useDispatch } from 'react-redux';
 import { saveLoginData } from '../../redux/slices/accountSlice';
@@ -53,6 +53,7 @@ const Login: React.FC = () => {
                 // onFinishFailed={onFinishFailed}
                 autoComplete="off"
             >
+
                 <h1 style={{ textAlign: 'center', marginTop: 100 }}>Login</h1>
                 <Divider />
                 <Form.Item
@@ -76,16 +77,30 @@ const Login: React.FC = () => {
                 </Form.Item> */}
 
                 <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+
                     <Button type="primary" htmlType="submit" loading={isLogin}>
                         Login
                     </Button>
+
                 </Form.Item>
                 <span className='or-text'>Or</span>
                 <p>You do not have account yet?
-                    <span
-                        className='register-btn'
-                        onClick={() => navigate("/register")}
-                    >Register</span>
+                    <Popover
+                        placement="bottom"
+                        content={
+                            <div>
+                                <p>Login as admin email: admin@gmail.com pass: 12345</p>
+                                <p>Login as user email:  user@gmail.com pass:  12345</p>
+                            </div>
+                        }
+                        visible={true}>
+
+
+                        <span
+                            className='register-btn'
+                            onClick={() => navigate("/register")}
+                        >Register</span>
+                    </Popover>
                     <span
                         className='register-btn'
                         onClick={() => navigate("/")}
@@ -94,6 +109,7 @@ const Login: React.FC = () => {
                 <Divider />
             </Form>
         </div>
+
     )
 };
 
