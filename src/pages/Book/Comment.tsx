@@ -20,6 +20,7 @@ const Comment = (props: IProps) => {
     const { showComment, setShowComment, bookId } = props
 
     const [commentDetail, setCommentDetail] = useState([])
+    const [isSubmit, setIsSubmit] = useState<boolean>(false)
 
     const onFinish = async (values: any) => {
         console.log('Success:', values);
@@ -27,7 +28,10 @@ const Comment = (props: IProps) => {
         let rate: number = 1
         if (values.comment) content = values.comment;
         if (values.rate) rate = values.rate;
+
+        setIsSubmit(true)
         let response = await postComment(bookId, account.user.id, content, rate)
+        setIsSubmit(false)
 
         if (response && response.errorCode === 0) {
             form.resetFields()
@@ -149,7 +153,7 @@ const Comment = (props: IProps) => {
 
 
                             <Form.Item>
-                                <Button type="primary" htmlType="submit">
+                                <Button loading={isSubmit} type="primary" htmlType="submit">
                                     Submit
                                 </Button>
                             </Form.Item>
