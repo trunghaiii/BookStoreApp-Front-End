@@ -21,6 +21,7 @@ const Comment = (props: IProps) => {
 
     const [commentDetail, setCommentDetail] = useState([])
     const [isSubmit, setIsSubmit] = useState<boolean>(false)
+    const [isDelete, setIsDelete] = useState<boolean>(false)
 
     const onFinish = async (values: any) => {
         console.log('Success:', values);
@@ -52,7 +53,10 @@ const Comment = (props: IProps) => {
     };
 
     const handleDeleteComment = async (commentID) => {
+
+        setIsDelete(true)
         let response = await deleteComment(commentID, bookId)
+        setIsDelete(false)
 
         if (response && response.errorCode === 0) {
             fetchCommentDetail()
@@ -115,6 +119,7 @@ const Comment = (props: IProps) => {
                             {account.user.id === comment.ownerId
                                 ?
                                 <Button
+                                    loading={isDelete}
                                     onClick={() => handleDeleteComment(comment.commentId)}
                                     size='small'
                                     type="primary"
