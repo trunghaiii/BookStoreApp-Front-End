@@ -9,6 +9,7 @@ import LayoutAdmin from "./components/Admin/LayoutAdmin";
 import UserTable from "./components/Admin/User/UserTable";
 import BookTable from "./components/Admin/Book/BookTable";
 import OrderTable from "./components/Admin/Order/OrderTable";
+import Bestseller from "./components/Admin/Bestseller/Bestseller";
 
 import IndexOrder from "./pages/Order/IndexOrder";
 import Login from "./pages/Login/Login";
@@ -91,6 +92,10 @@ const router = createBrowserRouter([
       {
         path: "order",
         element: <OrderTable />,
+      },
+      {
+        path: "bestseller",
+        element: <Bestseller />,
       }
     ],
   },

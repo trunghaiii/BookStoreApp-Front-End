@@ -14,6 +14,7 @@ import { RiDashboardLine } from "react-icons/ri";
 import { AiOutlineUser } from "react-icons/ai";
 import { GoBook } from "react-icons/go";
 import { RiMoneyDollarCircleLine } from "react-icons/ri";
+import { BsFillLightningChargeFill } from "react-icons/bs";
 import { useSelector } from 'react-redux';
 
 import { postLogOut } from '../../services/api';
@@ -122,8 +123,13 @@ const LayoutAdmin = () => {
                             },
                             {
                                 key: 'ordermanage',
-                                icon: <RiMoneyDollarCircleLine onClick={() => navigate("/admin/contact")} />,
+                                icon: <RiMoneyDollarCircleLine onClick={() => navigate("/admin/order")} />,
                                 label: <span onClick={() => navigate("/admin/order")}>Order Management</span>,
+                            },
+                            {
+                                key: 'bestmanage',
+                                icon: <BsFillLightningChargeFill onClick={() => navigate("/admin/bestseller")} />,
+                                label: <span onClick={() => navigate("/admin/bestseller")}>Best-Selling Books</span>,
                             },
                         ]}
                     />
