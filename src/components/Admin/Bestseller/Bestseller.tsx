@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 // import './index.css';
 import { Table } from 'antd';
 import type { TableColumnsType, TableProps } from 'antd';
+import { getBookPagination } from '../../../services/api';
 
 interface DataType {
     key: React.Key;
@@ -26,57 +27,55 @@ const columns: TableColumnsType<DataType> = [
 
 ];
 
-const data: DataType[] = [
-    {
-        key: '1',
-        rank: 1,
-        name: "Green Life",
-        sold: 70,
-
-    },
-    {
-        key: '2',
-        rank: 2,
-        name: "Green Life",
-        sold: 60,
-
-    },
-    {
-        key: '3',
-        rank: 3,
-        name: "Green Life",
-        sold: 50,
-
-    },
-    {
-        key: '4',
-        rank: 4,
-        name: "Green Life",
-        sold: 40,
-
-    },
-    {
-        key: '5',
-        rank: 5,
-        name: "Green Life",
-        sold: 30,
-
-    }
-
-];
-
 
 const Bestseller = () => {
+
+    const [topBookData, setTopBookData] = useState([]);
 
     const onChange: TableProps<DataType>['onChange'] = (pagination, filters, sorter, extra) => {
         console.log('params', pagination, filters, sorter, extra);
     };
 
+    const fetchBookData = async () => {
+
+        // 0. call api
+        let response = await getBookPagination("")
+
+        if (response && response.errorCode === 0) {
+
+            // 1. sort array of data object
+            let rawData = response.data.result.sort((a, b) => (b.sold - a.sold));
+
+            // 2. create customized data
+            let customizedData = []
+            for (let i = 0; i < 5; i++) {
+                customizedData.push({
+                    key: JSON.stringify(i + 1),
+                    rank: i + 1,
+                    name: rawData[i].bookName,
+                    sold: rawData[i].sold,
+                })
+            }
+
+            // 3. set customized data to state
+            setTopBookData(customizedData)
+        }
+
+    }
+
+    useEffect(() => {
+        fetchBookData()
+
+    }, [])
+
+    console.log('topBookData', topBookData);
+
+
     return (
         <>
             <Table
                 columns={columns}
-                dataSource={data}
+                dataSource={topBookData}
                 onChange={onChange} />;
         </>
     )
